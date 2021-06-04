@@ -1,0 +1,10 @@
+name: Challenges
+version: 1.0
+main: de.lpd.challenges.main.ChallengesMainClass
+api-version: 1.16
+
+commands:
+   timer:
+   challenges:
+   ch:
+   reset:
