@@ -1,13 +1,9 @@
 package de.lpd.challenges.utils;
 
-
 import java.io.File;
 import java.io.IOException;
-
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-
-import de.lpd.challenges.main.ChallengesMainClass;
 
 public class Config {
 	
@@ -22,7 +18,7 @@ public class Config {
 	}
 	
 	public Config(String path, String filename) {
-		this(ChallengesMainClass.getPlugin().getDataFolder().getAbsoluteFile().getAbsolutePath(), path, filename);
+		this("plugins//Challenges//", path, filename);
 	}
 	
 	public Config(String filename) {

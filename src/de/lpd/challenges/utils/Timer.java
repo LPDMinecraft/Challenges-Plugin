@@ -2,9 +2,6 @@ package de.lpd.challenges.utils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-
-import de.lpd.challenges.chg.Challenge;
-import de.lpd.challenges.chg.ChallengesManager;
 import de.lpd.challenges.main.ChallengesMainClass;
 import de.lpd.challenges.settings.SettingManager;
 
@@ -55,11 +52,7 @@ public class Timer {
 	public void reset() {
 		millsecounds = 0;
 		isStarted = false;
-		if(ChallengesManager.idtoclass != null) {
-			for(Challenge ch : ChallengesManager.idtoclass.values()) {
-				ch.reset();
-			}
-		}
+		
 	}
 	
 	public int getSecounds() {

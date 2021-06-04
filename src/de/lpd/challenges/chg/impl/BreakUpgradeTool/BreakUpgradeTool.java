@@ -112,6 +112,7 @@ public class BreakUpgradeTool extends Challenge {
 			iMeta.removeEnchant(Enchantment.values()[i]);
 		}
 		iMeta.addEnchant(Enchantment.values()[i], level, true);
+		System.out.println(level);
 		item.setItemMeta(iMeta);
 		return item;
 	}

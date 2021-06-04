@@ -12,6 +12,7 @@ import de.lpd.challenges.commands.TimerCommand;
 import de.lpd.challenges.invs.InventoryManager;
 import de.lpd.challenges.invs.impl.ChallengesMenu;
 import de.lpd.challenges.listener.DeathEvent;
+import de.lpd.challenges.settings.SettingManager;
 import de.lpd.challenges.utils.Command;
 import de.lpd.challenges.utils.Config;
 import de.lpd.challenges.utils.Starter;
@@ -27,6 +28,7 @@ public class ChallengesMainClass extends JavaPlugin {
 	private static ChallengesMainClass plugin;
 	private static Config mainCFG;
 	private static InventoryManager invManager;
+	private static SettingManager settingManager;
 	private static ChallengesManager ChMa;
 	
 	public static Timer t;
@@ -65,6 +67,7 @@ public class ChallengesMainClass extends JavaPlugin {
 		t.reset();
 		ChMa = new ChallengesManager(this);
 		invManager = new InventoryManager(this);
+		settingManager = new SettingManager(this);
 		new Starter().startPlugin(mainCFG, this);
 		
 		registerCommand("timer", new TimerCommand(this));
@@ -108,6 +111,10 @@ public class ChallengesMainClass extends JavaPlugin {
 	
 	public static ChallengesManager getChMa() {
 		return ChMa;
+	}
+	
+	public static SettingManager getSettingManager() {
+		return settingManager;
 	}
 	
 	public static void fail(int reason) {
