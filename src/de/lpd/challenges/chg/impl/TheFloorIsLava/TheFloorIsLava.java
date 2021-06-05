@@ -30,16 +30,16 @@ public class TheFloorIsLava extends Challenge {
 			@Override
 			public void run() {
 				if(isEnabled()) {
-					String root = "thefloorislava.hashmap";
+					String root = "locations.hashmap.0";
 					for(String c : cfg.cfg().getConfigurationSection(root).getKeys(false)) {
 						String r = root + "." + c;
 						
 						Location loc = cfg.getBlockLocation(r + ".loc");
-						double secs = (double) cfg.cfg().get(r + ".secounds");
+						int secs = (int) cfg.cfg().get(r + ".secounds");
 						boolean active = (boolean) cfg.cfg().get(r + ".active");
-						Material m = (Material) cfg.cfg().get(r + ".material");
+						Material m = Material.getMaterial((String) cfg.cfg().get(r + ".material"));
 						
-						double prozent = secs / (double)getOption(cfg, "thefloorislava.max", 30);
+						double prozent = secs / (int)getOption(cfg, "thefloorislava.max", 30);
 						
 						if(secs > 0) {
 							if(isEnabled()) {
@@ -61,7 +61,7 @@ public class TheFloorIsLava extends Challenge {
 									}
                                     loc.getBlock().setType(set);
                                     
-                                    cfg.cfg().set(root + ".secounds", (double)cfg.cfg().getDouble(root + ".secounds") - 1);
+                                    cfg.cfg().set(root + ".secounds", cfg.cfg().getInt(root + ".secounds") - 1);
                                     cfg.save();
 									
 								}
@@ -73,7 +73,18 @@ public class TheFloorIsLava extends Challenge {
 				}
 			}
 			
-		}, 0, 20l);
+		}, 0, 20 * 1);
+		
+		Bukkit.getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+			
+			@Override
+			public void run() {
+				if(delay > 0) {
+					delay--;
+				}
+			}
+			
+		}, 0, 20 * 1);
 	}
 
 	@Override
@@ -103,13 +114,13 @@ public class TheFloorIsLava extends Challenge {
 
 	@Override
 	public void onRightClick(Player p) {
-		double a = (double)getOption(cfg, "thefloorislava.max", 30.00);
+		int a = (int)getOption(cfg, "thefloorislava.max", 30);
 		setOption(cfg, "thefloorislava.max", a + 1);
 	}
 
 	@Override
 	public void onLeftClick(Player p) {
-		double a = (double)getOption(cfg, "thefloorislava.max", 30.00);
+		int a = (int)getOption(cfg, "thefloorislava.max", 30);
 		if(a > 0) {
 			setOption(cfg, "thefloorislava.max", a - 1);
 		}
@@ -122,25 +133,30 @@ public class TheFloorIsLava extends Challenge {
 
 	@Override
 	public void reset() {
-		cfg.saveHashMap("thefloorislava.hashmap", new HashMap<>());
 	}
+	
+	private int delay = 0;
 	
 	@EventHandler
 	public void onMove(PlayerMoveEvent e) {
-		Location l = e.getTo();
-		if(isEnabled()) {
-			float id = new Random().nextFloat();
-			String root = "locations.hashmap." + id;
-			while(cfg.cfg().contains(root)) {
-				id = new Random().nextFloat();
-				root = "locations.hashmap." + id;
+		if(delay == 0) {
+			Location l = e.getTo();
+			if(isEnabled()) {
+				float id = new Random().nextFloat();
+				String root = "locations.hashmap." + id;
+				while(cfg.cfg().contains(root)) {
+					id = new Random().nextFloat();
+					root = "locations.hashmap." + id;
+				}
+				cfg.saveBlockLocation(root + ".loc", l.getWorld(), l.getBlockX(), l.getBlockY(), l.getBlockZ());
+				cfg.cfg().set(root + ".secounds", (int)getOption(cfg, "thefloorislava.max", 30));
+				cfg.cfg().set(root + ".active", true);
+				cfg.cfg().set(root + ".material", l.getBlock().getType().toString());
+				
+				cfg.save();
+				
+				delay = 5;
 			}
-			cfg.saveBlockLocation(root + ".loc", l.getWorld(), l.getBlockX(), l.getBlockY(), l.getBlockZ());
-			cfg.cfg().set(root + ".secounds", (double)getOption(cfg, "thefloorislava.max", 30));
-			cfg.cfg().set(root + ".active", true);
-			cfg.cfg().set(root + ".material", l.getBlock().getType());
-			
-			cfg.save();
 		}
 	}
 	
