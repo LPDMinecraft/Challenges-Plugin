@@ -127,10 +127,7 @@ public class TheFloorIsLava extends Challenge {
 	
 	@EventHandler
 	public void onMove(PlayerMoveEvent e) {
-		int y = e.getTo().getBlock().getY();
-		y = y - 1;
 		Location l = e.getTo();
-		l.setY(y);
 		if(isEnabled()) {
 			float id = new Random().nextFloat();
 			String root = "locations.hashmap." + id;
