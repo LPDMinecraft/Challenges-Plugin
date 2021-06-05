@@ -41,24 +41,7 @@ public class ChallengesMainClass extends JavaPlugin {
 		if(cfg.cfg().contains("command.reset")) {
 			if(cfg.cfg().getBoolean("command.reset") == true) {
 				new WorldUtil().resetWorld();
-				System.out.println("a");
-				System.out.println("a");
-				System.out.println("a");
-				System.out.println("a");
-				System.out.println("a");
-				System.out.println("a");
-				System.out.println("a");
-				System.out.println("a");
-				System.out.println("a");
-				System.out.println("a");
-				System.out.println("a");
-				System.out.println("a");
-				System.out.println("a");
-				System.out.println("a");
-				System.out.println("a");
-				System.out.println("a");
-				System.out.println("a");
-				System.out.println("a");
+				cfg.cfg().set("command.reset", false);
 			}
 		}
 	}
