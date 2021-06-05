@@ -6,6 +6,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="E:/Development/Minecraft Plugins/Minecraft Versions/paper-1.16.5.jar"/>
+	<classpathentry kind="lib" path="E:/Development/Minecraft Plugins/Minecraft Versions/spigot-1.16.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
