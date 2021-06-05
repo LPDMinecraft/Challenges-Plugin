@@ -47,7 +47,7 @@ public class GeteilteHearths extends Challenge {
 	@Override
 	public ItemStack getItem() {
 		ItemBuilder ib = new ItemBuilder(Material.HEART_OF_THE_SEA, 2);
-		if(isEnabled()) {
+		if(isToggled()) {
 			ib.setDisplayName("§6GeteilteHerzen " + Starter.STARTPREFIX + "§aOn");
 		} else {
 			ib.setDisplayName("§6GeteilteHerzen " + Starter.STARTPREFIX + "§cOff");

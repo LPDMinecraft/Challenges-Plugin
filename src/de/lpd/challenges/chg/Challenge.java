@@ -3,7 +3,6 @@ package de.lpd.challenges.chg;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
-
 import de.lpd.challenges.main.ChallengesMainClass;
 import de.lpd.challenges.utils.Config;
 
@@ -40,6 +39,13 @@ public abstract class Challenge implements Listener {
 	}
 	
 	public boolean isEnabled() {
+		if(isEnabled && ChallengesMainClass.t.isStarted()) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean isToggled() {
 		if(isEnabled) {
 			return true;
 		}

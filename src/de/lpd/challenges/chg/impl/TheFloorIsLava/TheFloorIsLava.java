@@ -53,7 +53,7 @@ public class TheFloorIsLava extends Challenge {
 	@Override
 	public ItemStack getItem() {
 		ItemBuilder ib = new ItemBuilder(Material.LAVA_BUCKET);
-		if(isEnabled()) {
+		if(isToggled()) {
 			ib.setDisplayName("§6TheFloorisLava " + Starter.STARTPREFIX + "§aOn");
 		} else {
 			ib.setDisplayName("§6TheFloorisLava " + Starter.STARTPREFIX + "§cOff");

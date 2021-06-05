@@ -64,7 +64,7 @@ public class MaxHearth extends Challenge{
 	@Override
 	public ItemStack getItem() {
 		ItemBuilder ib = new ItemBuilder(Material.CUT_RED_SANDSTONE_SLAB);
-		if(isEnabled()) {
+		if(isToggled()) {
 			ib.setDisplayName("§6MaxLeben " + Starter.STARTPREFIX + "§aOn");
 		} else {
 			ib.setDisplayName("§6MaxLeben " + Starter.STARTPREFIX + "§cOff");

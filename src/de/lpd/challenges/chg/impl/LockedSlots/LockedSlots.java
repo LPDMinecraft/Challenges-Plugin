@@ -65,7 +65,7 @@ public class LockedSlots extends Challenge {
 	@Override
 	public ItemStack getItem() {
 		ItemBuilder ib = new ItemBuilder(Material.RED_STAINED_GLASS);
-		if(isEnabled()) {
+		if(isToggled()) {
 			ib.setDisplayName("§6LockedSlots " + Starter.STARTPREFIX + "§aOn");
 		} else {
 			ib.setDisplayName("§6LockedSlots " + Starter.STARTPREFIX + "§cOff");

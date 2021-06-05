@@ -34,7 +34,7 @@ public class BreakUpgradeTool extends Challenge {
 	@Override
 	public ItemStack getItem() {
 		ItemBuilder ib = new ItemBuilder(Material.ENCHANTED_BOOK);
-		if(isEnabled()) {
+		if(isToggled()) {
 			ib.setDisplayName("§6Entchante jedes Abbauen " + Starter.STARTPREFIX + "§aOn");
 		} else {
 			ib.setDisplayName("§6Entchante jedes Abbauen " + Starter.STARTPREFIX + "§cOff");

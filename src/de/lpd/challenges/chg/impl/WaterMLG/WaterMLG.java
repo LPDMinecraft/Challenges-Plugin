@@ -35,7 +35,7 @@ public class WaterMLG extends Challenge {
 	@Override
 	public ItemStack getItem() {
 		ItemBuilder ib = new ItemBuilder(Material.WATER_BUCKET);
-		if(isEnabled()) {
+		if(isToggled()) {
 			ib.setDisplayName("§6WaterMLG " + Starter.STARTPREFIX + "§aOn");
 		} else {
 			ib.setDisplayName("§6WaterMLG " + Starter.STARTPREFIX + "§cOff");

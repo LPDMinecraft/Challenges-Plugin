@@ -44,7 +44,7 @@ public abstract class Setting implements Listener {
 	}
 	
 	public boolean isEnabled() {
-		if(isEnabled) {
+		if(isEnabled && ChallengesMainClass.t.isStarted()) {
 			return true;
 		}
 		return false;

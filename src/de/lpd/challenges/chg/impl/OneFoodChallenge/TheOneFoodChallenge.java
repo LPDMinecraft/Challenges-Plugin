@@ -31,7 +31,7 @@ public class TheOneFoodChallenge extends Challenge {
 	@Override
 	public ItemStack getItem() {
 		ItemBuilder ib = new ItemBuilder(Material.COOKED_BEEF);
-		if(isEnabled()) {
+		if(isToggled()) {
 			ib.setDisplayName("§6TheOneFoodChallenge " + Starter.STARTPREFIX + "§aOn");
 		} else {
 			ib.setDisplayName("§6TheOneFoodChallenge " + Starter.STARTPREFIX + "§cOff");
