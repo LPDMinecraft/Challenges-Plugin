@@ -18,7 +18,6 @@ import de.lpd.challenges.utils.Starter;
 
 public class BreakUpgradeTool extends Challenge {
 	
-	int level = 1;
 	private Config cfg;
 	
 	public BreakUpgradeTool(ChallengesMainClass plugin) {
@@ -27,7 +26,7 @@ public class BreakUpgradeTool extends Challenge {
 
 	@Override
 	public void cfg(Config cfg) {
-		level = (int) getOption(cfg, "breakupgradetool.levelplus", 1);
+		getOption(cfg, "breakupgradetool.levelplus", 1);
 		this.cfg = cfg;
 	}
 
@@ -43,7 +42,7 @@ public class BreakUpgradeTool extends Challenge {
 		lore[0] = Starter.STARTPREFIX + "§aIn dieser Challenge muss man Minecraft";
 		lore[1] = "§adurchspielen. Bei jedem Block abbauen wird es um eine belibige";
 		lore[2] = "§aZahl Entchantmens hochgelevelt auf das Tool.";
-		lore[3] = "§aDerzeitige Level pro Abbauen§7: §6" + level;
+		lore[3] = "§aDerzeitige Level pro Abbauen§7: §6" + (int) getOption(cfg, "breakupgradetool.levelplus", 1);
 		lore[4] = "§6Mittelklick §7> §aAn/Aus diese Challenge";
 		lore[5] = "§6Rechtsklick §7> §a+1 mehr Level";
 		lore[6] = "§6Linksklick §7> §a-1 mehr Level";
@@ -54,12 +53,14 @@ public class BreakUpgradeTool extends Challenge {
 
 	@Override
 	public void onRightClick(Player p) {
+		int level = (int) getOption(cfg, "breakupgradetool.levelplus", 1);
 		level++;
 		setOption(cfg, "breakupgradetool.levelplus", level);
 	}
 
 	@Override
 	public void onLeftClick(Player p) {
+		int level = (int) getOption(cfg, "breakupgradetool.levelplus", 1);
 		level--;
 		setOption(cfg, "breakupgradetool.levelplus", level);
 	}
@@ -71,8 +72,7 @@ public class BreakUpgradeTool extends Challenge {
 
 	@Override
 	public void reset() {
-		level = 1;
-		setOption(cfg, "breakupgradetool.levelplus", level);
+		setOption(cfg, "breakupgradetool.levelplus", 1);
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -105,10 +105,10 @@ public class BreakUpgradeTool extends Challenge {
 			return entchant(item, p);
 		}
 		
-		int level = this.level;
+		int level = (int) getOption(cfg, "breakupgradetool.levelplus", 1);
 		if(iMeta.hasEnchant(Enchantment.values()[i])) {
 			level = iMeta.getEnchantLevel(Enchantment.values()[i]);
-			level = level + this.level;
+			level = level + (int) getOption(cfg, "breakupgradetool.levelplus", 1);
 			iMeta.removeEnchant(Enchantment.values()[i]);
 		}
 		iMeta.addEnchant(Enchantment.values()[i], level, true);

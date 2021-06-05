@@ -16,7 +16,6 @@ import de.lpd.challenges.utils.Starter;
 
 public class GeteilteHearths extends Challenge {
 	
-	public static int health = 20;
 	public Config cfg;
 
 	public GeteilteHearths(ChallengesMainClass plugin) {
@@ -28,11 +27,10 @@ public class GeteilteHearths extends Challenge {
 				if(ChallengesMainClass.t.isStarted()) {
 					for(Player p : Bukkit.getOnlinePlayers()) {
 						if(p.getGameMode() == GameMode.SURVIVAL) {
-							p.setHealth(health);
+							p.setHealth((int)getOption(cfg, "geteilteherzen.herzen", 20));
 						}
 					}
 				}
-				setOption(cfg, "geteilteherzen.herzen", health);
 			}
 			
 		}, 0, 1L);
@@ -40,7 +38,6 @@ public class GeteilteHearths extends Challenge {
 
 	@Override
 	public void cfg(Config cfg) {
-		health = (int) getOption(cfg, "geteilteherzen.herzen", 20);
 		this.cfg = cfg;
 	}
 
@@ -75,14 +72,14 @@ public class GeteilteHearths extends Challenge {
 
 	@Override
 	public void reset() {
-		health = 20;
+		setOption(cfg, "geteilteherzen.herzen", (int)getOption(cfg, "geteilteherzen.herzen", 20));
 	}
 	
 	@EventHandler
 	public void onDamage(EntityDamageEvent e) {
 		if(e.getEntity() instanceof Player) {
 			if(isEnabled()) {
-				health = (int) (health - (e.getDamage() * 2));
+				setOption(cfg, "geteilteherzen.herzen", (int)getOption(cfg, "geteilteherzen.herzen", 20) - (e.getDamage() * 2));
 			}
 		}
 	}

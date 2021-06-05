@@ -2,6 +2,8 @@ package de.lpd.challenges.main;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -115,6 +117,14 @@ public class ChallengesMainClass extends JavaPlugin {
 	
 	public static SettingManager getSettingManager() {
 		return settingManager;
+	}
+	
+	public static int getHighestY(Location loc) {
+		int y = 255;
+		while(new Location(loc.getWorld(), loc.getX(), y, loc.getZ()).getBlock().getType() == Material.AIR) {
+			y--;
+		}
+		return y;
 	}
 	
 	public static void fail(int reason) {

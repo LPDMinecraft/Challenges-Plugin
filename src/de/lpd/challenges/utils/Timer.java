@@ -83,31 +83,42 @@ public class Timer {
 			DateFormat secound = new SimpleDateFormat("ss");
 			DateFormat millsecound = new SimpleDateFormat("SSS");
 			String s = "§a";
+			if(Integer.valueOf(day.format(millsecounds)) > 0) {
+				if((Integer.valueOf(day.format(millsecounds)) - 1) != 0) {
+					s = s + correntSay((Integer.valueOf(day.format(millsecounds)) - 1), "ein Tag ", " Tage ");
+				}
+			}
+			if(Integer.valueOf(hour.format(millsecounds)) > 0 || Integer.valueOf(day.format(millsecounds)) > 0) {
+				if((Integer.valueOf(hour.format(millsecounds)) - 1) < 10) {
+					s = s + "0" + (Integer.valueOf(hour.format(millsecounds)) - 1);
+				} else {
+					s = s + (Integer.valueOf(hour.format(millsecounds)) - 1);
+				}
+			}
+			if(Integer.valueOf(minute.format(millsecounds)) > 0 || Integer.valueOf(hour.format(millsecounds)) > 0 || Integer.valueOf(day.format(millsecounds)) > 0) {
+				if(Integer.valueOf(minute.format(millsecounds)) < 10) {
+					s = s + ":0" + Integer.valueOf(minute.format(millsecounds));
+				} else {
+					s = s + ":" + Integer.valueOf(minute.format(millsecounds));
+				}
+			}
 			
-			if((Integer.valueOf(day.format(millsecounds)) - 1) != 0) {
-				s = s + correntSay((Integer.valueOf(day.format(millsecounds)) - 1), "ein Tag ", " Tage ");
+			if(Integer.valueOf(secound.format(millsecounds)) > 0 || Integer.valueOf(minute.format(millsecounds)) > 0 || Integer.valueOf(hour.format(millsecounds)) > 0 || Integer.valueOf(day.format(millsecounds)) > 0) {
+				if(Integer.valueOf(secound.format(millsecounds)) < 10) {
+					s = s + ":0" + Integer.valueOf(secound.format(millsecounds));
+				} else {
+					s = s + ":" + Integer.valueOf(secound.format(millsecounds));
+				}
 			}
-			if((Integer.valueOf(hour.format(millsecounds)) - 1) < 10) {
-				s = s + "0" + (Integer.valueOf(hour.format(millsecounds)) - 1);
-			} else {
-				s = s + (Integer.valueOf(hour.format(millsecounds)) - 1);
-			}
-			if(Integer.valueOf(minute.format(millsecounds)) < 10) {
-				s = s + ":0" + Integer.valueOf(minute.format(millsecounds));
-			} else {
-				s = s + ":" + Integer.valueOf(minute.format(millsecounds));
-			}
-			if(Integer.valueOf(secound.format(millsecounds)) < 10) {
-				s = s + ":0" + Integer.valueOf(secound.format(millsecounds));
-			} else {
-				s = s + ":" + Integer.valueOf(secound.format(millsecounds));
-			}
-            if(Integer.valueOf(millsecound.format(millsecounds)) < 10) {
-            	s = s + ":00" + Integer.valueOf(millsecound.format(millsecounds));
-			} else if(Integer.valueOf(millsecound.format(millsecounds)) < 100) {
-				s = s + ":0" + Integer.valueOf(millsecound.format(millsecounds));
-			} else {
-				s = s + ":" + Integer.valueOf(millsecound.format(millsecounds));
+			
+			if(Integer.valueOf(millsecound.format(millsecounds)) > 0 || Integer.valueOf(secound.format(millsecounds)) > 0 || Integer.valueOf(minute.format(millsecounds)) > 0 || Integer.valueOf(hour.format(millsecounds)) > 0 || Integer.valueOf(day.format(millsecounds)) > 0) {
+				if(Integer.valueOf(millsecound.format(millsecounds)) < 10) {
+	            	s = s + ":00" + Integer.valueOf(millsecound.format(millsecounds));
+				} else if(Integer.valueOf(millsecound.format(millsecounds)) < 100) {
+					s = s + ":0" + Integer.valueOf(millsecound.format(millsecounds));
+				} else {
+					s = s + ":" + Integer.valueOf(millsecound.format(millsecounds));
+				}
 			}
 			
 			return s;

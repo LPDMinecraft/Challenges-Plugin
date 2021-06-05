@@ -16,7 +16,6 @@ import de.lpd.challenges.utils.Starter;
 
 public class WaterMLG extends Challenge {
 	
-	public static int status = 30;
 	private Config cfg;
 	private ChallengesMainClass plugin;
 	
@@ -29,7 +28,6 @@ public class WaterMLG extends Challenge {
 	@Override
 	public void cfg(Config cfg) {
 		this.cfg = cfg;
-		status = (int) getOption(cfg, "watermlg.max", 30);
 	}
 	
 	@Override
@@ -44,7 +42,7 @@ public class WaterMLG extends Challenge {
 		lore[0] = Starter.STARTPREFIX + "§aIn dieser Challenge muss du in x Sekunden";
 		lore[1] = "§aeinen WaterMLG machen. Wenn einer dabei stirbt ist die Challange";
 		lore[2] = "§avorbei.";
-		lore[3] = "§7Derzeitig ausgewählte Zeit§8: §6" + status;
+		lore[3] = "§7Derzeitig ausgewählte Zeit§8: §6" + getOption(cfg, "watermlg.max", 30);
 		lore[4] = "§6Linksklick §7> §a-1 Sekunde";
 		lore[5] = "§6Rechtsklick §7> §a+1 Sekunde";
 		lore[6] = "§6Mittelklick §7> §aAn/Aus diese Challenge";
@@ -55,15 +53,13 @@ public class WaterMLG extends Challenge {
 	
 	@Override
 	public void onRightClick(Player p) {
-		status++;
-		setOption(cfg, "watermlg.max", status);
+		setOption(cfg, "watermlg.max", (int)getOption(cfg, "watermlg.max", 30) + 1);
 	}
 	
 	@Override
 	public void onLeftClick(Player p) {
-		if(status > 1) {
-			status--;
-			setOption(cfg, "watermlg.max", status);
+		if((int)getOption(cfg, "watermlg.max", 30) > 1) {
+			setOption(cfg, "watermlg.max", (int)getOption(cfg, "watermlg.max", 30) - 1);
 		}
 	}
 	
@@ -75,9 +71,11 @@ public class WaterMLG extends Challenge {
 	@Override
 	public void reset() {
 		inv = new HashMap<>();
+		loc = new HashMap<>();
 	}
 	
 	private HashMap<Player, ItemStack[]> inv = new HashMap<>();
+	private HashMap<Player, Location> loc = new HashMap<Player, Location>();
 	
 	public void send() {
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
@@ -91,9 +89,12 @@ public class WaterMLG extends Challenge {
 							inv.put(c, c.getInventory().getContents());
 							c.getInventory().clear();
 							c.leaveVehicle();
+							
+							loc.put(c, c.getLocation());
+							
 							// 30 - 50 Blöcke
-							int r = Mathe.getRandom(30, 50);
-							c.teleport(new Location(c.getWorld(), c.getLocation().getX(), c.getLocation().getY() + r, c.getLocation().getZ()));
+							int r = Mathe.getRandom(20, 100);
+							c.teleport(new Location(c.getWorld(), c.getLocation().getX(), ChallengesMainClass.getHighestY(c.getLocation()) + r, c.getLocation().getZ()));
 							c.getInventory().addItem(new ItemBuilder(Material.WATER_BUCKET).setDisplayName("§6Der beste Springer").build());
 							Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
 								
@@ -101,6 +102,8 @@ public class WaterMLG extends Challenge {
 								public void run() {
 									c.getInventory().setContents(inv.get(c));
 									inv.remove(c);
+									c.teleport(loc.get(c));
+									loc.remove(c);
 								}
 								
 							}, ((r - 30) + 1) * 7L);
@@ -109,7 +112,7 @@ public class WaterMLG extends Challenge {
 				}
 			}
 			
-		}, 0, 20L * status);
+		}, 0, (int)getOption(cfg, "watermlg.max", 30));
 	}
 	
 }

@@ -14,8 +14,7 @@ import de.lpd.challenges.utils.Starter;
 
 public class TheOneFoodChallenge extends Challenge {
 	
-	public static HashMap<Material, Integer> eaten = new HashMap<>();
-	public static int status = 1;
+	// public static HashMap<Material, Integer> eaten = new HashMap<>();
 	private Config cfg;
 	
 	public TheOneFoodChallenge(ChallengesMainClass plugin) {
@@ -25,7 +24,6 @@ public class TheOneFoodChallenge extends Challenge {
 	@Override
 	public void cfg(Config cfg) {
 		this.cfg = cfg;
-		status = (int) getOption(cfg, "foodchallenge.max", 1);
 	}
 	
 	@Override
@@ -42,7 +40,7 @@ public class TheOneFoodChallenge extends Challenge {
 		lore[2] = "§aDas heißt wenn der 1. Spieler rohes Kuhfleisch gegessen hat und danach ein ";
 		lore[3] = "§aanderer Kuhfleisch ist sind sie tot.";
 		lore[4] = "§aAber nur dann, wenn die maximale Begrenzung auf 1 gestellt ist.";
-		lore[5] = "§7Derzeitig ausgewählte Begrenzung§8: §6" + status;
+		lore[5] = "§7Derzeitig ausgewählte Begrenzung§8: §6" + (int) getOption(cfg, "foodchallenge.max", 1);
 		lore[6] = "§6Linksklick §7> §a-1";
 		lore[7] = "§6Rechtsklick §7> §a+1";
 		lore[8] = "§6Mittelklick §7> §aAn/Aus diese Challenge";
@@ -53,16 +51,14 @@ public class TheOneFoodChallenge extends Challenge {
 
 	@Override
 	public void onRightClick(Player p) {
-		status++;
-		setOption(cfg, "foodchallenge.max", status);
+		setOption(cfg, "foodchallenge.max", (int) getOption(cfg, "foodchallenge.max", 1) + 1);
 	}
 
 	@Override
 	public void onLeftClick(Player p) {
-		if(status > 1) {
-			status--;
+		if((int) getOption(cfg, "foodchallenge.max", 1) > 1) {
+			setOption(cfg, "foodchallenge.max", (int) getOption(cfg, "foodchallenge.max", 1) - 1);
 		}
-		setOption(cfg, "foodchallenge.max", status);
 	}
 
 	@Override
@@ -72,26 +68,26 @@ public class TheOneFoodChallenge extends Challenge {
 
 	@Override
 	public void reset() {
-		eaten = new HashMap<>();
+		cfg.saveHashMap("eaten.hashmap", new HashMap<>());
 	}
 	
 	@EventHandler
 	public void onEat(PlayerItemConsumeEvent e) {
 		if(isEnabled()) {
-			if(ChallengesMainClass.t.isStarted()) {
-				if(eaten.containsKey(e.getItem().getType())) {
-					Material t = e.getItem().getType();
-					int a = eaten.get(e.getItem().getType());
-					a++;
-					eaten.remove(t);
-					eaten.put(t, a);
-					if(a > status) {
-						ChallengesMainClass.fail(1);
-					}
-				} else {
-					eaten.put(e.getItem().getType(), 1);
+			HashMap<Object, Object> eaten = cfg.loadHashMap("eaten.hashmap");
+			if(eaten.containsKey(e.getItem().getType())) {
+				Material t = e.getItem().getType();
+				int a = (int) eaten.get(e.getItem().getType());
+				a++;
+				eaten.remove(t);
+				eaten.put(t, a);
+				if(a > (int) getOption(cfg, "foodchallenge.max", 1)) {
+					ChallengesMainClass.fail(1);
 				}
+			} else {
+				eaten.put(e.getItem().getType(), 1);
 			}
+			setOption(cfg, "eaten.hashmap", eaten);
 		}
 	}
 	

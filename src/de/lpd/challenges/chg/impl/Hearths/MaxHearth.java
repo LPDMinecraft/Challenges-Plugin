@@ -13,10 +13,8 @@ import de.lpd.challenges.utils.Starter;
 
 public class MaxHearth extends Challenge{
 	
-	public static double status = 0;
 	private Config cfg;
-	private ChallengesMainClass plugin;
-	private boolean a = false;
+	private ChallengesMainClass plugin;	
 	
 	public MaxHearth(ChallengesMainClass plugin) {
 		super(plugin, "maxhearth", "config.yml", "maxhearth");
@@ -28,22 +26,9 @@ public class MaxHearth extends Challenge{
 			@Override
 			public void run() {
 				
-				if(a != ChallengesMainClass.t.isStarted()) {
-					if(isEnabled()) {
-						for(Player p : Bukkit.getOnlinePlayers()) {
-							p.setMaxHealth(status);
-						}
-						status = 20;
-						setOption(cfg, "maxhearths.max", status);
-					}
-				}
-				
-				a = ChallengesMainClass.t.isStarted();
-				if(a) {
-					if(isEnabled()) {
-						for(Player p : Bukkit.getOnlinePlayers()) {
-							p.setMaxHealth(status);
-						}
+				if(isEnabled()) {
+					for(Player p : Bukkit.getOnlinePlayers()) {
+						p.setMaxHealth((double) getOption(cfg, "maxhearths.max", 10) * 2);
 					}
 				}
 			}
@@ -54,11 +39,6 @@ public class MaxHearth extends Challenge{
 	@Override
 	public void cfg(Config cfg) {
 		this.cfg = cfg;
-		try {
-			status = (double) getOption(cfg, "maxhearths.max", 20);
-		} catch (Exception e) {
-			status = Double.valueOf(String.valueOf(getOption(cfg, "maxhearths.max", 20)));
-		}
 	}
 
 	@Override
@@ -72,7 +52,7 @@ public class MaxHearth extends Challenge{
 		String[] lore = new String[6];
 		lore[0] = Starter.STARTPREFIX + "§aIn dieser Challenge muss man Minecraft mit";
 		lore[1] = "§aX Herzen durchspielen.";
-		lore[2] = "§7Derzeitige Herzen§8: §6" + status + "/20";
+		lore[2] = "§7Derzeitige Herzen§8: §6" + (double) getOption(cfg, "maxhearths.max", 20) + "/20";
 		lore[3] = "§6Linksklick §7> §a-0.5 Herz";
 		lore[4] = "§6Rechtsklick §7> §a+0.5 Herz";
 		lore[5] = "§6Mittelklick §7> §aAn/Aus diese Challenge";
@@ -83,15 +63,13 @@ public class MaxHearth extends Challenge{
 
 	@Override
 	public void onRightClick(Player p) {
-		status = status + 1;
-		setOption(cfg, "maxhearths.max", status);
+		setOption(cfg, "maxhearths.max", (double)getOption(cfg, "maxhearths.max", 10) + 0.5);
 	}
 
 	@Override
 	public void onLeftClick(Player p) {
-		if(status > 1) {
-			status = status - 1;
-			setOption(cfg, "lmaxhearths.max", status);
+		if((double)getOption(cfg, "maxhearths.max", 20) > 0.5) {
+			setOption(cfg, "maxhearths.max", (double)getOption(cfg, "maxhearths.max", 10) - 0.5);
 		}
 	}
 
@@ -100,8 +78,16 @@ public class MaxHearth extends Challenge{
 		toggle();
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
-	public void reset() {}
+	public void reset() {
+		if(isEnabled()) {
+			setOption(cfg, "maxhearths.max", 10);
+			for(Player p : Bukkit.getOnlinePlayers()) {
+				p.setMaxHealth((double) getOption(cfg, "maxhearths.max", 10));
+			}
+		}
+	}
 
 	public ChallengesMainClass getPlugin() {
 		return plugin;

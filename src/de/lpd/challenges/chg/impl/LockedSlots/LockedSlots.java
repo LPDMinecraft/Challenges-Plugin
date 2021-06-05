@@ -19,10 +19,8 @@ import de.lpd.challenges.utils.Starter;
 
 public class LockedSlots extends Challenge {
 	
-	public static int status = 0;
 	private Config cfg;
 	private ChallengesMainClass plugin;
-	private boolean a = false;
 	
 	public LockedSlots(ChallengesMainClass plugin) {
 		super(plugin, "lockedslots", "lockedslots.yml", "lockedslots");
@@ -31,24 +29,16 @@ public class LockedSlots extends Challenge {
 			
 			@Override
 			public void run() {
-				if(ChallengesMainClass.t.isStarted() != a) {
-					a = ChallengesMainClass.t.isStarted();
-					if(a) {
-						if(isEnabled()) {
-							for(Player c : Bukkit.getOnlinePlayers()) {
-								if(c.getGameMode() == GameMode.SURVIVAL) {
-									a(c);
-								}
-							}
+				if(isEnabled()) {
+					for(Player c : Bukkit.getOnlinePlayers()) {
+						if(c.getGameMode() == GameMode.SURVIVAL) {
+							a(c);
 						}
-					} else {
-						if(isEnabled()) {
-							for(Player c : Bukkit.getOnlinePlayers()) {
-								if(c.getGameMode() == GameMode.SURVIVAL) {
-									c.getInventory().remove(Material.BARRIER);
-								}
-							}
-						}
+					}
+				}
+				if(!isEnabled()) {
+					for(Player c : Bukkit.getOnlinePlayers()) {
+						c.getInventory().remove(Material.BARRIER);
 					}
 				}
 			}
@@ -59,7 +49,6 @@ public class LockedSlots extends Challenge {
 	@Override
 	public void cfg(Config cfg) {
 		this.cfg = cfg;
-		status = (int) getOption(cfg, "lockedslots.max", 0);
 	}
 	
 	@Override
@@ -73,7 +62,7 @@ public class LockedSlots extends Challenge {
 		String[] lore = new String[6];
 		lore[0] = Starter.STARTPREFIX + "§aIn dieser Challenge muss man Minecraft mit";
 		lore[1] = "§aX Slots durchspielen.";
-		lore[2] = "§7Derzeitig gespeerte Slots§8: §6" + status;
+		lore[2] = "§7Derzeitig gespeerte Slots§8: §6" + getOption(cfg, "lockedslots.max", 0);
 		lore[3] = "§6Linksklick §7> §a-1 Slot";
 		lore[4] = "§6Rechtsklick §7> §a+1 Slot";
 		lore[5] = "§6Mittelklick §7> §aAn/Aus diese Challenge";
@@ -83,28 +72,26 @@ public class LockedSlots extends Challenge {
 	}
 	
 	public void a(Player p) {
-		if(isEnabled()) {
+		if(isToggled()) {
 			p.getInventory().remove(Material.BARRIER);
-			if(ChallengesMainClass.t.isStarted()) {
-				for(int i = 0; i < status; i++) {
-					p.getInventory().setItem(((4*9)-1)-i, new ItemBuilder(Material.BARRIER).build());
-				}
-			}
 		}
+		if(isEnabled()) {
+			for(int i = 0; i < (int)getOption(cfg, "lockedslots.max", 0); i++) {
+				p.getInventory().setItem(((4*9)-1)-i, new ItemBuilder(Material.BARRIER).build());
+			}
+		} 
 	}
 	
 	@Override
 	public void onRightClick(Player p) {
-		status++;
-		setOption(cfg, "lockedslots.max", status);
+		setOption(cfg, "lockedslots.max", (int)getOption(cfg, "lockedslots.max", 0) + 1);
 		a(p);
 	}
 	
 	@Override
 	public void onLeftClick(Player p) {
-		if(status > 1) {
-			status--;
-			setOption(cfg, "lockedslots.max", status);
+		if((int)getOption(cfg, "lockedslots.max", 0) > 1) {
+			setOption(cfg, "lockedslots.max", (int)getOption(cfg, "lockedslots.max", 0) - 1);
 			a(p);
 		}
 	}
@@ -116,7 +103,7 @@ public class LockedSlots extends Challenge {
 	
 	@Override
 	public void reset() {
-		
+		setOption(cfg, "lockedslots.max", 0);
 	}
 	
 	@EventHandler
@@ -126,7 +113,7 @@ public class LockedSlots extends Challenge {
 				if(e.getCurrentItem().getType() != null) {
 					if(e.getCurrentItem().getType() == Material.BARRIER) {
 						if(e.getWhoClicked().getGameMode() == GameMode.SURVIVAL) {
-							if(ChallengesMainClass.t.isStarted()) {
+							if(isEnabled()) {
 								e.setCancelled(true);
 							}
 						}
@@ -138,27 +125,27 @@ public class LockedSlots extends Challenge {
 	
 	@EventHandler
 	public void onPlace(BlockPlaceEvent e) {
-		if(e.getBlock().getType() == Material.BARRIER && e.getPlayer().getGameMode() == GameMode.SURVIVAL) {
+		if(e.getBlock().getType() == Material.BARRIER && e.getPlayer().getGameMode() == GameMode.SURVIVAL && isEnabled()) {
 			e.setCancelled(true);
 		}
 	}
 	
 	@EventHandler
 	public void onDrop(PlayerDropItemEvent e) {
-		if(e.getItemDrop().getItemStack().getType() == Material.BARRIER && e.getPlayer().getGameMode() == GameMode.SURVIVAL) {
+		if(e.getItemDrop().getItemStack().getType() == Material.BARRIER && e.getPlayer().getGameMode() == GameMode.SURVIVAL && isEnabled()) {
 			e.setCancelled(true);
 		}
 	}
 	
 	@EventHandler
-	public void onDeatzh(PlayerDeathEvent e) {
+	public void onDeath(PlayerDeathEvent e) {
 		e.getDrops().remove(new ItemBuilder(Material.BARRIER).build());
 	}
 	
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
 		Player c = e.getPlayer();
-		if(a && isEnabled()) {
+		if(isEnabled()) {
 			if(ChallengesMainClass.t.isStarted()) {
 				if(c.getGameMode() == GameMode.SURVIVAL) {
 					a(c);
