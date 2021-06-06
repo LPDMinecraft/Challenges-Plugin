@@ -2,7 +2,6 @@ package de.lpd.challenges.chg.impl.TheFloorIsLava;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
