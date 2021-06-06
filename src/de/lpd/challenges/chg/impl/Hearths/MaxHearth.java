@@ -28,8 +28,11 @@ public class MaxHearth extends Challenge{
 				
 				if(isEnabled()) {
 					for(Player p : Bukkit.getOnlinePlayers()) {
+						System.out.println(p.getMaxHealth());
 						if(p.getMaxHealth() != (double) getOption(cfg, "maxhearths.max", 10)) {
 							p.setMaxHealth((double) getOption(cfg, "maxhearths.max", 10));
+							
+							System.out.println(getOption(cfg, "maxhearths.max", 10));
 						}
 					}
 				}

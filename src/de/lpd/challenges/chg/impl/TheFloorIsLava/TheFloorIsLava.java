@@ -132,7 +132,7 @@ public class TheFloorIsLava extends Challenge {
 		}, 20, 20);
 		
 	}
-
+	
 	@Override
 	public void cfg(Config cfg) {
 		this.cfg = cfg;
