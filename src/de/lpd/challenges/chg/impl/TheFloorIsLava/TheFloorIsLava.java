@@ -2,8 +2,9 @@ package de.lpd.challenges.chg.impl.TheFloorIsLava;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.Iterator;
+
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -27,14 +28,13 @@ public class TheFloorIsLava extends Challenge {
 		this.plugin = plugin;
 		
 		
-		Timer a = new Timer();
 		
-		
-		
-		a.scheduleAtFixedRate(new TimerTask() {
+		Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
+
 			
 			public void run() {
-				System.out.println("1");
+				
+				// System.out.println("1");
 				if(isEnabled()) {
 					/*System.out.println("2");
 					String root = "locations.hashmap.0";
@@ -78,53 +78,59 @@ public class TheFloorIsLava extends Challenge {
 						} else {
 							active = false;
 						}
-					}*/
+					} */
 					
 					if(blocks != null && !blocks.isEmpty()) {
-						for(Block c : blocks) {
-							Location loc = c.getLoc();
-							int secs = c.getSecounds();
-							boolean active = c.isActive();
-							Material m = c.getMaterial();
-							
-							double prozent = secs / ((int)getOption(cfg, "thefloorislava.max", 30) / 4);
-							
-							if(secs > 0) {
-								if(isEnabled()) {
-									if(active) {
-										
-										Material set = null;
-	                                    if(prozent < 0.94) {
-											set = Material.MAGMA_BLOCK;
-										} else if(prozent < 0.67) {
-											set = Material.LAVA;
-										} else if(prozent < 0.19) {
-											set = Material.OBSIDIAN;
-										} else if(prozent < 0.1) {
-											set = Material.BEDROCK;
-										} else if(prozent < 0.04) {
-											set = Material.BEDROCK;
-										} else {
-											set = m;
+						try {
+							System.out.println("on");
+							for(Block c : blocks) {
+								Location loc = c.getLoc();
+								int secs = c.getSecounds();
+								boolean active = c.isActive();
+								Material m = c.getMaterial();
+								
+								double prozent = secs / ((int)getOption(cfg, "thefloorislava.max", 30));
+								
+								System.out.println(prozent);
+								
+								if(secs > 0) {
+									if(isEnabled()) {
+										if(active) {
+											
+											Material set = null;
+		                                    if(prozent < 0.94) {
+												set = Material.MAGMA_BLOCK;
+											} else if(prozent < 0.67) {
+												set = Material.LAVA;
+											} else if(prozent < 0.19) {
+												set = Material.OBSIDIAN;
+											} else if(prozent < 0.1) {
+												set = Material.BEDROCK;
+											} else if(prozent < 0.04) {
+												set = Material.BEDROCK;
+											} else {
+												set = m;
+											}
+		                                    if(set != Material.AIR) {
+		                                    	loc.getBlock().setType(set);
+		                                    }
+		                                    
+		                                    secs = secs - 1;
+		                                    c.secounds = secs;
+											blocks.add(c);
 										}
-	                                    if(set != Material.AIR) {
-	                                    	loc.getBlock().setType(set);
-	                                    }
-	                                    
-	                                    secs = secs - 1;
-										blocks.remove(c);
-										blocks.add(new Block(loc, secs, active, m));
 									}
-								}
-							} else {
-								blocks.remove(c);
+								} else {}
 							}
+							System.out.println("stop");
+						} catch (Exception e) {
+							e.printStackTrace();
 						}
 					}
 				}
 			}
 			
-		}, 4000l, 4000l);
+		}, 20, 20);
 		
 	}
 
@@ -203,6 +209,8 @@ public class TheFloorIsLava extends Challenge {
 			}
 			far.put(e.getPlayer(), add);
 			
+			System.out.println(add);
+			
 			if(far != null && !far.isEmpty() && far.containsKey(e.getPlayer()) && far.get(e.getPlayer()) >= 3) {
 				/*float id = new Random().nextFloat();
 				String root = "locations.hashmap." + id;
@@ -218,6 +226,8 @@ public class TheFloorIsLava extends Challenge {
 				cfg.save();*/
 				
 				blocks.add(new Block(l, (int)getOption(cfg, "thefloorislava.max", 30), true, l.getBlock().getType()));
+				
+				System.out.println("New Block");
 				
 				far.remove(e.getPlayer());
 			}
@@ -249,6 +259,18 @@ public class TheFloorIsLava extends Challenge {
 		}
 		public Material getMaterial() {
 			return material;
+		}
+		public void setActive(boolean active) {
+			this.active = active;
+		}
+		public void setLoc(Location loc) {
+			this.loc = loc;
+		}
+		public void setMaterial(Material material) {
+			this.material = material;
+		}
+		public void setSecounds(int secounds) {
+			this.secounds = secounds;
 		}
 		
 	}

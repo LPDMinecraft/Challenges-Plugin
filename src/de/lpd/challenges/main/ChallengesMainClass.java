@@ -66,7 +66,6 @@ public class ChallengesMainClass extends JavaPlugin {
 	
 	@Override
 	public void onEnable() {
-		Bukkit.getScheduler().cancelTasks(this);
 		load();
 		plugin = this;
 		
@@ -76,6 +75,7 @@ public class ChallengesMainClass extends JavaPlugin {
 	@Override
 	public void onDisable() {
 		Bukkit.broadcastMessage(Starter.ON_STOP);
+		Bukkit.getScheduler().cancelTasks(plugin);
 	}
 	
 	public void registerCommand(String cmd, Command executor) {
