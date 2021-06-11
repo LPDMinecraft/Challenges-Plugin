@@ -1,5 +1,5 @@
 name: Challenges
-version: 2.3
+version: 3.0
 main: de.lpd.challenges.main.ChallengesMainClass
 api-version: 1.16
 
