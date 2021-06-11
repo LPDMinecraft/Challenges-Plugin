@@ -16,10 +16,11 @@ public class TheOneFoodChallenge extends Challenge {
 	
 	// public static HashMap<Material, Integer> eaten = new HashMap<>();
 	private Config cfg;
+	private HashMap<Material, Integer> eaten;
 	
 	public TheOneFoodChallenge(ChallengesMainClass plugin) {
 		super(plugin, "theonefoodchallenge", "config.yml", "foodchallenge");
-		cfg.saveHashMap("eaten.hashmap", new HashMap<>());
+		eaten = new HashMap<>();
 	}
 	
 	@Override
@@ -69,18 +70,17 @@ public class TheOneFoodChallenge extends Challenge {
 
 	@Override
 	public void reset() {
-		cfg.saveHashMap("eaten.hashmap", new HashMap<>());
+		eaten = new HashMap<>();
 	}
 
 	@Override
 	public void ifPlayerDies() {
-		cfg.saveHashMap("eaten.hashmap", new HashMap<>());
+		eaten = new HashMap<>();
 	}
 
 	@EventHandler
 	public void onEat(PlayerItemConsumeEvent e) {
 		if(isEnabled()) {
-			HashMap<Object, Object> eaten = cfg.loadHashMap("eaten.hashmap");
 			if(eaten.containsKey(e.getItem().getType())) {
 				Material t = e.getItem().getType();
 				int a = (int) eaten.get(e.getItem().getType());
@@ -93,7 +93,6 @@ public class TheOneFoodChallenge extends Challenge {
 			} else {
 				eaten.put(e.getItem().getType(), 1);
 			}
-			setOption(cfg, "eaten.hashmap", eaten);
 		}
 	}
 	
