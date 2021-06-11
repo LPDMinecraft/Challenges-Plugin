@@ -1,23 +1,25 @@
 package de.lpd.challenges.invs;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import de.lpd.challenges.invs.impl.ChallengesMenu;
 import de.lpd.challenges.invs.impl.Menu;
 import de.lpd.challenges.invs.impl.Settings;
 import de.lpd.challenges.main.ChallengesMainClass;
 
 public class InventoryManager {
 	
-	public static ArrayList<Inventory> invs;
+	public static HashMap<String, Inventory> invs;
 	
 	public InventoryManager(ChallengesMainClass plugin) {
-		invs = new ArrayList<>();
+		invs = new HashMap<>();
 		
-		invs.add(new Menu(plugin));
-		invs.add(new Settings(plugin));
+		invs.put("menu", new Menu(plugin));
+		invs.put("chmenu", new ChallengesMenu(plugin));
+		invs.put("settings", new Settings(plugin));
 	}
-	
-	public org.bukkit.inventory.Inventory getInventory(int page) {
-		return invs.get(page).createdInv();
+
+	public static HashMap<String, Inventory> getInvs() {
+		return invs;
 	}
-	
 }

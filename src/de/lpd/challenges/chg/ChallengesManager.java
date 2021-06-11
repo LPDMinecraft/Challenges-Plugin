@@ -30,6 +30,14 @@ public class ChallengesManager {
 		idtoclass.put("maxheaths", new MaxHearth(plugin));
 		idtoclass.put("enchantbreakblocktool", new BreakUpgradeTool(plugin));
 	}
+
+	public ArrayList<ItemStack> getAllItems() {
+		ArrayList<ItemStack> items = new ArrayList<>();
+		for(Challenge c : idtoclass.values()) {
+			items.add(c.getItem());
+		}
+		return items;
+	}
 	
 	public static HashMap<String, ItemStack> getItemStack() {
 		HashMap<String, ItemStack> all = new HashMap<>();

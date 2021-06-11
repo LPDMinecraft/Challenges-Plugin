@@ -59,8 +59,7 @@ public class ChallengesMainClass extends JavaPlugin {
 		registerCommand("challenges", new ChallengesCommand(this));
 		registerCommand("ch", new ChallengesCommand(this));
 		registerCommand("reset", new ResetCommand(this));
-		
-		registerListener(new ChallengesMenu());
+
 		registerListener(new DeathEvent());
 	}
 	
@@ -117,20 +116,23 @@ public class ChallengesMainClass extends JavaPlugin {
 			Bukkit.broadcastMessage("§6Die Challenge ist bestanden.");
 			Bukkit.broadcastMessage("");
 			Bukkit.broadcastMessage("§6" + t.getDisplay("", ""));
+			Bukkit.broadcastMessage("§7Seed§8: §6" + Bukkit.getWorld("world").getSeed());
 			Bukkit.broadcastMessage("§7---------------------------------------");
 		} else if(reason == 1) {
 			Bukkit.broadcastMessage("§7---------------------------------------");
 			Bukkit.broadcastMessage("§6Die Challenge ist nicht bestanden.");
-			Bukkit.broadcastMessage("§a#madlife §6in den Chat.");
+			Bukkit.broadcastMessage("§a#pech §6in den Chat.");
 			Bukkit.broadcastMessage("");
 			Bukkit.broadcastMessage("§6" + t.getDisplay("", ""));
+			Bukkit.broadcastMessage("§7Seed§8: §6" + Bukkit.getWorld("world").getSeed());
 			Bukkit.broadcastMessage("§7---------------------------------------");
 		} else if(reason == 2) {
 			Bukkit.broadcastMessage("§7---------------------------------------");
 			Bukkit.broadcastMessage("§6Die Challenge ist nicht bestanden. [Tod]");
-			Bukkit.broadcastMessage("§a#madlife §6in den Chat.");
+			Bukkit.broadcastMessage("§a#pech §6in den Chat.");
 			Bukkit.broadcastMessage("");
 			Bukkit.broadcastMessage("§6" + t.getDisplay("", ""));
+			Bukkit.broadcastMessage("§7Seed§8: §6" + Bukkit.getWorld("world").getSeed());
 			Bukkit.broadcastMessage("§7---------------------------------------");
 		}
 		t.reset();
