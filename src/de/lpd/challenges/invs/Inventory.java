@@ -103,7 +103,11 @@ public abstract class Inventory implements Listener {
 	}
 
 	public int getCurrentPage(String title) {
-		return Integer.valueOf(title.replaceFirst((TITLE + " "), ""));
+		try {
+			return Integer.valueOf(title.replaceFirst((TITLE + " "), ""));
+		} catch (Exception e) {
+			return 0;
+		}
 	}
 
 	public abstract void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e);
@@ -118,9 +122,9 @@ public abstract class Inventory implements Listener {
 				System.out.println(2);
 				if(e.getView().getTitle() != null) {
 					System.out.println(3);
-					System.out.println(TITLE);
-					System.out.println(e.getView().getTitle());
-					if(e.getView().getTitle().startsWith(TITLE)) {
+					String a = TITLE.split(" §7- ")[0];
+					String b = e.getView().getTitle().split(" §7- ")[0];
+					if(a.startsWith(b)) {
 						System.out.println(4);
 						e.setCancelled(true);
 						if(e.getCurrentItem() != null) {
@@ -145,7 +149,7 @@ public abstract class Inventory implements Listener {
 											}
 										} else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ITEM_BACK)) {
 											p.closeInventory();
-											p.openInventory(ChallengesMainClass.getInvManager().invs.get("menu").getInventory(0));
+											p.openInventory(ChallengesMainClass.getInvManager().invs.get("menu").getInventory(1));
 										} else {
 											onClickOnItemEvent(p, e.getCurrentItem(), e);
 										}

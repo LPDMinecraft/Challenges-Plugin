@@ -23,10 +23,10 @@ public class Menu extends Inventory {
 	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e) {
 		if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ITEM_CHALLENGES)) {
 			p.closeInventory();
-			p.openInventory(ChallengesMainClass.getInvManager().invs.get("challenges").getInventory(0));
+			p.openInventory(ChallengesMainClass.getInvManager().invs.get("chmenu").getInventory(1));
 		} else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ITEM_SETTINGS)) {
 			p.closeInventory();
-			p.openInventory(ChallengesMainClass.getInvManager().invs.get("settings").getInventory(0));
+			p.openInventory(ChallengesMainClass.getInvManager().invs.get("settings").getInventory(1));
 		}
 	}
 
