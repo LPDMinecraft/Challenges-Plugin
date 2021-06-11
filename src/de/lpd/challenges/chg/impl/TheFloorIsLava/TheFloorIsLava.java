@@ -180,7 +180,12 @@ public class TheFloorIsLava extends Challenge {
 	@Override
 	public void reset() {
 	}
-	
+
+	@Override
+	public void ifPlayerDies() {
+
+	}
+
 	private HashMap<Player, Double> far = new HashMap<>();
 	
 	@EventHandler

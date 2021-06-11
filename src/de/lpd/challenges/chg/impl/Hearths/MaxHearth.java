@@ -29,10 +29,10 @@ public class MaxHearth extends Challenge{
 				if(isEnabled()) {
 					for(Player p : Bukkit.getOnlinePlayers()) {
 						System.out.println(p.getMaxHealth());
-						if(p.getMaxHealth() != (double) getOption(cfg, "maxhearths.max", 10)) {
-							p.setMaxHealth((double) getOption(cfg, "maxhearths.max", 10));
+						if(p.getMaxHealth() != (int) getOption(cfg, "maxhearths.max", 20)) {
+							p.setMaxHealth((int) getOption(cfg, "maxhearths.max", 20));
 							
-							System.out.println(getOption(cfg, "maxhearths.max", 10));
+							System.out.println(getOption(cfg, "maxhearths.max", 20));
 						}
 					}
 				}
@@ -57,9 +57,9 @@ public class MaxHearth extends Challenge{
 		String[] lore = new String[6];
 		lore[0] = Starter.STARTPREFIX + "§aIn dieser Challenge muss man Minecraft mit";
 		lore[1] = "§aX Herzen durchspielen.";
-		lore[2] = "§7Derzeitige Herzen§8: §6" + (double) getOption(cfg, "maxhearths.max", 20) + "/20";
-		lore[3] = "§6Linksklick §7> §a-0.5 Herz";
-		lore[4] = "§6Rechtsklick §7> §a+0.5 Herz";
+		lore[2] = "§7Derzeitige Herzen§8: §6" + getOption(cfg, "maxhearths.max", 20) + "/20";
+		lore[3] = "§6Linksklick §7> §a-1 Herz";
+		lore[4] = "§6Rechtsklick §7> §a+1 Herz";
 		lore[5] = "§6Mittelklick §7> §aAn/Aus diese Challenge";
 		
 		ib.setLoreString(lore);
@@ -68,13 +68,13 @@ public class MaxHearth extends Challenge{
 
 	@Override
 	public void onRightClick(Player p) {
-		setOption(cfg, "maxhearths.max", (double)getOption(cfg, "maxhearths.max", 10) + 0.5);
+		setOption(cfg, "maxhearths.max", (int)getOption(cfg, "maxhearths.max", 20) + 1);
 	}
 
 	@Override
 	public void onLeftClick(Player p) {
-		if((double)getOption(cfg, "maxhearths.max", 20) > 0.5) {
-			setOption(cfg, "maxhearths.max", (double)getOption(cfg, "maxhearths.max", 10) - 0.5);
+		if((int)getOption(cfg, "maxhearths.max", 20) > 1) {
+			setOption(cfg, "maxhearths.max", (int)getOption(cfg, "maxhearths.max", 20) - 1);
 		}
 	}
 
@@ -87,11 +87,16 @@ public class MaxHearth extends Challenge{
 	@Override
 	public void reset() {
 		if(isEnabled()) {
-			setOption(cfg, "maxhearths.max", 10);
+			setOption(cfg, "maxhearths.max", 20);
 			for(Player p : Bukkit.getOnlinePlayers()) {
-				p.setMaxHealth((double) getOption(cfg, "maxhearths.max", 10));
+				p.setMaxHealth((int) getOption(cfg, "maxhearths.max", 20));
 			}
 		}
+	}
+
+	@Override
+	public void ifPlayerDies() {
+
 	}
 
 	public ChallengesMainClass getPlugin() {

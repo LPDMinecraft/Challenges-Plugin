@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.inventory.ItemStack;
 
 import de.lpd.challenges.chg.Challenge;
@@ -24,7 +25,7 @@ public class GeteilteHearths extends Challenge {
 			
 			@Override
 			public void run() {
-				if(ChallengesMainClass.t.isStarted()) {
+				if(isEnabled()) {
 					for(Player p : Bukkit.getOnlinePlayers()) {
 						if(p.getGameMode() == GameMode.SURVIVAL) {
 							p.setHealth((int)getOption(cfg, "geteilteherzen.herzen", 20));
@@ -74,12 +75,26 @@ public class GeteilteHearths extends Challenge {
 	public void reset() {
 		setOption(cfg, "geteilteherzen.herzen", (int)getOption(cfg, "geteilteherzen.herzen", 20));
 	}
-	
+
+	@Override
+	public void ifPlayerDies() {
+		setOption(cfg, "geteilteherzen.herzen", (int)getOption(cfg, "geteilteherzen.herzen", 20));
+	}
+
 	@EventHandler
 	public void onDamage(EntityDamageEvent e) {
+		if (e.getEntity() instanceof Player) {
+			if (isEnabled()) {
+				setOption(cfg, "geteilteherzen.herzen", (int) getOption(cfg, "geteilteherzen.herzen", 20) - (int) (e.getDamage() * 2));
+			}
+		}
+	}
+
+	@EventHandler
+	public void onRegenerate(EntityRegainHealthEvent e) {
 		if(e.getEntity() instanceof Player) {
 			if(isEnabled()) {
-				setOption(cfg, "geteilteherzen.herzen", (int)getOption(cfg, "geteilteherzen.herzen", 20) - (e.getDamage() * 2));
+				setOption(cfg, "geteilteherzen.herzen", (int)getOption(cfg, "geteilteherzen.herzen", 20) + (int)e.getAmount());
 			}
 		}
 	}

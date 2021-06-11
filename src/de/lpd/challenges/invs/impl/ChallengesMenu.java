@@ -2,6 +2,7 @@ package de.lpd.challenges.invs.impl;
 
 import java.util.Arrays;
 import de.lpd.challenges.invs.Inventory;
+import de.lpd.challenges.utils.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -14,8 +15,10 @@ import de.lpd.challenges.main.ChallengesMainClass;
 public class ChallengesMenu extends Inventory {
 
 	public ChallengesMenu(ChallengesMainClass plugin) {
-		super(plugin, 6*9, true, "Challenges");
+		super(plugin, 6*9, true, "Challenges", "Menu");
 	}
+
+	public static String TITLE = "§6Challenges §aMenu";
 
 	@Override
 	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e) {
@@ -34,7 +37,7 @@ public class ChallengesMenu extends Inventory {
 
 						@Override
 						public void run() {
-							p.openInventory(getInventory((int) Arrays.stream(e.getView().getTopInventory().getContents()).count()));
+							p.openInventory(ChallengesMainClass.getInvManager().invs.get("chmenu").getInventory(1));
 						}
 
 						}, 1L);
@@ -47,6 +50,8 @@ public class ChallengesMenu extends Inventory {
 	public org.bukkit.inventory.Inventory getInventory(int page) {
 		org.bukkit.inventory.Inventory inv = getInv();
 		inv = de.lpd.challenges.invs.Inventory.placeHolder(inv);
+
+		inv.setItem(inv.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK()).build());
 		
 		return getPage(ChallengesMainClass.getChMa().getAllItems(), inv, page);
 	}

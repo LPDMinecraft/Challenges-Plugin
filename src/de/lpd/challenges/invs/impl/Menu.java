@@ -10,13 +10,15 @@ import de.lpd.challenges.utils.HeadBuilder;
 import de.lpd.challenges.utils.ItemBuilder;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
+
 public class Menu extends Inventory {
 
 	private String ITEM_CHALLENGES = "§6Challenges",
 			       ITEM_SETTINGS = "§6Einstellungen";
 
 	public Menu(ChallengesMainClass plugin) {
-		super(plugin, 5*9, false, "Menu");
+		super(plugin, 5*9, false, "Menu", null);
 	}
 
 	@Override
@@ -34,9 +36,12 @@ public class Menu extends Inventory {
 	public org.bukkit.inventory.Inventory getInventory(int page) {
 		inv = placeHolder(inv);
 
+		ArrayList<ItemStack> items = new ArrayList<>();
+
 		inv.setItem(13 + 9, new HeadBuilder("Cooler_LK").setDisplayName("§bDev §7| §6Cooler_LK").build());
 		inv.setItem(11 + 9, new ItemBuilder(Material.REDSTONE).setDisplayName(ITEM_SETTINGS).build());
 		inv.setItem(15 + 9, new ItemBuilder(Material.CLOCK).setDisplayName(ITEM_CHALLENGES).build());
-		return getPage(ChallengesMainClass.getChMa().getAllItems(), inv, page);
+
+		return getPage(items, inv, page);
 	}
 }

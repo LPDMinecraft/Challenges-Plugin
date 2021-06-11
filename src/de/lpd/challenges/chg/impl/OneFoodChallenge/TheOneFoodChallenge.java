@@ -19,6 +19,7 @@ public class TheOneFoodChallenge extends Challenge {
 	
 	public TheOneFoodChallenge(ChallengesMainClass plugin) {
 		super(plugin, "theonefoodchallenge", "config.yml", "foodchallenge");
+		cfg.saveHashMap("eaten.hashmap", new HashMap<>());
 	}
 	
 	@Override
@@ -70,7 +71,12 @@ public class TheOneFoodChallenge extends Challenge {
 	public void reset() {
 		cfg.saveHashMap("eaten.hashmap", new HashMap<>());
 	}
-	
+
+	@Override
+	public void ifPlayerDies() {
+		cfg.saveHashMap("eaten.hashmap", new HashMap<>());
+	}
+
 	@EventHandler
 	public void onEat(PlayerItemConsumeEvent e) {
 		if(isEnabled()) {

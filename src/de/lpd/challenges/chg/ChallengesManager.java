@@ -2,6 +2,8 @@ package de.lpd.challenges.chg;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
 import de.lpd.challenges.chg.impl.BreakUpgradeTool.BreakUpgradeTool;

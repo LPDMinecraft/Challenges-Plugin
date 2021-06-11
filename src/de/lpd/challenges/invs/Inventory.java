@@ -18,7 +18,7 @@ import java.util.Arrays;
 
 public abstract class Inventory implements Listener {
 
-	private static String TITLE = "§aChallenges §7- §6",
+	private String TITLE = "§aChallenges §7- §6",
 			             ITEM_BACK = "§cZur§ck zum §6",
 			             ITEM_NextPage = "§6§lN§chste Seite",
 			             ITEM_BeforePage = "§6§lVorherige Seite",
@@ -26,9 +26,33 @@ public abstract class Inventory implements Listener {
 	private Config cfg;
 	public org.bukkit.inventory.Inventory inv;
 
+	public String getITEM_BACK() {
+		return ITEM_BACK;
+	}
+
+	public String getTITLE() {
+		return TITLE;
+	}
+
+	public String getITEM_BeforePage() {
+		return ITEM_BeforePage;
+	}
+
+	public String getITEM_NextPage() {
+		return ITEM_NextPage;
+	}
+
+	public String getNAME() {
+		return NAME;
+	}
+
+	public int getSize() {
+		return size;
+	}
+
 	private int size = 5*9;
-	public Inventory(ChallengesMainClass plugin, int size, boolean hasMoreThen1Site, String name) {
-		cfg = new Config(name, "config.yml");
+	public Inventory(ChallengesMainClass plugin, int size, boolean hasMoreThen1Site, String name, String backName) {
+		cfg = new Config(name, "inv.yml");
 
 		this.size = size;
 		plugin.registerListener(this);
@@ -38,7 +62,7 @@ public abstract class Inventory implements Listener {
 		NAME = (String) cfg.getOption(cfg, "settings.name", NAME);
 
 		TITLE = TITLE + NAME;
-		ITEM_BACK = ITEM_BACK + NAME;
+		ITEM_BACK = ITEM_BACK + backName;
 
 		TITLE = (String) cfg.getOption(cfg, "settings.title", TITLE);
 		ITEM_NextPage = (String) cfg.getOption(cfg, "settings.nextpage", ITEM_NextPage);
@@ -117,24 +141,16 @@ public abstract class Inventory implements Listener {
 	public void onInteract(InventoryClickEvent e) {
 		if(e.getWhoClicked() != null && e.getWhoClicked() instanceof Player) {
 			Player p = (Player) e.getWhoClicked();
-			System.out.println(1);
 			if(e.getView() != null) {
-				System.out.println(2);
 				if(e.getView().getTitle() != null) {
-					System.out.println(3);
 					String a = TITLE.split(" §7- ")[0];
 					String b = e.getView().getTitle().split(" §7- ")[0];
 					if(a.startsWith(b)) {
-						System.out.println(4);
 						e.setCancelled(true);
 						if(e.getCurrentItem() != null) {
-							System.out.println(5);
 							if (e.getCurrentItem().getItemMeta() != null) {
-								System.out.println(6);
 								if (e.getCurrentItem().getItemMeta().getDisplayName() != null) {
-									System.out.println(7);
 									if (e.getCurrentItem().getType() != null && e.getCurrentItem().getType() != Material.AIR) {
-										System.out.println(8);
 										int currentpage = getCurrentPage(e.getView().getTitle());
 
 										if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ITEM_BeforePage)) {

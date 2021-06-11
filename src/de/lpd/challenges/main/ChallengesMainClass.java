@@ -1,5 +1,6 @@
 package de.lpd.challenges.main;
 
+import de.lpd.challenges.chg.Challenge;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -110,6 +111,11 @@ public class ChallengesMainClass extends JavaPlugin {
 	}
 	
 	public static void fail(int reason) {
+
+		for(Challenge c : getChMa().idtoclass.values()) {
+			c.ifPlayerDies();
+		}
+
 		if(reason == 0) {
 			Bukkit.broadcastMessage("§7---------------------------------------");
 			Bukkit.broadcastMessage("§6Der Enderdrache wurde besiegt!");

@@ -74,7 +74,12 @@ public class BreakUpgradeTool extends Challenge {
 	public void reset() {
 		setOption(cfg, "breakupgradetool.levelplus", 1);
 	}
-	
+
+	@Override
+	public void ifPlayerDies() {
+
+	}
+
 	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onBreak(BlockBreakEvent e) {

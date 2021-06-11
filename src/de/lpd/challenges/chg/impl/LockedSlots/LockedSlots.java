@@ -105,7 +105,12 @@ public class LockedSlots extends Challenge {
 	public void reset() {
 		setOption(cfg, "lockedslots.max", 0);
 	}
-	
+
+	@Override
+	public void ifPlayerDies() {
+
+	}
+
 	@EventHandler
 	public void onInteract(InventoryClickEvent e) {
 		if(e.getWhoClicked() instanceof Player) {

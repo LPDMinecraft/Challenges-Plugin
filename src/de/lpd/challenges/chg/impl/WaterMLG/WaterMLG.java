@@ -73,7 +73,12 @@ public class WaterMLG extends Challenge {
 		inv = new HashMap<>();
 		loc = new HashMap<>();
 	}
-	
+
+	@Override
+	public void ifPlayerDies() {
+
+	}
+
 	private HashMap<Player, ItemStack[]> inv = new HashMap<>();
 	private HashMap<Player, Location> loc = new HashMap<Player, Location>();
 	

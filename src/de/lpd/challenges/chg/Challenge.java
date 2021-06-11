@@ -14,6 +14,7 @@ public abstract class Challenge implements Listener {
 	public abstract void onLeftClick(Player p);
 	public abstract void onMiddleClick(Player p);
 	public abstract void reset();
+	public abstract void ifPlayerDies();
 	
 	private boolean isEnabled = false;
 	
