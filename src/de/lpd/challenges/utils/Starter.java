@@ -8,15 +8,15 @@ import net.md_5.bungee.api.chat.TextComponent;
 
 public class Starter {
 
-	public static String PREFIX = "§7[§6Challenges§7] §r",
-            STARTPREFIX = " §7» §r",
-            NO_PERMISSIONS = "§cDazu hast du keine Rechte!",
-            NO_PLAYER = "§cDazu musst du ein Spieler sein!",
-            NO_COMMAND_FOUND = "§cDieser Command wurde nicht gefunden!",
-            NO_NUMBER = "§cDies ist keine gültige Nummer.",
-            ON_LOAD = PREFIX + "§aDas Plugin wurde erfolgreich geladen.",
-            ON_START = PREFIX + "§aDas Plugin wurde erfolgreich gestartet.",
-            ON_STOP = PREFIX + "§aDas Plugin wurde erfolgreich gestoppt.";
+	public static String PREFIX = "Â§7[Â§6ChallengesÂ§7] Â§r",
+            STARTPREFIX = " Â§7Â§ Â§r",
+            NO_PERMISSIONS = "Â§cDazu hast du keine Rechte!",
+            NO_PLAYER = "Â§cDazu musst du ein Spieler sein!",
+            NO_COMMAND_FOUND = "Â§cDieser Command wurde nicht gefunden!",
+            NO_NUMBER = "Â§cDies ist keine gÂ§ltige Nummer.",
+            ON_LOAD = PREFIX + "Â§aDas Plugin wurde erfolgreich geladen.",
+            ON_START = PREFIX + "Â§aDas Plugin wurde erfolgreich gestartet.",
+            ON_STOP = PREFIX + "Â§aDas Plugin wurde erfolgreich gestoppt.";
 	
 	public void startPlugin(Config mainCFG, ChallengesMainClass plugin) {
 		try {
@@ -35,7 +35,7 @@ public class Starter {
 			Bukkit.broadcastMessage(ON_LOAD);
 		} catch (Exception e) {
 			e.printStackTrace();
-			Bukkit.broadcastMessage("§cERRRRRROR!!!");
+			Bukkit.broadcastMessage("Â§cERRRRRROR!!!");
 		}
 		
 		all1Tick(plugin);
@@ -51,7 +51,7 @@ public class Starter {
 			@Override
 			public void scheduler() {
 				for(Player current : Bukkit.getOnlinePlayers()) {
-					sendActionBar(current, ChallengesMainClass.t.getDisplay("§a", ""));
+					sendActionBar(current, ChallengesMainClass.t.getDisplay("Â§a", ""));
 				}
 			}
 		};

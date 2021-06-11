@@ -82,7 +82,7 @@ public class Timer {
 			DateFormat minute = new SimpleDateFormat("mm");
 			DateFormat secound = new SimpleDateFormat("ss");
 			DateFormat millsecound = new SimpleDateFormat("SSS");
-			String s = "§a";
+			String s = "Â§a";
 			if(Integer.valueOf(day.format(millsecounds)) > 0) {
 				if((Integer.valueOf(day.format(millsecounds)) - 1) != 0) {
 					s = s + correntSay((Integer.valueOf(day.format(millsecounds)) - 1), "ein Tag ", " Tage ");
@@ -123,9 +123,9 @@ public class Timer {
 			
 			return s;
 		} else if(isPaused()) {
-			return "§aDer Countdown ist pausitert.";
+			return "Â§aDer Countdown ist pausitert.";
 		} else {
-			return "§aDer Countdown wurde noch nicht gestartet.";
+			return "Â§aDer Countdown wurde noch nicht gestartet.";
 		}
 	}
 	

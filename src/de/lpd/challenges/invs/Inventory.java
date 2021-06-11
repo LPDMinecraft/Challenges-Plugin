@@ -14,7 +14,7 @@ public abstract class Inventory implements Listener {
 	}
 	
 	public static org.bukkit.inventory.Inventory placeHolder(org.bukkit.inventory.Inventory inv) {
-		String s = "ง7";
+		String s = "ยง7";
 		for(int i = 0; i < inv.getContents().length; i++) {
 			inv.setItem(i, new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setDisplayName(s).build());
 			s = s + " ";

@@ -23,7 +23,7 @@ public class ResetCommand extends Command {
 		if(args.length == 0) {
 			
 			for(Player p : Bukkit.getOnlinePlayers()) {
-				p.kickPlayer("ง6Restart");
+				p.kickPlayer("ยง6Restart");
 			}
 			
 			Config cfg = new Config("config.yml");

@@ -23,35 +23,35 @@ public class TimerCommand extends Command {
 				if(!ChallengesMainClass.t.isStarted()) {
 					if(ChallengesMainClass.t.getMillsecounds() == 0) {
 						ChallengesMainClass.t.start();
-						s.sendMessage(PREFIX + "§aDer Countdown wurde gestartet.");
+						s.sendMessage(PREFIX + "Â§aDer Countdown wurde gestartet.");
 					} else {
-						s.sendMessage(PREFIX + "§cDer Countdown wurde bereits gestartet. " + getHelpMessage("timer resume"));
+						s.sendMessage(PREFIX + "Â§cDer Countdown wurde bereits gestartet. " + getHelpMessage("timer resume"));
 					}
 				} else {
-					s.sendMessage(PREFIX + "§cDer Countdown ist bereit gestartet.");
+					s.sendMessage(PREFIX + "Â§cDer Countdown ist bereit gestartet.");
 				}
 			} else if(args[0].equalsIgnoreCase("reset")) {
 				ChallengesMainClass.t.reset();
-				s.sendMessage(PREFIX + "§aDer Countdown wurde resetet.");
+				s.sendMessage(PREFIX + "Â§aDer Countdown wurde resetet.");
 			} else if(args[0].equalsIgnoreCase("resume")) {
 				if(!ChallengesMainClass.t.isStarted()) {
 					if(ChallengesMainClass.t.getMillsecounds() != 0) {
 						ChallengesMainClass.t.resume();
 					} else {
-						s.sendMessage(PREFIX + "§cDer Countdown wurde noch nicht gestartet.");
+						s.sendMessage(PREFIX + "Â§cDer Countdown wurde noch nicht gestartet.");
 					}
 				} else {
-					s.sendMessage(PREFIX + "§cDer Countdown läuft bereits.");
+					s.sendMessage(PREFIX + "Â§cDer Countdown lÂ§uft bereits.");
 				}
 			} else if(args[0].equalsIgnoreCase("pause")) {
 				if(ChallengesMainClass.t.isStarted()) {
 					if(ChallengesMainClass.t.getMillsecounds() != 0) {
 						ChallengesMainClass.t.pause();
 					} else {
-						s.sendMessage(PREFIX + "§cDer Countdown wurde noch nicht gestartet.");
+						s.sendMessage(PREFIX + "Â§cDer Countdown wurde noch nicht gestartet.");
 					}
 				} else {
-					s.sendMessage(PREFIX + "§cDer Countdown wurde noch nicht gestartet.");
+					s.sendMessage(PREFIX + "Â§cDer Countdown wurde noch nicht gestartet.");
 				}
 			} else {
 				s.sendMessage(getHelpMessage("timer", "timer [start, reset, resume, pause, status]"));
@@ -66,12 +66,12 @@ public class TimerCommand extends Command {
 		String msg = "";
 		if(!ChallengesMainClass.t.isStarted()) {
 			if(ChallengesMainClass.t.getMillsecounds() == 0) {
-				msg = PREFIX + "§aDer CountDown ist §6noch nicht gestartet worden§a.";
+				msg = PREFIX + "Â§aDer CountDown ist Â§6noch nicht gestartet wordenÂ§a.";
 			} else if(ChallengesMainClass.t.isPaused()) {
-				msg = PREFIX + "§aDer CountDown ist §6bereits gestoppt§a.";
+				msg = PREFIX + "Â§aDer CountDown ist Â§6bereits gestopptÂ§a.";
 			}
 		} else {
-			msg = PREFIX + "§aDer CountDown ist §6bereits gestartet§a.";
+			msg = PREFIX + "Â§aDer CountDown ist Â§6bereits gestartetÂ§a.";
 		}
 		return msg;
 	}

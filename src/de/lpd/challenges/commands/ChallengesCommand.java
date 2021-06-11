@@ -20,7 +20,7 @@ public class ChallengesCommand extends Command {
 			Player p = (Player) s;
 			if(args.length == 0) {
 				p.openInventory(ChallengesMainClass.getInvManager().getInventory(0));
-				p.sendMessage(PREFIX + "§aDas Inventar wurde geöffnet.");
+				p.sendMessage(PREFIX + "Â§aDas Inventar wurde geÂ§ffnet.");
 			} else if(args.length == 1) {
 				if(args[0].equalsIgnoreCase("reset")) {
 					if(ChallengesManager.idtoclass != null) {
@@ -28,7 +28,7 @@ public class ChallengesCommand extends Command {
 							ch.reset();
 						}
 					}
-					p.sendMessage(PREFIX + "§aAlle Einstellungen wurden erfolgreich reseted.");
+					p.sendMessage(PREFIX + "Â§aAlle Einstellungen wurden erfolgreich reseted.");
 				} else {
 					p.sendMessage(getHelpMessage("challenges", "challenges [reset]", "ch", "ch [reset]"));
 				}

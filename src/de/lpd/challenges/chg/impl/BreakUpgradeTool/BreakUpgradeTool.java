@@ -34,18 +34,18 @@ public class BreakUpgradeTool extends Challenge {
 	public ItemStack getItem() {
 		ItemBuilder ib = new ItemBuilder(Material.ENCHANTED_BOOK);
 		if(isToggled()) {
-			ib.setDisplayName("§6Entchante jedes Abbauen " + Starter.STARTPREFIX + "§aOn");
+			ib.setDisplayName("Â§6Entchante jedes Abbauen " + Starter.STARTPREFIX + "Â§aOn");
 		} else {
-			ib.setDisplayName("§6Entchante jedes Abbauen " + Starter.STARTPREFIX + "§cOff");
+			ib.setDisplayName("Â§6Entchante jedes Abbauen " + Starter.STARTPREFIX + "Â§cOff");
 		}
 		String[] lore = new String[7];
-		lore[0] = Starter.STARTPREFIX + "§aIn dieser Challenge muss man Minecraft";
-		lore[1] = "§adurchspielen. Bei jedem Block abbauen wird es um eine belibige";
-		lore[2] = "§aZahl Entchantmens hochgelevelt auf das Tool.";
-		lore[3] = "§aDerzeitige Level pro Abbauen§7: §6" + (int) getOption(cfg, "breakupgradetool.levelplus", 1);
-		lore[4] = "§6Mittelklick §7> §aAn/Aus diese Challenge";
-		lore[5] = "§6Rechtsklick §7> §a+1 mehr Level";
-		lore[6] = "§6Linksklick §7> §a-1 mehr Level";
+		lore[0] = Starter.STARTPREFIX + "Â§aIn dieser Challenge muss man Minecraft";
+		lore[1] = "Â§adurchspielen. Bei jedem Block abbauen wird es um eine belibige";
+		lore[2] = "Â§aZahl Entchantmens hochgelevelt auf das Tool.";
+		lore[3] = "Â§aDerzeitige Level pro AbbauenÂ§7: Â§6" + (int) getOption(cfg, "breakupgradetool.levelplus", 1);
+		lore[4] = "Â§6Mittelklick Â§7> Â§aAn/Aus diese Challenge";
+		lore[5] = "Â§6Rechtsklick Â§7> Â§a+1 mehr Level";
+		lore[6] = "Â§6Linksklick Â§7> Â§a-1 mehr Level";
 		
 		ib.setLoreString(lore);
 		return ib.build();

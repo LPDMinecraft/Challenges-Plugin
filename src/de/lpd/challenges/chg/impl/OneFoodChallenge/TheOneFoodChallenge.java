@@ -30,20 +30,20 @@ public class TheOneFoodChallenge extends Challenge {
 	public ItemStack getItem() {
 		ItemBuilder ib = new ItemBuilder(Material.COOKED_BEEF);
 		if(isToggled()) {
-			ib.setDisplayName("§6TheOneFoodChallenge " + Starter.STARTPREFIX + "§aOn");
+			ib.setDisplayName("Â§6TheOneFoodChallenge " + Starter.STARTPREFIX + "Â§aOn");
 		} else {
-			ib.setDisplayName("§6TheOneFoodChallenge " + Starter.STARTPREFIX + "§cOff");
+			ib.setDisplayName("Â§6TheOneFoodChallenge " + Starter.STARTPREFIX + "Â§cOff");
 		}
 		String[] lore = new String[9];
-		lore[0] = Starter.STARTPREFIX + "§aIn dieser Challenge kannst du 1/2/ect. mal einen Essenstyp essen.";
-		lore[1] = "§cAchtung! §6Es wird in dieser Challenge die Essenmale zusammen gezählt.";
-		lore[2] = "§aDas heißt wenn der 1. Spieler rohes Kuhfleisch gegessen hat und danach ein ";
-		lore[3] = "§aanderer Kuhfleisch ist sind sie tot.";
-		lore[4] = "§aAber nur dann, wenn die maximale Begrenzung auf 1 gestellt ist.";
-		lore[5] = "§7Derzeitig ausgewählte Begrenzung§8: §6" + (int) getOption(cfg, "foodchallenge.max", 1);
-		lore[6] = "§6Linksklick §7> §a-1";
-		lore[7] = "§6Rechtsklick §7> §a+1";
-		lore[8] = "§6Mittelklick §7> §aAn/Aus diese Challenge";
+		lore[0] = Starter.STARTPREFIX + "Â§aIn dieser Challenge kannst du 1/2/ect. mal einen Essenstyp essen.";
+		lore[1] = "Â§cAchtung! Â§6Es wird in dieser Challenge die Essenmale zusammen gezÂ§hlt.";
+		lore[2] = "Â§aDas heiÂ§t wenn der 1. Spieler rohes Kuhfleisch gegessen hat und danach ein ";
+		lore[3] = "Â§aanderer Kuhfleisch ist sind sie tot.";
+		lore[4] = "Â§aAber nur dann, wenn die maximale Begrenzung auf 1 gestellt ist.";
+		lore[5] = "Â§7Derzeitig ausgewÂ§hlte BegrenzungÂ§8: Â§6" + (int) getOption(cfg, "foodchallenge.max", 1);
+		lore[6] = "Â§6Linksklick Â§7> Â§a-1";
+		lore[7] = "Â§6Rechtsklick Â§7> Â§a+1";
+		lore[8] = "Â§6Mittelklick Â§7> Â§aAn/Aus diese Challenge";
 		
 		ib.setLoreString(lore);
 		return ib.build();

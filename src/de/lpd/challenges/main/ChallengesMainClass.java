@@ -112,26 +112,26 @@ public class ChallengesMainClass extends JavaPlugin {
 	
 	public static void fail(int reason) {
 		if(reason == 0) {
-			Bukkit.broadcastMessage("ง7---------------------------------------");
-			Bukkit.broadcastMessage("ง6Der Enderdrache wurde besiegt!");
-			Bukkit.broadcastMessage("ง6Die Challenge ist bestanden.");
+			Bukkit.broadcastMessage("ยง7---------------------------------------");
+			Bukkit.broadcastMessage("ยง6Der Enderdrache wurde besiegt!");
+			Bukkit.broadcastMessage("ยง6Die Challenge ist bestanden.");
 			Bukkit.broadcastMessage("");
-			Bukkit.broadcastMessage("ง6" + t.getDisplay("", ""));
-			Bukkit.broadcastMessage("ง7---------------------------------------");
+			Bukkit.broadcastMessage("ยง6" + t.getDisplay("", ""));
+			Bukkit.broadcastMessage("ยง7---------------------------------------");
 		} else if(reason == 1) {
-			Bukkit.broadcastMessage("ง7---------------------------------------");
-			Bukkit.broadcastMessage("ง6Die Challenge ist nicht bestanden.");
-			Bukkit.broadcastMessage("งa#madlife ง6in den Chat.");
+			Bukkit.broadcastMessage("ยง7---------------------------------------");
+			Bukkit.broadcastMessage("ยง6Die Challenge ist nicht bestanden.");
+			Bukkit.broadcastMessage("ยงa#madlife ยง6in den Chat.");
 			Bukkit.broadcastMessage("");
-			Bukkit.broadcastMessage("ง6" + t.getDisplay("", ""));
-			Bukkit.broadcastMessage("ง7---------------------------------------");
+			Bukkit.broadcastMessage("ยง6" + t.getDisplay("", ""));
+			Bukkit.broadcastMessage("ยง7---------------------------------------");
 		} else if(reason == 2) {
-			Bukkit.broadcastMessage("ง7---------------------------------------");
-			Bukkit.broadcastMessage("ง6Die Challenge ist nicht bestanden. [Tod]");
-			Bukkit.broadcastMessage("งa#madlife ง6in den Chat.");
+			Bukkit.broadcastMessage("ยง7---------------------------------------");
+			Bukkit.broadcastMessage("ยง6Die Challenge ist nicht bestanden. [Tod]");
+			Bukkit.broadcastMessage("ยงa#madlife ยง6in den Chat.");
 			Bukkit.broadcastMessage("");
-			Bukkit.broadcastMessage("ง6" + t.getDisplay("", ""));
-			Bukkit.broadcastMessage("ง7---------------------------------------");
+			Bukkit.broadcastMessage("ยง6" + t.getDisplay("", ""));
+			Bukkit.broadcastMessage("ยง7---------------------------------------");
 		}
 		t.reset();
 		t.stop();

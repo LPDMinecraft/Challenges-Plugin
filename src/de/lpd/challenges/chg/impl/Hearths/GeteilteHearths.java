@@ -45,15 +45,15 @@ public class GeteilteHearths extends Challenge {
 	public ItemStack getItem() {
 		ItemBuilder ib = new ItemBuilder(Material.HEART_OF_THE_SEA, 2);
 		if(isToggled()) {
-			ib.setDisplayName("§6GeteilteHerzen " + Starter.STARTPREFIX + "§aOn");
+			ib.setDisplayName("Â§6GeteilteHerzen " + Starter.STARTPREFIX + "Â§aOn");
 		} else {
-			ib.setDisplayName("§6GeteilteHerzen " + Starter.STARTPREFIX + "§cOff");
+			ib.setDisplayName("Â§6GeteilteHerzen " + Starter.STARTPREFIX + "Â§cOff");
 		}
 		String[] lore = new String[4];
-		lore[0] = Starter.STARTPREFIX + "§aIn dieser Challenge muss man Minecraft mit";
-		lore[1] = "§ageteilten Herzen durspielen. Das heißt. Wenn Spieler 1 Damage";
-		lore[2] = "§abekommt, bekommt der Rest auch Damage.";
-		lore[3] = "§6Mittelklick §7> §aAn/Aus diese Challenge";
+		lore[0] = Starter.STARTPREFIX + "Â§aIn dieser Challenge muss man Minecraft mit";
+		lore[1] = "Â§ageteilten Herzen durspielen. Das heiÂ§t. Wenn Spieler 1 Damage";
+		lore[2] = "Â§abekommt, bekommt der Rest auch Damage.";
+		lore[3] = "Â§6Mittelklick Â§7> Â§aAn/Aus diese Challenge";
 		
 		ib.setLoreString(lore);
 		return ib.build();

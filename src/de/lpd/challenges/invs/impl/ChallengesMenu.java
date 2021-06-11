@@ -17,10 +17,10 @@ import de.lpd.challenges.utils.ItemBuilder;
 
 public class ChallengesMenu implements Listener {
 	
-	public static String TITLE = "§aChallenges §7- §6Menu",
-                         ITEM_BACK = "§cZurück zum Menu",
-                         ITEM_NextPage = "§6§lNächste Seite",
-	                     ITEM_BeforePage = "§6§lVorherige Seite";
+	public static String TITLE = "Â§aChallenges Â§7- Â§6Menu",
+                         ITEM_BACK = "Â§cZurÂ§ck zum Menu",
+                         ITEM_NextPage = "Â§6Â§lNÂ§chste Seite",
+	                     ITEM_BeforePage = "Â§6Â§lVorherige Seite";
 	
 	int needpages = 1;
 	int currentpage = 1;

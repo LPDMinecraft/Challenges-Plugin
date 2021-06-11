@@ -142,17 +142,17 @@ public class TheFloorIsLava extends Challenge {
 	public ItemStack getItem() {
 		ItemBuilder ib = new ItemBuilder(Material.LAVA_BUCKET);
 		if(isToggled()) {
-			ib.setDisplayName("§6TheFloorisLava " + Starter.STARTPREFIX + "§aOn");
+			ib.setDisplayName("Â§6TheFloorisLava " + Starter.STARTPREFIX + "Â§aOn");
 		} else {
-			ib.setDisplayName("§6TheFloorisLava " + Starter.STARTPREFIX + "§cOff");
+			ib.setDisplayName("Â§6TheFloorisLava " + Starter.STARTPREFIX + "Â§cOff");
 		}
 		String[] lore = new String[6];
-		lore[0] = Starter.STARTPREFIX + "§aIn dieser Challenge muss du in x Sekunden";
-		lore[1] = "§avor der Lava entfliehen";
-		lore[2] = "§7Derzeitig ausgewählte Zeit§8: §6" + getOption(cfg, "thefloorislava.max", 30);
-		lore[3] = "§6Linksklick §7> §a-1 Sekunde";
-		lore[4] = "§6Rechtsklick §7> §a+1 Sekunde";
-		lore[5] = "§6Mittelklick §7> §aAn/Aus diese Challenge";
+		lore[0] = Starter.STARTPREFIX + "Â§aIn dieser Challenge muss du in x Sekunden";
+		lore[1] = "Â§avor der Lava entfliehen";
+		lore[2] = "Â§7Derzeitig ausgewÂ§hlte ZeitÂ§8: Â§6" + getOption(cfg, "thefloorislava.max", 30);
+		lore[3] = "Â§6Linksklick Â§7> Â§a-1 Sekunde";
+		lore[4] = "Â§6Rechtsklick Â§7> Â§a+1 Sekunde";
+		lore[5] = "Â§6Mittelklick Â§7> Â§aAn/Aus diese Challenge";
 		
 		ib.setLoreString(lore);
 		return ib.build();

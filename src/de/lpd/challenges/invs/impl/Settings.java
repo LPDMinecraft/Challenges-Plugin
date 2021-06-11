@@ -16,8 +16,8 @@ public class Settings extends Inventory {
 		super(plugin);
 	}
 	
-	public static String TITLE = "§6Settings §aMenü",
-			             ITEM_BACK = "§cBack";
+	public static String TITLE = "Â§6Settings Â§aMenÂ§",
+			             ITEM_BACK = "Â§cBack";
 
 	@Override
 	public org.bukkit.inventory.Inventory createdInv() {

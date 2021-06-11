@@ -5,6 +5,10 @@ api-version: 1.16
 
 commands:
    timer:
+      description: "Handelt den Timer"
    challenges:
+      description: "Öffnet das Menu"
    ch:
+      description: "Öffnet das Menu"
    reset:
+      description: "Reseted die Map"

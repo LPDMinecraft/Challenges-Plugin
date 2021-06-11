@@ -37,17 +37,17 @@ public class DeathRun extends Setting {
 	public ItemStack getItem() {
 		ItemBuilder ib = new ItemBuilder(Material.TNT);
 		if(isEnabled()) {
-			ib.setDisplayName("§6DeathRun " + Starter.STARTPREFIX + "§aOn");
+			ib.setDisplayName("Â§6DeathRun " + Starter.STARTPREFIX + "Â§aOn");
 		} else {
-			ib.setDisplayName("§6DeathRun " + Starter.STARTPREFIX + "§cOff");
+			ib.setDisplayName("Â§6DeathRun " + Starter.STARTPREFIX + "Â§cOff");
 		}
 		String[] lore = new String[7];
-		lore[0] = Starter.STARTPREFIX + "§aIn dieser Challenge muss man in Minecraft";
-		lore[1] = "§amehr Strecke gelaufen sein als seine Gegner.";
-		lore[2] = "§aDerzeitige maxmiale Zeit§7: §6" + conf.cfg().getInt("deathrun.minutes");
-		lore[3] = "§6Mittelklick §7> §aAn/Aus diese Challenge";
-		lore[4] = "§6Rechtsklick §7> §a+1 Minute";
-		lore[5] = "§6Linksklick §7> §a-1 Minute";
+		lore[0] = Starter.STARTPREFIX + "Â§aIn dieser Challenge muss man in Minecraft";
+		lore[1] = "Â§amehr Strecke gelaufen sein als seine Gegner.";
+		lore[2] = "Â§aDerzeitige maxmiale ZeitÂ§7: Â§6" + conf.cfg().getInt("deathrun.minutes");
+		lore[3] = "Â§6Mittelklick Â§7> Â§aAn/Aus diese Challenge";
+		lore[4] = "Â§6Rechtsklick Â§7> Â§a+1 Minute";
+		lore[5] = "Â§6Linksklick Â§7> Â§a-1 Minute";
 		
 		ib.setLoreString(lore);
 		return ib.build();

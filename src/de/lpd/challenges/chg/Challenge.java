@@ -39,7 +39,7 @@ public abstract class Challenge implements Listener {
 	}
 	
 	public boolean isEnabled() {
-		if(isEnabled && ChallengesMainClass.t.isStarted()) {
+		if(isToggled() && ChallengesMainClass.t.isStarted()) {
 			return true;
 		}
 		return false;

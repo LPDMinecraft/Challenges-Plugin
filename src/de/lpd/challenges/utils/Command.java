@@ -22,11 +22,11 @@ public abstract class Command extends Starter implements CommandExecutor {
 	}
 	
 	public String getHelpMessage(String... help) {
-		String end = PREFIX + "§cBitte benutze §6/" + help[0];
+		String end = PREFIX + "Â§cBitte benutze Â§6/" + help[0];
 		for(int i = 1; i < help.length; i++) {
-			end = end + " §coder §6/" + help[i];
+			end = end + " Â§coder Â§6/" + help[i];
 		}
-		end = end + " §c!";
+		end = end + " Â§c!";
 		return end;
 	}
 	

@@ -16,16 +16,16 @@ public class Menu extends Inventory {
 		super(plugin);
 	}
 
-	public static String TITLE = "§6Menu",
-			             ITEM_SETTINGS = "§cSettings",
-			             ITEM_CHALLENGES = "§aChallenges";
+	public static String TITLE = "Â§6Menu",
+			             ITEM_SETTINGS = "Â§cSettings",
+			             ITEM_CHALLENGES = "Â§aChallenges";
 	
 	@Override
 	public org.bukkit.inventory.Inventory createdInv() {
 		org.bukkit.inventory.Inventory inv = Bukkit.getServer().createInventory(null, 9*5, TITLE);
 		inv = placeHolder(inv);
 		
-		inv.setItem(13 + 9, new HeadBuilder("Cooler_LK").setDisplayName("§bDev §7| §6Cooler_LK").build());
+		inv.setItem(13 + 9, new HeadBuilder("Cooler_LK").setDisplayName("Â§bDev Â§7| Â§6Cooler_LK").build());
 		inv.setItem(11 + 9, new ItemBuilder(Material.REDSTONE).setDisplayName(ITEM_SETTINGS).build());
 		inv.setItem(15 + 9, new ItemBuilder(Material.CLOCK).setDisplayName(ITEM_CHALLENGES).build());
 		

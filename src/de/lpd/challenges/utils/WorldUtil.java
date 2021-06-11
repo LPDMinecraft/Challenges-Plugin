@@ -32,10 +32,10 @@ public class WorldUtil {
                         .forEach(File::delete);
 
                 createFiles();
-                Bukkit.getLogger().log(Level.INFO, "§2" + folder.toUpperCase() + " §awird gelöscht und resetet");
+                Bukkit.getLogger().log(Level.INFO, "Â§2" + folder.toUpperCase() + " Â§awird gelÂ§scht und resetet");
             } catch (IOException e) {
-                Bukkit.getLogger().log(Level.SEVERE, "§4" + folder.toUpperCase() + " §ckonnte nicht gelöscht werden\n" +
-                        "§4Grund: §c" + e.getCause().toString());
+                Bukkit.getLogger().log(Level.SEVERE, "Â§4" + folder.toUpperCase() + " Â§ckonnte nicht gelÂ§scht werden\n" +
+                        "Â§4Grund: Â§c" + e.getCause().toString());
             }
 
 
