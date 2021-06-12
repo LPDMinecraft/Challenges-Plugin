@@ -43,7 +43,7 @@ public class BreakUpgradeTool extends Challenge {
 		lore[0] = Starter.STARTPREFIX + "§aIn dieser Challenge muss man Minecraft";
 		lore[1] = "§adurchspielen. Bei jedem Block abbauen wird es um eine belibige";
 		lore[2] = "§aZahl Entchantmens hochgelevelt auf das Tool.";
-		lore[3] = "§6Linksklick §7> §aÖffne das Inventart";
+		lore[3] = "§6Mittelklick §7> §aÖffne das Inventart";
 		
 		ib.setLoreString(lore);
 		return ib.build();
@@ -61,12 +61,12 @@ public class BreakUpgradeTool extends Challenge {
 		/*int level = (int) getOption(cfg, "breakupgradetool.levelplus", 1);
 		level--;
 		setOption(cfg, "breakupgradetool.levelplus", level);*/
-		p.openInventory(getInventory(1, p));
+
 	}
 
 	@Override
 	public void onMiddleClick(Player p) {
-		toggle();
+		p.openInventory(getInventory(1, p));
 	}
 
 	@Override

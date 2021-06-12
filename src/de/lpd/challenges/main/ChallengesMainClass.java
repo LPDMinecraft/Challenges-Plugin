@@ -52,10 +52,10 @@ public class ChallengesMainClass extends JavaPlugin {
 		plugin = this;
 		t = new Timer(plugin);
 		t.reset();
-		ChMa = new ChallengesManager(this);
-		invManager = new InventoryManager(this);
-		settingManager = new SettingManager(this);
-		new Starter().startPlugin(mainCFG, this);
+		invManager = new InventoryManager(plugin);
+		ChMa = new ChallengesManager(plugin);
+		settingManager = new SettingManager(plugin);
+		new Starter().startPlugin(mainCFG, plugin);
 		
 		registerCommand("timer", new TimerCommand(this));
 		registerCommand("challenges", new ChallengesCommand(this));

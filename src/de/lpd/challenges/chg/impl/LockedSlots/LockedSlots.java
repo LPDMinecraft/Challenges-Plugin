@@ -57,17 +57,12 @@ public class LockedSlots extends Challenge {
 	@Override
 	public ItemStack getItem() {
 		ItemBuilder ib = new ItemBuilder(Material.RED_STAINED_GLASS);
-		if(isToggled()) {
-			ib.setDisplayName("§6LockedSlots " + Starter.STARTPREFIX + "§aOn");
-		} else {
-			ib.setDisplayName("§6LockedSlots " + Starter.STARTPREFIX + "§cOff");
-		}
-		String[] lore = new String[6];
+
+		String[] lore = new String[4];
 		lore[0] = Starter.STARTPREFIX + "§aIn dieser Challenge muss man Minecraft mit";
 		lore[1] = "§aX Slots durchspielen.";
 		lore[2] = "§7Derzeitig gespeerte Slots§8: §6" + getOption(cfg, "lockedslots.max", 0);
-		lore[3] = "§6Linksklick §7> §aOpen Inventory";
-		lore[5] = "§6Mittelklick §7> §aAn/Aus diese Challenge";
+		lore[3] = "§6Mittelklick §7> §aOpen Inventory";
 		
 		ib.setLoreString(lore);
 		return ib.build();
@@ -96,12 +91,12 @@ public class LockedSlots extends Challenge {
 			setOption(cfg, "lockedslots.max", (int)getOption(cfg, "lockedslots.max", 0) - 1);
 			a(p);
 		}*/
-		p.openInventory(getInventory(1, p));
+
 	}
 	
 	@Override
 	public void onMiddleClick(Player p) {
-		toggle();
+		p.openInventory(getInventory(1, p));
 	}
 	
 	@Override
@@ -171,10 +166,17 @@ public class LockedSlots extends Challenge {
 	}
 
 	String plusLockedSlots1 = "§6Sperre ein 1 Slot mehr",
-			minusLockedSlots1 = "§6Entsperre ein weiteren 1 Slot";
+			minusLockedSlots1 = "§6Entsperre ein weiteren 1 Slot",
+			itemdisplayname = "";
 
 	@Override
 	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page) {
+		if(isToggled()) {
+			itemdisplayname = "§6Locked Slots " + Starter.STARTPREFIX + "§aOn";
+		} else {
+			itemdisplayname = "§6Locked Slots " + Starter.STARTPREFIX + "§cOff";
+		}
+
 		if(item.getItemMeta().getDisplayName().equalsIgnoreCase(plusLockedSlots1) && item.getType() == Material.STONE_BUTTON) {
 			setOption(cfg, "lockedslots.max", (int)getOption(cfg, "lockedslots.max", 0) + 1);
 			a(p);
@@ -183,6 +185,8 @@ public class LockedSlots extends Challenge {
 				setOption(cfg, "lockedslots.max", (int) getOption(cfg, "lockedslots.max", 0) - 1);
 				a(p);
 			}
+		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(itemdisplayname)) {
+			toggle();
 		}
 		// p.openInventory(getInventory(page, p));
 	}
@@ -192,10 +196,16 @@ public class LockedSlots extends Challenge {
 		org.bukkit.inventory.Inventory inv = getInv();
 		inv = de.lpd.challenges.invs.Inventory.placeHolder(inv);
 
+		if(isToggled()) {
+			itemdisplayname = "§6Locked Slots " + Starter.STARTPREFIX + "§aOn";
+		} else {
+			itemdisplayname = "§6Locked Slots " + Starter.STARTPREFIX + "§cOff";
+		}
+
 		ArrayList<ItemStack> items = new ArrayList<>();
 
 		inv.setItem(0, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(plusLockedSlots1).build());
-		inv.setItem(9, new ItemBuilder(Material.REDSTONE_BLOCK).setDisplayName("§6Maximale Slots").build());
+		inv.setItem(9, new ItemBuilder(Material.REDSTONE_BLOCK).setDisplayName(itemdisplayname).build());
 		inv.setItem(18, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(minusLockedSlots1).build());
 
 		inv.setItem(inv.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK()).build());

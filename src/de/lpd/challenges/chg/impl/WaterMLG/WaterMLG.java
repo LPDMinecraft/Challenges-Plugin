@@ -6,6 +6,8 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import de.lpd.challenges.chg.Challenge;
 import de.lpd.challenges.main.ChallengesMainClass;
@@ -20,7 +22,7 @@ public class WaterMLG extends Challenge {
 	private ChallengesMainClass plugin;
 	
 	public WaterMLG(ChallengesMainClass plugin) {
-		super(plugin, "watermlg", "watermlg.yml", "watermlg");
+		super(plugin, "watermlg", "watermlg.yml", "watermlg", 6*9, true, "WaterMLG", "Water MLG", "challenge-watermlg");
 		this.plugin = plugin;
 		send();
 	}
@@ -42,10 +44,8 @@ public class WaterMLG extends Challenge {
 		lore[0] = Starter.STARTPREFIX + "§aIn dieser Challenge muss du in x Sekunden";
 		lore[1] = "§aeinen WaterMLG machen. Wenn einer dabei stirbt ist die Challange";
 		lore[2] = "§avorbei.";
-		lore[3] = "§7Derzeitig ausgew§hlte Zeit§8: §6" + getOption(cfg, "watermlg.max", 30);
-		lore[4] = "§6Linksklick §7> §a-5 Sekunden";
-		lore[5] = "§6Rechtsklick §7> §a+5 Sekunden";
-		lore[6] = "§6Mittelklick §7> §aAn/Aus diese Challenge";
+		lore[3] = "§7Derzeitig ausgew§hlte Zeit§8: §6" + getOption(cfg, "watermlg.max", 120);
+		lore[6] = "§6Mittelklick §7> §aÖffne das Inventart";
 		
 		ib.setLoreString(lore);
 		return ib.build();
@@ -53,19 +53,20 @@ public class WaterMLG extends Challenge {
 	
 	@Override
 	public void onRightClick(Player p) {
-		setOption(cfg, "watermlg.max", (int)getOption(cfg, "watermlg.max", 120) + 5);
+		//setOption(cfg, "watermlg.max", (int)getOption(cfg, "watermlg.max", 120) + 5);
 	}
 	
 	@Override
 	public void onLeftClick(Player p) {
-		if((int)getOption(cfg, "watermlg.max", 30) > 5) {
+		/*if((int)getOption(cfg, "watermlg.max", 30) > 5) {
 			setOption(cfg, "watermlg.max", (int)getOption(cfg, "watermlg.max", 120) - 5);
-		}
+		}*/
 	}
 	
 	@Override
 	public void onMiddleClick(Player p) {
-		toggle();
+		//toggle();
+		p.openInventory(getInventory(1, p));
 	}
 	
 	@Override
@@ -97,7 +98,7 @@ public class WaterMLG extends Challenge {
 							
 							loc.put(c, c.getLocation());
 							
-							// 30 - 50 Bl§cke
+							// 30 - 50 Blöcke
 							int r = Mathe.getRandom(30, 50);
 							c.teleport(new Location(c.getWorld(), c.getLocation().getX(), ChallengesMainClass.getHighestY(c.getLocation()) + r, c.getLocation().getZ()));
 							c.getInventory().addItem(new ItemBuilder(Material.WATER_BUCKET).setDisplayName("§6Der beste Springer").build());
@@ -119,5 +120,37 @@ public class WaterMLG extends Challenge {
 			
 		}, 0, (int)getOption(cfg, "watermlg.max", 120) * 20);
 	}
-	
+
+	String plusMaxFood1 = "§6Ändere die Zeit bis zum nächsten MLG um +5 Sekunden",
+			minusMaxFood1 = "§6Ändere die Zeit bis zum nächsten MLG um -5 Sekunden",
+			itemdisplayname = "";
+
+	@Override
+	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page) {
+		if(isToggled()) {
+			itemdisplayname = "§6WaterMLG " + Starter.STARTPREFIX + "§aOn";
+		} else {
+			itemdisplayname = "§6WaterMLG " + Starter.STARTPREFIX + "§cOff";
+		}
+
+		if(item.getItemMeta().getDisplayName().equalsIgnoreCase(plusMaxFood1)) {
+			setOption(cfg, "watermlg.max", (int)getOption(cfg, "watermlg.max", 120) + 5);
+		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(minusMaxFood1)) {
+			if((int)getOption(cfg, "watermlg.max", 30) > 5) {
+				setOption(cfg, "watermlg.max", (int)getOption(cfg, "watermlg.max", 120) - 5);
+			}
+		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(itemdisplayname)) {
+			toggle();
+		}
+	}
+
+	@Override
+	public Inventory getInventory(int page, Player p) {
+		if(isToggled()) {
+			itemdisplayname = "§6WaterMLG " + Starter.STARTPREFIX + "§aOn";
+		} else {
+			itemdisplayname = "§6WaterMLG " + Starter.STARTPREFIX + "§cOff";
+		}
+		return null;
+	}
 }

@@ -22,7 +22,15 @@ public class TheOneFoodChallenge extends Challenge {
 	private HashMap<Material, Integer> eaten;
 	
 	public TheOneFoodChallenge(ChallengesMainClass plugin) {
-		super(plugin, "theonefoodchallenge", "config.yml", "foodchallenge", 6*9, true, "TheMaxFood", "Max Food", "challenge-maxfood");
+		super(plugin,
+				"theonefoodchallenge",
+				"config.yml",
+				"foodchallenge",
+				6*9,
+				true,
+				"TheMaxFood",
+				"Max Food",
+				"challenge-maxfood");
 		eaten = new HashMap<>();
 	}
 	
@@ -34,11 +42,9 @@ public class TheOneFoodChallenge extends Challenge {
 	@Override
 	public ItemStack getItem() {
 		ItemBuilder ib = new ItemBuilder(Material.COOKED_BEEF);
-		if(isToggled()) {
-			ib.setDisplayName("§6TheOneFoodChallenge " + Starter.STARTPREFIX + "§aOn");
-		} else {
-			ib.setDisplayName("§6TheOneFoodChallenge " + Starter.STARTPREFIX + "§cOff");
-		}
+
+		ib.setDisplayName("§6TheOneFoodChallenge");
+
 		String[] lore = new String[9];
 		lore[0] = Starter.STARTPREFIX + "§aIn dieser Challenge kannst du 1/2/ect. mal einen Essenstyp essen.";
 		lore[1] = "§cAchtung! §6Es wird in dieser Challenge die Essenmale zusammen gez§hlt.";
@@ -46,9 +52,7 @@ public class TheOneFoodChallenge extends Challenge {
 		lore[3] = "§aanderer Kuhfleisch ist sind sie tot.";
 		lore[4] = "§aAber nur dann, wenn die maximale Begrenzung auf 1 gestellt ist.";
 		lore[5] = "§7Derzeitig ausgew§hlte Begrenzung§8: §6" + (int) getOption(cfg, "foodchallenge.max", 1);
-		lore[6] = "§6Linksklick §7> §a-1";
-		lore[7] = "§6Rechtsklick §7> §a+1";
-		lore[8] = "§6Mittelklick §7> §aAn/Aus diese Challenge";
+		lore[8] = "§6Mittelklick §7> §aÖffne das Inventar";
 		
 		ib.setLoreString(lore);
 		return ib.build();
@@ -56,19 +60,17 @@ public class TheOneFoodChallenge extends Challenge {
 
 	@Override
 	public void onRightClick(Player p) {
-		setOption(cfg, "foodchallenge.max", (int) getOption(cfg, "foodchallenge.max", 1) + 1);
+
 	}
 
 	@Override
 	public void onLeftClick(Player p) {
-		if((int) getOption(cfg, "foodchallenge.max", 1) > 1) {
-			setOption(cfg, "foodchallenge.max", (int) getOption(cfg, "foodchallenge.max", 1) - 1);
-		}
+
 	}
 
 	@Override
 	public void onMiddleClick(Player p) {
-		toggle();
+		p.openInventory(getInventory(1, p));
 	}
 
 	@Override
@@ -100,11 +102,26 @@ public class TheOneFoodChallenge extends Challenge {
 	}
 
 	String plusMaxFood1 = "§6Ändere das Maximum vom Essentyp um +1",
-			minusMaxFood1 = "§6Ändere das Maximum vom Essentyp um -1";
+			minusMaxFood1 = "§6Ändere das Maximum vom Essentyp um -1",
+			itemdisplayname = "";
 
 	@Override
 	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page) {
+		if(isToggled()) {
+			itemdisplayname = "§6TheOneFoodChallenge " + Starter.STARTPREFIX + "§aOn";
+		} else {
+			itemdisplayname = "§6TheOneFoodChallenge " + Starter.STARTPREFIX + "§cOff";
+		}
 
+		if(item.getItemMeta().getDisplayName().equalsIgnoreCase(plusMaxFood1)) {
+			setOption(cfg, "foodchallenge.max", (int) getOption(cfg, "foodchallenge.max", 1) + 1);
+		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(minusMaxFood1)) {
+			if((int) getOption(cfg, "foodchallenge.max", 1) > 1) {
+				setOption(cfg, "foodchallenge.max", (int) getOption(cfg, "foodchallenge.max", 1) - 1);
+			}
+		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(itemdisplayname)) {
+			toggle();
+		}
 	}
 
 	@Override
@@ -112,10 +129,16 @@ public class TheOneFoodChallenge extends Challenge {
 		org.bukkit.inventory.Inventory inv = getInv();
 		inv = de.lpd.challenges.invs.Inventory.placeHolder(inv);
 
+		if(isToggled()) {
+			itemdisplayname = "§6TheOneFoodChallenge " + Starter.STARTPREFIX + "§aOn";
+		} else {
+			itemdisplayname = "§6TheOneFoodChallenge " + Starter.STARTPREFIX + "§cOff";
+		}
+
 		ArrayList<ItemStack> items = new ArrayList<>();
 
 		inv.setItem(0, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(plusMaxFood1).build());
-		inv.setItem(9, new ItemBuilder(Material.REDSTONE_BLOCK).setDisplayName("§6Maximales Essen von einem Essentyp").build());
+		inv.setItem(9, new ItemBuilder(Material.REDSTONE_BLOCK).setDisplayName(itemdisplayname).build());
 		inv.setItem(18, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(minusMaxFood1).build());
 
 		inv.setItem(inv.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK()).build());

@@ -20,7 +20,7 @@ public class ChallengesManager {
 		this.plugin = plugin;
 		idtoclass = new HashMap<>();
 		
-		idtoclass.put("theonefoodchallenge", new TheOneFoodChallenge(this.plugin));
+		idtoclass.put("theonefoodchallenge", new TheOneFoodChallenge(plugin));
 		idtoclass.put("watermlg", new WaterMLG(plugin));
 		idtoclass.put("lockedslots", new LockedSlots(plugin));
 		idtoclass.put("geteilteherzen", new GeteilteHearths(plugin));

@@ -60,12 +60,11 @@ public class MaxHearth extends Challenge {
 		} else {
 			ib.setDisplayName("§6MaxLeben " + Starter.STARTPREFIX + "§cOff");
 		}
-		String[] lore = new String[5];
+		String[] lore = new String[4];
 		lore[0] = Starter.STARTPREFIX + "§aIn dieser Challenge muss man Minecraft mit";
 		lore[1] = "§aX Herzen durchspielen.";
 		lore[2] = "§7Derzeitige Herzen§8: §6" + getOption(cfg, "maxhearths.max", 20) + "/20";
-		lore[3] = "§6Mittelklick §7> §aAn/Aus diese Challenge";
-		lore[4] = "§6Linksklick §7> §aÖffne Inventar";
+		lore[3] = "§6Mittelklick §7> §aÖffne Inventar";
 		
 		ib.setLoreString(lore);
 		return ib.build();
@@ -82,12 +81,11 @@ public class MaxHearth extends Challenge {
 		/*if((int)getOption(cfg, "maxhearths.max", 20) > 1) {
 			setOption(cfg, "maxhearths.max", (int)getOption(cfg, "maxhearths.max", 20) - 1);
 		}*/
-		p.openInventory(getInventory(1, p));
 	}
 
 	@Override
 	public void onMiddleClick(Player p) {
-		toggle();
+		p.openInventory(getInventory(1, p));
 	}
 
 	@SuppressWarnings("deprecation")
@@ -112,18 +110,27 @@ public class MaxHearth extends Challenge {
 
 	@Override
 	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page) {
+		if(isToggled()) {
+			itemdisplayname = "§6Max Herzen " + Starter.STARTPREFIX + "§aOn";
+		} else {
+			itemdisplayname = "§6Max Herzen " + Starter.STARTPREFIX + "§cOff";
+		}
+
 		if(item.getItemMeta().getDisplayName().equalsIgnoreCase(plusMaxHearth1) && item.getType() == Material.STONE_BUTTON) {
 			setOption(cfg, "maxhearths.max", (int)getOption(cfg, "maxhearths.max", 20) + 1);
 		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(minusMaxHeath1) && item.getType() == Material.STONE_BUTTON) {
 			if((int)getOption(cfg, "maxhearths.max", 20) > 1) {
 				setOption(cfg, "maxhearths.max", (int) getOption(cfg, "maxhearths.max", 20) - 1);
 			}
+		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(itemdisplayname)) {
+			toggle();
 		}
 		// p.openInventory(getInventory(page, p));
 	}
 
 	String plusMaxHearth1 = "§6Füge 0,5 Herzen hinzu",
-	       minusMaxHeath1 = "§6Lösche 0,5 Herzen";
+	       minusMaxHeath1 = "§6Lösche 0,5 Herzen",
+			itemdisplayname = "";
 
 	@Override
 	public Inventory getInventory(int page, Player p) {
@@ -132,8 +139,16 @@ public class MaxHearth extends Challenge {
 
 		ArrayList<ItemStack> items = new ArrayList<>();
 
+		ItemBuilder ib = new ItemBuilder(Material.REDSTONE_BLOCK);
+		if(isToggled()) {
+			itemdisplayname = "§6Max Herzen " + Starter.STARTPREFIX + "§aOn";
+		} else {
+			itemdisplayname = "§6Max Herzen " + Starter.STARTPREFIX + "§cOff";
+		}
+		ib.setDisplayName(itemdisplayname);
+
 		inv.setItem(0, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(plusMaxHearth1).build());
-		inv.setItem(9, new ItemBuilder(Material.REDSTONE_BLOCK).setDisplayName("§6Maximale Herzen").build());
+		inv.setItem(9, ib.build());
 		inv.setItem(18, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(minusMaxHeath1).build());
 
 		inv.setItem(inv.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK()).build());

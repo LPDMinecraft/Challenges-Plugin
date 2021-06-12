@@ -60,7 +60,7 @@ public class GeteilteHearths extends Challenge {
 		lore[0] = Starter.STARTPREFIX + "§aIn dieser Challenge muss man Minecraft mit";
 		lore[1] = "§ageteilten Herzen durspielen. Das hei§t. Wenn Spieler 1 Damage";
 		lore[2] = "§abekommt, bekommt der Rest auch Damage.";
-		lore[3] = "§6Mittelklick §7> §aAn/Aus diese Challenge";
+		lore[3] = "§6Mittelklick §7> §aÖffne das Inventart";
 		
 		ib.setLoreString(lore);
 		return ib.build();
@@ -107,11 +107,34 @@ public class GeteilteHearths extends Challenge {
 
 	@Override
 	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page) {
-
+		if(isToggled()) {
+			itemdisplayname = "§6Geteilte Herzen " + Starter.STARTPREFIX + "§aOn";
+		} else {
+			itemdisplayname = "§6Geteilte Herzen " + Starter.STARTPREFIX + "§cOff";
+		}
+		if(item.getItemMeta().getDisplayName().equalsIgnoreCase(itemdisplayname)) {
+			toggle();
+		}
 	}
+
+	String itemdisplayname;
 
 	@Override
 	public Inventory getInventory(int page, Player p) {
-		return inv;
+		inv = placeHolder(inv);
+
+		ArrayList<ItemStack> items = new ArrayList<>();
+		ItemBuilder ib = new ItemBuilder(Material.REDSTONE_BLOCK);
+		if(isToggled()) {
+			itemdisplayname = "§6Geteilte Herzen " + Starter.STARTPREFIX + "§aOn";
+		} else {
+			itemdisplayname = "§6Geteilte Herzen " + Starter.STARTPREFIX + "§cOff";
+		}
+		ib.setDisplayName(itemdisplayname);
+
+		inv.setItem(9, ib.build());
+		inv.setItem(inv.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK()).build());
+
+		return getPage(items, inv, page);
 	}
 }
