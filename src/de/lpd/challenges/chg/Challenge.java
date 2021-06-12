@@ -17,15 +17,15 @@ public abstract class Challenge extends Inventory implements Listener {
 	public abstract void onMiddleClick(Player p);
 	public abstract void reset();
 	public abstract void ifPlayerDies();
-	
-	private boolean isEnabled = false;
+
+	private String root;
 	
 	public Challenge(ChallengesMainClass plugin, String cfgPath, String filename, String root, int size, boolean hasMoreThen1Site, String name, String backName, String id) {
 		super(plugin, size, hasMoreThen1Site, name, backName);
 		plugin.registerListener(this);
 		cfg(new Config("challenges//" + cfgPath, filename));
-		isEnabled = (boolean) getOption(new Config("challenges//" + cfgPath, filename), root + ".isEnabled", isEnabled);
 		ChallengesMainClass.getInvManager().invs.put(id, this);
+		this.root = root;
 	}
 	
 	public static Object getOption(Config cfg, String path, Object start) {
@@ -51,15 +51,15 @@ public abstract class Challenge extends Inventory implements Listener {
 	}
 	
 	public boolean isToggled() {
-		if(isEnabled) {
+		if((boolean) getOption(this.getCfg(), root + ".isEnabled", false)) {
 			return true;
 		}
 		return false;
 	}
 	
 	public void toggle() {
-		if(isEnabled) isEnabled = false;
-		else isEnabled = true;
+		if((boolean) getOption(this.getCfg(), root + ".isEnabled", false)) setOption(this.getCfg(), root + ".isEnabled", false);
+		else setOption(this.getCfg(), root + ".isEnabled", true);
 	}
 	
 }
