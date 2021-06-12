@@ -26,7 +26,7 @@ public class LockedSlots extends Challenge {
 	private ChallengesMainClass plugin;
 	
 	public LockedSlots(ChallengesMainClass plugin) {
-		super(plugin, "lockedslots", "lockedslots.yml", "lockedslots", 6*9, true, "LockedSlots", "Locked Slots", "challenge-lockedslots");
+		super(plugin, "lockedslots", "lockedslots.yml", "lockedslots", 6*9, true, "LockedSlots", "chmenu", "challenge-lockedslots");
 		this.setPlugin(plugin);
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
 			
@@ -59,7 +59,7 @@ public class LockedSlots extends Challenge {
 		ItemBuilder ib = new ItemBuilder(Material.RED_STAINED_GLASS);
 
 		String[] lore = new String[4];
-		lore[0] = Starter.STARTPREFIX + "§aIn dieser Challenge muss man Minecraft mit";
+		lore[0] = Starter.START_PREFIX + "§aIn dieser Challenge muss man Minecraft mit";
 		lore[1] = "§aX Slots durchspielen.";
 		lore[2] = "§7Derzeitig gespeerte Slots§8: §6" + getOption(cfg, "lockedslots.max", 0);
 		lore[3] = "§6Mittelklick §7> §aOpen Inventory";
@@ -172,9 +172,9 @@ public class LockedSlots extends Challenge {
 	@Override
 	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page) {
 		if(isToggled()) {
-			itemdisplayname = "§6Locked Slots " + Starter.STARTPREFIX + "§aOn";
+			itemdisplayname = "§6Locked Slots " + Starter.START_PREFIX + "§aOn";
 		} else {
-			itemdisplayname = "§6Locked Slots " + Starter.STARTPREFIX + "§cOff";
+			itemdisplayname = "§6Locked Slots " + Starter.START_PREFIX + "§cOff";
 		}
 
 		if(item.getItemMeta().getDisplayName().equalsIgnoreCase(plusLockedSlots1) && item.getType() == Material.STONE_BUTTON) {
@@ -188,7 +188,7 @@ public class LockedSlots extends Challenge {
 		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(itemdisplayname)) {
 			toggle();
 		}
-		// p.openInventory(getInventory(page, p));
+		p.openInventory(getInventory(page, p));
 	}
 
 	@Override
@@ -197,9 +197,9 @@ public class LockedSlots extends Challenge {
 		inv = de.lpd.challenges.invs.Inventory.placeHolder(inv);
 
 		if(isToggled()) {
-			itemdisplayname = "§6Locked Slots " + Starter.STARTPREFIX + "§aOn";
+			itemdisplayname = "§6Locked Slots " + Starter.START_PREFIX + "§aOn";
 		} else {
-			itemdisplayname = "§6Locked Slots " + Starter.STARTPREFIX + "§cOff";
+			itemdisplayname = "§6Locked Slots " + Starter.START_PREFIX + "§cOff";
 		}
 
 		ArrayList<ItemStack> items = new ArrayList<>();

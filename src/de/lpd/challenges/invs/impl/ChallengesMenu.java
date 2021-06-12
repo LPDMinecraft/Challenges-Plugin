@@ -33,14 +33,6 @@ public class ChallengesMenu extends Inventory {
 					} else if(e.isRightClick()) {
 						ChallengesManager.idtoclass.get(key).onRightClick(p);
 					}
-					Bukkit.getScheduler().runTaskLater(ChallengesMainClass.getPlugin(), new Runnable() {
-
-						@Override
-						public void run() {
-							p.openInventory(ChallengesMainClass.getInvManager().invs.get("chmenu").getInventory(1, p));
-						}
-
-						}, 1L);
 					break;
 				}
 			}

@@ -1,7 +1,5 @@
 package de.lpd.challenges.chg.impl.Hearths;
 
-import de.lpd.challenges.settings.Setting;
-import de.lpd.challenges.settings.SettingManager;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -26,7 +24,7 @@ public class GeteilteHearths extends Challenge {
 	public Config cfg;
 
 	public GeteilteHearths(ChallengesMainClass plugin) {
-		super(plugin, "geteilteherzen", "config.yml", "geteiltehearths", 6*9, true, "GeteilteHerzen", "Geteilte Herzen", "challenge-geteilteherzen");
+		super(plugin, "geteilteherzen", "config.yml", "geteiltehearths", 6*9, true, "GeteilteHerzen", "chmenu", "challenge-geteilteherzen");
         Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
 			
 			@Override
@@ -51,16 +49,12 @@ public class GeteilteHearths extends Challenge {
 	@Override
 	public ItemStack getItem() {
 		ItemBuilder ib = new ItemBuilder(Material.HEART_OF_THE_SEA, 2);
-		if(isToggled()) {
-			ib.setDisplayName("§6GeteilteHerzen " + Starter.STARTPREFIX + "§aOn");
-		} else {
-			ib.setDisplayName("§6GeteilteHerzen " + Starter.STARTPREFIX + "§cOff");
-		}
+		ib.setDisplayName("§6GeteilteHerzen");
 		String[] lore = new String[4];
-		lore[0] = Starter.STARTPREFIX + "§aIn dieser Challenge muss man Minecraft mit";
+		lore[0] = Starter.START_PREFIX + "§aIn dieser Challenge muss man Minecraft mit";
 		lore[1] = "§ageteilten Herzen durspielen. Das hei§t. Wenn Spieler 1 Damage";
 		lore[2] = "§abekommt, bekommt der Rest auch Damage.";
-		lore[3] = "§6Mittelklick §7> §aÖffne das Inventart";
+		lore[3] = "§6Mittelklick §7> §aInventar aufmachen";
 		
 		ib.setLoreString(lore);
 		return ib.build();
@@ -74,7 +68,7 @@ public class GeteilteHearths extends Challenge {
 
 	@Override
 	public void onMiddleClick(Player p) {
-		toggle();
+		p.openInventory(getInventory(1, p));
 	}
 
 	@Override
@@ -107,13 +101,14 @@ public class GeteilteHearths extends Challenge {
 
 	@Override
 	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page) {
-		if(isToggled()) {
-			itemdisplayname = "§6Geteilte Herzen " + Starter.STARTPREFIX + "§aOn";
-		} else {
-			itemdisplayname = "§6Geteilte Herzen " + Starter.STARTPREFIX + "§cOff";
-		}
+        if(isToggled()) {
+            itemdisplayname = "§6Geteilte Herzen " + Starter.START_PREFIX.replace("§r", "") + "§aOn";
+        } else {
+            itemdisplayname = "§6Geteilte Herzen " + Starter.START_PREFIX.replace("§r", "") + "§cOff";
+        }
 		if(item.getItemMeta().getDisplayName().equalsIgnoreCase(itemdisplayname)) {
 			toggle();
+			p.openInventory(getInventory(page, p));
 		}
 	}
 
@@ -126,9 +121,9 @@ public class GeteilteHearths extends Challenge {
 		ArrayList<ItemStack> items = new ArrayList<>();
 		ItemBuilder ib = new ItemBuilder(Material.REDSTONE_BLOCK);
 		if(isToggled()) {
-			itemdisplayname = "§6Geteilte Herzen " + Starter.STARTPREFIX + "§aOn";
+			itemdisplayname = "§6Geteilte Herzen " + Starter.START_PREFIX + "§aOn";
 		} else {
-			itemdisplayname = "§6Geteilte Herzen " + Starter.STARTPREFIX + "§cOff";
+			itemdisplayname = "§6Geteilte Herzen " + Starter.START_PREFIX + "§cOff";
 		}
 		ib.setDisplayName(itemdisplayname);
 

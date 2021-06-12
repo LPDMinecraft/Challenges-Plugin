@@ -22,7 +22,7 @@ public class WaterMLG extends Challenge {
 	private ChallengesMainClass plugin;
 	
 	public WaterMLG(ChallengesMainClass plugin) {
-		super(plugin, "watermlg", "watermlg.yml", "watermlg", 6*9, true, "WaterMLG", "Water MLG", "challenge-watermlg");
+		super(plugin, "watermlg", "watermlg.yml", "watermlg", 6*9, true, "WaterMLG", "chmenu", "challenge-watermlg");
 		this.plugin = plugin;
 		send();
 	}
@@ -36,12 +36,12 @@ public class WaterMLG extends Challenge {
 	public ItemStack getItem() {
 		ItemBuilder ib = new ItemBuilder(Material.WATER_BUCKET);
 		if(isToggled()) {
-			ib.setDisplayName("§6WaterMLG " + Starter.STARTPREFIX + "§aOn");
+			ib.setDisplayName("§6WaterMLG " + Starter.START_PREFIX + "§aOn");
 		} else {
-			ib.setDisplayName("§6WaterMLG " + Starter.STARTPREFIX + "§cOff");
+			ib.setDisplayName("§6WaterMLG " + Starter.START_PREFIX + "§cOff");
 		}
 		String[] lore = new String[7];
-		lore[0] = Starter.STARTPREFIX + "§aIn dieser Challenge muss du in x Sekunden";
+		lore[0] = Starter.START_PREFIX + "§aIn dieser Challenge muss du in x Sekunden";
 		lore[1] = "§aeinen WaterMLG machen. Wenn einer dabei stirbt ist die Challange";
 		lore[2] = "§avorbei.";
 		lore[3] = "§7Derzeitig ausgew§hlte Zeit§8: §6" + getOption(cfg, "watermlg.max", 120);
@@ -128,9 +128,9 @@ public class WaterMLG extends Challenge {
 	@Override
 	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page) {
 		if(isToggled()) {
-			itemdisplayname = "§6WaterMLG " + Starter.STARTPREFIX + "§aOn";
+			itemdisplayname = "§6WaterMLG " + Starter.START_PREFIX + "§aOn";
 		} else {
-			itemdisplayname = "§6WaterMLG " + Starter.STARTPREFIX + "§cOff";
+			itemdisplayname = "§6WaterMLG " + Starter.START_PREFIX + "§cOff";
 		}
 
 		if(item.getItemMeta().getDisplayName().equalsIgnoreCase(plusMaxFood1)) {
@@ -142,14 +142,16 @@ public class WaterMLG extends Challenge {
 		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(itemdisplayname)) {
 			toggle();
 		}
+
+		p.openInventory(getInventory(page, p));
 	}
 
 	@Override
 	public Inventory getInventory(int page, Player p) {
 		if(isToggled()) {
-			itemdisplayname = "§6WaterMLG " + Starter.STARTPREFIX + "§aOn";
+			itemdisplayname = "§6WaterMLG " + Starter.START_PREFIX + "§aOn";
 		} else {
-			itemdisplayname = "§6WaterMLG " + Starter.STARTPREFIX + "§cOff";
+			itemdisplayname = "§6WaterMLG " + Starter.START_PREFIX + "§cOff";
 		}
 		return null;
 	}

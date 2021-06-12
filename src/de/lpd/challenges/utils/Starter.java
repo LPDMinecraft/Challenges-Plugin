@@ -9,7 +9,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 public class Starter {
 
 	public static String PREFIX = "§7[§6Challenges§7] §r",
-            STARTPREFIX = " §7§ §r",
+            START_PREFIX = " §7>> §r",
             NO_PERMISSIONS = "§cDazu hast du keine Rechte!",
             NO_PLAYER = "§cDazu musst du ein Spieler sein!",
             NO_COMMAND_FOUND = "§cDieser Command wurde nicht gefunden!",
@@ -22,7 +22,7 @@ public class Starter {
 		try {
 			mainCFG = new Config("config.yml");
 			PREFIX = (String) Config.getOption(mainCFG, "challenges.PREFIX", PREFIX);
-			STARTPREFIX = (String) Config.getOption(mainCFG, "challenges.START_PREFIX", STARTPREFIX);
+			START_PREFIX = (String) Config.getOption(mainCFG, "challenges.START_PREFIX", START_PREFIX);
 			NO_PERMISSIONS = (String) Config.getOption(mainCFG, "challenges.NO_PERMISSIONS", NO_PERMISSIONS);
 			NO_PLAYER = (String) Config.getOption(mainCFG, "challenges.NO_PLAYER", NO_PLAYER);
 			NO_COMMAND_FOUND = (String) Config.getOption(mainCFG, "challenges.NO_COMMAND_FOUND", NO_COMMAND_FOUND);

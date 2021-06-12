@@ -1,6 +1,5 @@
 package de.lpd.challenges.chg.impl.BreakUpgradeTool;
 
-import de.lpd.challenges.utils.HeadBuilder;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.HumanEntity;
@@ -26,7 +25,7 @@ public class BreakUpgradeTool extends Challenge {
 	private Config cfg;
 	
 	public BreakUpgradeTool(ChallengesMainClass plugin) {
-		super(plugin, "breakupgradetool", "config.yml", "breakupgradetool", 6*9, true, "BreakUpgradeTool", "Break Upgrade Tool", "challenge-breakupgradetool");
+		super(plugin, "breakupgradetool", "config.yml", "breakupgradetool", 6*9, true, "BreakUpgradeTool", "chmenu", "challenge-breakupgradetool");
 	}
 
 	@Override
@@ -39,11 +38,12 @@ public class BreakUpgradeTool extends Challenge {
 	public ItemStack getItem() {
 		ItemBuilder ib = new ItemBuilder(Material.ENCHANTED_BOOK);
 		ib.setDisplayName("§6Entchante jedes Abbauen");
-		String[] lore = new String[4];
-		lore[0] = Starter.STARTPREFIX + "§aIn dieser Challenge muss man Minecraft";
+		String[] lore = new String[5];
+		lore[0] = Starter.START_PREFIX + "§aIn dieser Challenge muss man Minecraft";
 		lore[1] = "§adurchspielen. Bei jedem Block abbauen wird es um eine belibige";
 		lore[2] = "§aZahl Entchantmens hochgelevelt auf das Tool.";
-		lore[3] = "§6Mittelklick §7> §aÖffne das Inventart";
+		lore[3] = "§6Linksklick §7> §aChallenges aus/an machen";
+		lore[4] = "§6Mittelklick §7> §aÖffne das Inventart";
 		
 		ib.setLoreString(lore);
 		return ib.build();
@@ -61,7 +61,7 @@ public class BreakUpgradeTool extends Challenge {
 		/*int level = (int) getOption(cfg, "breakupgradetool.levelplus", 1);
 		level--;
 		setOption(cfg, "breakupgradetool.levelplus", level);*/
-
+		toggle();
 	}
 
 	@Override
@@ -139,11 +139,7 @@ public class BreakUpgradeTool extends Challenge {
 
 		ArrayList<ItemStack> items = new ArrayList<>();
 		ItemBuilder ib = new ItemBuilder(Material.REDSTONE_BLOCK);
-		if(isToggled()) {
-			ib.setDisplayName("§6Entchante jedes Abbauen " + Starter.STARTPREFIX + "§aOn §7- §6" + getOption(cfg, "breakupgradetool.levelplus", 1));
-		} else {
-			ib.setDisplayName("§6Entchante jedes Abbauen " + Starter.STARTPREFIX + "§cOff §7- §6" + getOption(cfg, "breakupgradetool.levelplus", 1));
-		}
+		ib.setDisplayName("§aEntchante jedes Abbauen: §6" + getOption(cfg, "breakupgradetool.levelplus", 1) + " Level");
 
 		inv.setItem(0, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(plusMaxHearth1).build());
 		inv.setItem(9, ib.build());

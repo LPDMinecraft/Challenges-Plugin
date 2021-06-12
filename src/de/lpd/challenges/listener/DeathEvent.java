@@ -13,6 +13,7 @@ public class DeathEvent implements Listener {
 	@EventHandler
 	public void onDeath(PlayerDeathEvent e) {
 		ChallengesMainClass.fail(2);
+		e.getEntity().setHealth(20);
 	}
 	
 	@EventHandler

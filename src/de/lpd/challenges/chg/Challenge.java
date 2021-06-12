@@ -51,15 +51,15 @@ public abstract class Challenge extends Inventory implements Listener {
 	}
 	
 	public boolean isToggled() {
-		if((boolean) getOption(this.getCfg(), root + ".isEnabled", false)) {
-			return true;
-		}
-		return false;
+		return (boolean) getOption(this.getCfg(), root + ".isEnabled", false);
 	}
 	
 	public void toggle() {
-		if((boolean) getOption(this.getCfg(), root + ".isEnabled", false)) setOption(this.getCfg(), root + ".isEnabled", false);
-		else setOption(this.getCfg(), root + ".isEnabled", true);
+		if((boolean) getOption(this.getCfg(), root + ".isEnabled", false)) {
+			setOption(this.getCfg(), root + ".isEnabled", false);
+		} else {
+			setOption(this.getCfg(), root + ".isEnabled", true);
+		}
 	}
 	
 }

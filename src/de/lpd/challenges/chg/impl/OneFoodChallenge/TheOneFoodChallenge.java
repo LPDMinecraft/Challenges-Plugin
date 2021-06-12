@@ -29,7 +29,7 @@ public class TheOneFoodChallenge extends Challenge {
 				6*9,
 				true,
 				"TheMaxFood",
-				"Max Food",
+				"chmenu",
 				"challenge-maxfood");
 		eaten = new HashMap<>();
 	}
@@ -46,7 +46,7 @@ public class TheOneFoodChallenge extends Challenge {
 		ib.setDisplayName("§6TheOneFoodChallenge");
 
 		String[] lore = new String[9];
-		lore[0] = Starter.STARTPREFIX + "§aIn dieser Challenge kannst du 1/2/ect. mal einen Essenstyp essen.";
+		lore[0] = Starter.START_PREFIX + "§aIn dieser Challenge kannst du 1/2/ect. mal einen Essenstyp essen.";
 		lore[1] = "§cAchtung! §6Es wird in dieser Challenge die Essenmale zusammen gez§hlt.";
 		lore[2] = "§aDas hei§t wenn der 1. Spieler rohes Kuhfleisch gegessen hat und danach ein ";
 		lore[3] = "§aanderer Kuhfleisch ist sind sie tot.";
@@ -108,9 +108,9 @@ public class TheOneFoodChallenge extends Challenge {
 	@Override
 	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page) {
 		if(isToggled()) {
-			itemdisplayname = "§6TheOneFoodChallenge " + Starter.STARTPREFIX + "§aOn";
+			itemdisplayname = "§6TheOneFoodChallenge " + Starter.START_PREFIX + "§aOn";
 		} else {
-			itemdisplayname = "§6TheOneFoodChallenge " + Starter.STARTPREFIX + "§cOff";
+			itemdisplayname = "§6TheOneFoodChallenge " + Starter.START_PREFIX + "§cOff";
 		}
 
 		if(item.getItemMeta().getDisplayName().equalsIgnoreCase(plusMaxFood1)) {
@@ -122,6 +122,7 @@ public class TheOneFoodChallenge extends Challenge {
 		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(itemdisplayname)) {
 			toggle();
 		}
+		p.openInventory(getInventory(page, p));
 	}
 
 	@Override
@@ -130,9 +131,9 @@ public class TheOneFoodChallenge extends Challenge {
 		inv = de.lpd.challenges.invs.Inventory.placeHolder(inv);
 
 		if(isToggled()) {
-			itemdisplayname = "§6TheOneFoodChallenge " + Starter.STARTPREFIX + "§aOn";
+			itemdisplayname = "§6TheOneFoodChallenge " + Starter.START_PREFIX + "§aOn";
 		} else {
-			itemdisplayname = "§6TheOneFoodChallenge " + Starter.STARTPREFIX + "§cOff";
+			itemdisplayname = "§6TheOneFoodChallenge " + Starter.START_PREFIX + "§cOff";
 		}
 
 		ArrayList<ItemStack> items = new ArrayList<>();

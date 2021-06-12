@@ -1,7 +1,5 @@
 package de.lpd.challenges.chg.impl.Hearths;
 
-import de.lpd.challenges.settings.Setting;
-import de.lpd.challenges.settings.SettingManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -23,7 +21,7 @@ public class MaxHearth extends Challenge {
 	private ChallengesMainClass plugin;	
 	
 	public MaxHearth(ChallengesMainClass plugin) {
-		super(plugin, "maxhearth", "config.yml", "maxhearth", 6*9, true, "MaxHerzen", "Max Herzen", "challenge-maxhearths");
+		super(plugin, "maxhearth", "config.yml", "maxhearth", 6*9, true, "MaxHerzen", "chmenu", "challenge-maxhearths");
 		this.setPlugin(plugin);
 		
         Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
@@ -56,12 +54,12 @@ public class MaxHearth extends Challenge {
 	public ItemStack getItem() {
 		ItemBuilder ib = new ItemBuilder(Material.CUT_RED_SANDSTONE_SLAB);
 		if(isToggled()) {
-			ib.setDisplayName("§6MaxLeben " + Starter.STARTPREFIX + "§aOn");
+			ib.setDisplayName("§6MaxLeben " + Starter.START_PREFIX + "§aOn");
 		} else {
-			ib.setDisplayName("§6MaxLeben " + Starter.STARTPREFIX + "§cOff");
+			ib.setDisplayName("§6MaxLeben " + Starter.START_PREFIX + "§cOff");
 		}
 		String[] lore = new String[4];
-		lore[0] = Starter.STARTPREFIX + "§aIn dieser Challenge muss man Minecraft mit";
+		lore[0] = Starter.START_PREFIX + "§aIn dieser Challenge muss man Minecraft mit";
 		lore[1] = "§aX Herzen durchspielen.";
 		lore[2] = "§7Derzeitige Herzen§8: §6" + getOption(cfg, "maxhearths.max", 20) + "/20";
 		lore[3] = "§6Mittelklick §7> §aÖffne Inventar";
@@ -111,9 +109,9 @@ public class MaxHearth extends Challenge {
 	@Override
 	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page) {
 		if(isToggled()) {
-			itemdisplayname = "§6Max Herzen " + Starter.STARTPREFIX + "§aOn";
+			itemdisplayname = "§6Max Herzen " + Starter.START_PREFIX + "§aOn";
 		} else {
-			itemdisplayname = "§6Max Herzen " + Starter.STARTPREFIX + "§cOff";
+			itemdisplayname = "§6Max Herzen " + Starter.START_PREFIX + "§cOff";
 		}
 
 		if(item.getItemMeta().getDisplayName().equalsIgnoreCase(plusMaxHearth1) && item.getType() == Material.STONE_BUTTON) {
@@ -125,7 +123,7 @@ public class MaxHearth extends Challenge {
 		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(itemdisplayname)) {
 			toggle();
 		}
-		// p.openInventory(getInventory(page, p));
+		p.openInventory(getInventory(page, p));
 	}
 
 	String plusMaxHearth1 = "§6Füge 0,5 Herzen hinzu",
@@ -141,9 +139,9 @@ public class MaxHearth extends Challenge {
 
 		ItemBuilder ib = new ItemBuilder(Material.REDSTONE_BLOCK);
 		if(isToggled()) {
-			itemdisplayname = "§6Max Herzen " + Starter.STARTPREFIX + "§aOn";
+			itemdisplayname = "§6Max Herzen " + Starter.START_PREFIX + "§aOn";
 		} else {
-			itemdisplayname = "§6Max Herzen " + Starter.STARTPREFIX + "§cOff";
+			itemdisplayname = "§6Max Herzen " + Starter.START_PREFIX + "§cOff";
 		}
 		ib.setDisplayName(itemdisplayname);
 
