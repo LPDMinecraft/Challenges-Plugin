@@ -43,8 +43,8 @@ public class WaterMLG extends Challenge {
 		lore[1] = "§aeinen WaterMLG machen. Wenn einer dabei stirbt ist die Challange";
 		lore[2] = "§avorbei.";
 		lore[3] = "§7Derzeitig ausgew§hlte Zeit§8: §6" + getOption(cfg, "watermlg.max", 30);
-		lore[4] = "§6Linksklick §7> §a-1 Sekunde";
-		lore[5] = "§6Rechtsklick §7> §a+1 Sekunde";
+		lore[4] = "§6Linksklick §7> §a-5 Sekunden";
+		lore[5] = "§6Rechtsklick §7> §a+5 Sekunden";
 		lore[6] = "§6Mittelklick §7> §aAn/Aus diese Challenge";
 		
 		ib.setLoreString(lore);
@@ -53,13 +53,13 @@ public class WaterMLG extends Challenge {
 	
 	@Override
 	public void onRightClick(Player p) {
-		setOption(cfg, "watermlg.max", (int)getOption(cfg, "watermlg.max", 30) + 1);
+		setOption(cfg, "watermlg.max", (int)getOption(cfg, "watermlg.max", 120) + 5);
 	}
 	
 	@Override
 	public void onLeftClick(Player p) {
-		if((int)getOption(cfg, "watermlg.max", 30) > 1) {
-			setOption(cfg, "watermlg.max", (int)getOption(cfg, "watermlg.max", 30) - 1);
+		if((int)getOption(cfg, "watermlg.max", 30) > 5) {
+			setOption(cfg, "watermlg.max", (int)getOption(cfg, "watermlg.max", 120) - 5);
 		}
 	}
 	
@@ -88,7 +88,7 @@ public class WaterMLG extends Challenge {
 			@Override
 			public void run() {
 				inv = new HashMap<>();
-				if(isEnabled() && ChallengesMainClass.t.isStarted()) {
+				if(isEnabled()) {
 					for(Player c : Bukkit.getOnlinePlayers()) {
 						if(c.getGameMode() == GameMode.SURVIVAL) {
 							inv.put(c, c.getInventory().getContents());
@@ -98,7 +98,7 @@ public class WaterMLG extends Challenge {
 							loc.put(c, c.getLocation());
 							
 							// 30 - 50 Bl§cke
-							int r = Mathe.getRandom(20, 100);
+							int r = Mathe.getRandom(30, 50);
 							c.teleport(new Location(c.getWorld(), c.getLocation().getX(), ChallengesMainClass.getHighestY(c.getLocation()) + r, c.getLocation().getZ()));
 							c.getInventory().addItem(new ItemBuilder(Material.WATER_BUCKET).setDisplayName("§6Der beste Springer").build());
 							Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
@@ -111,13 +111,13 @@ public class WaterMLG extends Challenge {
 									loc.remove(c);
 								}
 								
-							}, ((r - 30) + 1) * 7L);
+							}, ((r / 10) * 20));
 						}
 					}
 				}
 			}
 			
-		}, 0, (int)getOption(cfg, "watermlg.max", 30));
+		}, 0, (int)getOption(cfg, "watermlg.max", 120) * 20);
 	}
 	
 }

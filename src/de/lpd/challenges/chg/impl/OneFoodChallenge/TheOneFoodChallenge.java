@@ -1,10 +1,13 @@
 package de.lpd.challenges.chg.impl.OneFoodChallenge;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import de.lpd.challenges.chg.Challenge;
 import de.lpd.challenges.main.ChallengesMainClass;
@@ -19,7 +22,7 @@ public class TheOneFoodChallenge extends Challenge {
 	private HashMap<Material, Integer> eaten;
 	
 	public TheOneFoodChallenge(ChallengesMainClass plugin) {
-		super(plugin, "theonefoodchallenge", "config.yml", "foodchallenge");
+		super(plugin, "theonefoodchallenge", "config.yml", "foodchallenge", 6*9, true, "TheMaxFood", "Max Food", "challenge-maxfood");
 		eaten = new HashMap<>();
 	}
 	
@@ -95,5 +98,28 @@ public class TheOneFoodChallenge extends Challenge {
 			}
 		}
 	}
-	
+
+	String plusMaxFood1 = "§6Ändere das Maximum vom Essentyp um +1",
+			minusMaxFood1 = "§6Ändere das Maximum vom Essentyp um -1";
+
+	@Override
+	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page) {
+
+	}
+
+	@Override
+	public Inventory getInventory(int page, Player p) {
+		org.bukkit.inventory.Inventory inv = getInv();
+		inv = de.lpd.challenges.invs.Inventory.placeHolder(inv);
+
+		ArrayList<ItemStack> items = new ArrayList<>();
+
+		inv.setItem(0, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(plusMaxFood1).build());
+		inv.setItem(9, new ItemBuilder(Material.REDSTONE_BLOCK).setDisplayName("§6Maximales Essen von einem Essentyp").build());
+		inv.setItem(18, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(minusMaxFood1).build());
+
+		inv.setItem(inv.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK()).build());
+
+		return getPage(items, inv, page);
+	}
 }

@@ -1,6 +1,7 @@
 package de.lpd.challenges.main;
 
 import de.lpd.challenges.chg.Challenge;
+import de.lpd.challenges.settings.Setting;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -113,6 +114,9 @@ public class ChallengesMainClass extends JavaPlugin {
 	public static void fail(int reason) {
 
 		for(Challenge c : getChMa().idtoclass.values()) {
+			c.ifPlayerDies();
+		}
+		for(Setting c : getSettingManager().settings) {
 			c.ifPlayerDies();
 		}
 

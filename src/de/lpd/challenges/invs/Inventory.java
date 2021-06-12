@@ -134,8 +134,8 @@ public abstract class Inventory implements Listener {
 		}
 	}
 
-	public abstract void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e);
-	public abstract org.bukkit.inventory.Inventory getInventory(int page);
+	public abstract void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page);
+	public abstract org.bukkit.inventory.Inventory getInventory(int page, Player p);
 
 	@EventHandler
 	public void onInteract(InventoryClickEvent e) {
@@ -156,18 +156,18 @@ public abstract class Inventory implements Listener {
 										if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ITEM_BeforePage)) {
 											if(currentpage > 1) {
 												p.closeInventory();
-												p.openInventory(getInventory(currentpage - 1));
+												p.openInventory(getInventory(currentpage - 1, p));
 											}
 										} else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ITEM_NextPage)) {
 											if(currentpage < Arrays.stream(e.getView().getTopInventory().getContents()).count()) {
 												p.closeInventory();
-												p.openInventory(getInventory(currentpage + 1));
+												p.openInventory(getInventory(currentpage + 1, p));
 											}
 										} else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ITEM_BACK)) {
 											p.closeInventory();
-											p.openInventory(ChallengesMainClass.getInvManager().invs.get("menu").getInventory(1));
+											p.openInventory(ChallengesMainClass.getInvManager().invs.get("menu").getInventory(1, p));
 										} else {
-											onClickOnItemEvent(p, e.getCurrentItem(), e);
+											onClickOnItemEvent(p, e.getCurrentItem(), e, getCurrentPage(e.getView().getTitle()));
 										}
 									}
 								}

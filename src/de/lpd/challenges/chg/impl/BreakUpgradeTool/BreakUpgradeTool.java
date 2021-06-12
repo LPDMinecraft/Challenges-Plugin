@@ -1,5 +1,6 @@
 package de.lpd.challenges.chg.impl.BreakUpgradeTool;
 
+import de.lpd.challenges.utils.HeadBuilder;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.HumanEntity;
@@ -7,6 +8,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -16,12 +19,14 @@ import de.lpd.challenges.utils.Config;
 import de.lpd.challenges.utils.ItemBuilder;
 import de.lpd.challenges.utils.Starter;
 
+import java.util.ArrayList;
+
 public class BreakUpgradeTool extends Challenge {
 	
 	private Config cfg;
 	
 	public BreakUpgradeTool(ChallengesMainClass plugin) {
-		super(plugin, "breakupgradetool", "config.yml", "breakupgradetool");
+		super(plugin, "breakupgradetool", "config.yml", "breakupgradetool", 6*9, true, "BreakUpgradeTool", "Break Upgrade Tool", "challenge-breakupgradetool");
 	}
 
 	@Override
@@ -33,19 +38,12 @@ public class BreakUpgradeTool extends Challenge {
 	@Override
 	public ItemStack getItem() {
 		ItemBuilder ib = new ItemBuilder(Material.ENCHANTED_BOOK);
-		if(isToggled()) {
-			ib.setDisplayName("§6Entchante jedes Abbauen " + Starter.STARTPREFIX + "§aOn");
-		} else {
-			ib.setDisplayName("§6Entchante jedes Abbauen " + Starter.STARTPREFIX + "§cOff");
-		}
-		String[] lore = new String[7];
+		ib.setDisplayName("§6Entchante jedes Abbauen");
+		String[] lore = new String[4];
 		lore[0] = Starter.STARTPREFIX + "§aIn dieser Challenge muss man Minecraft";
 		lore[1] = "§adurchspielen. Bei jedem Block abbauen wird es um eine belibige";
 		lore[2] = "§aZahl Entchantmens hochgelevelt auf das Tool.";
-		lore[3] = "§aDerzeitige Level pro Abbauen§7: §6" + (int) getOption(cfg, "breakupgradetool.levelplus", 1);
-		lore[4] = "§6Mittelklick §7> §aAn/Aus diese Challenge";
-		lore[5] = "§6Rechtsklick §7> §a+1 mehr Level";
-		lore[6] = "§6Linksklick §7> §a-1 mehr Level";
+		lore[3] = "§6Linksklick §7> §aÖffne das Inventart";
 		
 		ib.setLoreString(lore);
 		return ib.build();
@@ -53,16 +51,17 @@ public class BreakUpgradeTool extends Challenge {
 
 	@Override
 	public void onRightClick(Player p) {
-		int level = (int) getOption(cfg, "breakupgradetool.levelplus", 1);
+		/*int level = (int) getOption(cfg, "breakupgradetool.levelplus", 1);
 		level++;
-		setOption(cfg, "breakupgradetool.levelplus", level);
+		setOption(cfg, "breakupgradetool.levelplus", level);*/
 	}
 
 	@Override
 	public void onLeftClick(Player p) {
-		int level = (int) getOption(cfg, "breakupgradetool.levelplus", 1);
+		/*int level = (int) getOption(cfg, "breakupgradetool.levelplus", 1);
 		level--;
-		setOption(cfg, "breakupgradetool.levelplus", level);
+		setOption(cfg, "breakupgradetool.levelplus", level);*/
+		p.openInventory(getInventory(1, p));
 	}
 
 	@Override
@@ -125,5 +124,33 @@ public class BreakUpgradeTool extends Challenge {
 	public int getRandomNumber(int min, int max) {
 	    return (int) ((Math.random() * (max - min)) + min);
 	}
-	
+
+	String plusMaxHearth1 = "§6+1 Entchantment Level",
+			minusMaxHeath1 = "§6-1 Entchantment Level";
+
+	@Override
+	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page) {
+
+	}
+
+	@Override
+	public Inventory getInventory(int page, Player p) {
+		inv = placeHolder(inv);
+
+		ArrayList<ItemStack> items = new ArrayList<>();
+		ItemBuilder ib = new ItemBuilder(Material.REDSTONE_BLOCK);
+		if(isToggled()) {
+			ib.setDisplayName("§6Entchante jedes Abbauen " + Starter.STARTPREFIX + "§aOn §7- §6" + getOption(cfg, "breakupgradetool.levelplus", 1));
+		} else {
+			ib.setDisplayName("§6Entchante jedes Abbauen " + Starter.STARTPREFIX + "§cOff §7- §6" + getOption(cfg, "breakupgradetool.levelplus", 1));
+		}
+
+		inv.setItem(0, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(plusMaxHearth1).build());
+		inv.setItem(9, ib.build());
+		inv.setItem(18, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(minusMaxHeath1).build());
+
+		inv.setItem(inv.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK()).build());
+
+		return getPage(items, inv, page);
+	}
 }

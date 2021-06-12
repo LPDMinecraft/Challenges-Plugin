@@ -10,6 +10,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import de.lpd.challenges.chg.Challenge;
 import de.lpd.challenges.main.ChallengesMainClass;
@@ -17,13 +18,15 @@ import de.lpd.challenges.utils.Config;
 import de.lpd.challenges.utils.ItemBuilder;
 import de.lpd.challenges.utils.Starter;
 
+import java.util.ArrayList;
+
 public class LockedSlots extends Challenge {
 	
 	private Config cfg;
 	private ChallengesMainClass plugin;
 	
 	public LockedSlots(ChallengesMainClass plugin) {
-		super(plugin, "lockedslots", "lockedslots.yml", "lockedslots");
+		super(plugin, "lockedslots", "lockedslots.yml", "lockedslots", 6*9, true, "LockedSlots", "Locked Slots", "challenge-lockedslots");
 		this.setPlugin(plugin);
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
 			
@@ -63,8 +66,7 @@ public class LockedSlots extends Challenge {
 		lore[0] = Starter.STARTPREFIX + "§aIn dieser Challenge muss man Minecraft mit";
 		lore[1] = "§aX Slots durchspielen.";
 		lore[2] = "§7Derzeitig gespeerte Slots§8: §6" + getOption(cfg, "lockedslots.max", 0);
-		lore[3] = "§6Linksklick §7> §a-1 Slot";
-		lore[4] = "§6Rechtsklick §7> §a+1 Slot";
+		lore[3] = "§6Linksklick §7> §aOpen Inventory";
 		lore[5] = "§6Mittelklick §7> §aAn/Aus diese Challenge";
 		
 		ib.setLoreString(lore);
@@ -84,16 +86,17 @@ public class LockedSlots extends Challenge {
 	
 	@Override
 	public void onRightClick(Player p) {
-		setOption(cfg, "lockedslots.max", (int)getOption(cfg, "lockedslots.max", 0) + 1);
-		a(p);
+		/*setOption(cfg, "lockedslots.max", (int)getOption(cfg, "lockedslots.max", 0) + 1);
+		a(p);*/
 	}
 	
 	@Override
 	public void onLeftClick(Player p) {
-		if((int)getOption(cfg, "lockedslots.max", 0) > 1) {
+		/*if((int)getOption(cfg, "lockedslots.max", 0) > 1) {
 			setOption(cfg, "lockedslots.max", (int)getOption(cfg, "lockedslots.max", 0) - 1);
 			a(p);
-		}
+		}*/
+		p.openInventory(getInventory(1, p));
 	}
 	
 	@Override
@@ -165,6 +168,39 @@ public class LockedSlots extends Challenge {
 
 	public ChallengesMainClass getPlugin() {
 		return plugin;
+	}
+
+	String plusLockedSlots1 = "§6Sperre ein 1 Slot mehr",
+			minusLockedSlots1 = "§6Entsperre ein weiteren 1 Slot";
+
+	@Override
+	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page) {
+		if(item.getItemMeta().getDisplayName().equalsIgnoreCase(plusLockedSlots1) && item.getType() == Material.STONE_BUTTON) {
+			setOption(cfg, "lockedslots.max", (int)getOption(cfg, "lockedslots.max", 0) + 1);
+			a(p);
+		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(minusLockedSlots1) && item.getType() == Material.STONE_BUTTON) {
+			if((int)getOption(cfg, "lockedslots.max", 0) > 1) {
+				setOption(cfg, "lockedslots.max", (int) getOption(cfg, "lockedslots.max", 0) - 1);
+				a(p);
+			}
+		}
+		// p.openInventory(getInventory(page, p));
+	}
+
+	@Override
+	public Inventory getInventory(int page, Player p) {
+		org.bukkit.inventory.Inventory inv = getInv();
+		inv = de.lpd.challenges.invs.Inventory.placeHolder(inv);
+
+		ArrayList<ItemStack> items = new ArrayList<>();
+
+		inv.setItem(0, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(plusLockedSlots1).build());
+		inv.setItem(9, new ItemBuilder(Material.REDSTONE_BLOCK).setDisplayName("§6Maximale Slots").build());
+		inv.setItem(18, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(minusLockedSlots1).build());
+
+		inv.setItem(inv.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK()).build());
+
+		return getPage(items, inv, page);
 	}
 
 	public void setPlugin(ChallengesMainClass plugin) {

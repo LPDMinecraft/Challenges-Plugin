@@ -21,7 +21,7 @@ public class ChallengesMenu extends Inventory {
 	public static String TITLE = "§6Challenges §aMenu";
 
 	@Override
-	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e) {
+	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page) {
 		if(item.getType() != Material.BLACK_STAINED_GLASS_PANE) {
 			for(String key : ChallengesManager.getItemStack().keySet()) {
 				ItemStack i = ChallengesManager.getItemStack().get(key);
@@ -37,7 +37,7 @@ public class ChallengesMenu extends Inventory {
 
 						@Override
 						public void run() {
-							p.openInventory(ChallengesMainClass.getInvManager().invs.get("chmenu").getInventory(1));
+							p.openInventory(ChallengesMainClass.getInvManager().invs.get("chmenu").getInventory(1, p));
 						}
 
 						}, 1L);
@@ -47,7 +47,7 @@ public class ChallengesMenu extends Inventory {
 		}
 	}
 
-	public org.bukkit.inventory.Inventory getInventory(int page) {
+	public org.bukkit.inventory.Inventory getInventory(int page, Player p) {
 		org.bukkit.inventory.Inventory inv = getInv();
 		inv = de.lpd.challenges.invs.Inventory.placeHolder(inv);
 

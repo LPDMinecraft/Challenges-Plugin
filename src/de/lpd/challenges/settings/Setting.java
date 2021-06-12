@@ -1,5 +1,6 @@
 package de.lpd.challenges.settings;
 
+import de.lpd.challenges.invs.Inventory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
@@ -7,7 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import de.lpd.challenges.main.ChallengesMainClass;
 import de.lpd.challenges.utils.Config;
 
-public abstract class Setting implements Listener {
+public abstract class Setting extends Inventory implements Listener {
 	
 	public abstract void onTimerStarted();
 	public abstract void onTimerStoped();
@@ -17,15 +18,18 @@ public abstract class Setting implements Listener {
 	public abstract void onLeftClick(Player p);
 	public abstract void onMiddleClick(Player p);
 	public abstract void reset();
+	public abstract void ifPlayerDies();
 	
 	private boolean isEnabled = false;
 	private String path = "";
 	
-	public Setting(ChallengesMainClass plugin, String cfgPath, String filename, String root) {
+	public Setting(ChallengesMainClass plugin, String cfgPath, String filename, String root, int size, boolean hasMoreThen1Site, String name, String backName, String id) {
+		super(plugin, size, hasMoreThen1Site, name, backName);
 		plugin.registerListener(this);
 		path = "settings//" + cfgPath;
 		cfg(new Config(path, filename));
 		isEnabled = (boolean) getOption(new Config(path, filename), root + ".isEnabled", isEnabled);
+		ChallengesMainClass.getInvManager().invs.put(id, this);
 	}
 	
 	public static Object getOption(Config cfg, String path, Object start) {

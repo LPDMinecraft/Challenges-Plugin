@@ -2,16 +2,12 @@ package de.lpd.challenges.chg;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
-
 import de.lpd.challenges.chg.impl.BreakUpgradeTool.BreakUpgradeTool;
 import de.lpd.challenges.chg.impl.Hearths.GeteilteHearths;
 import de.lpd.challenges.chg.impl.Hearths.MaxHearth;
 import de.lpd.challenges.chg.impl.LockedSlots.LockedSlots;
 import de.lpd.challenges.chg.impl.OneFoodChallenge.TheOneFoodChallenge;
-import de.lpd.challenges.chg.impl.TheFloorIsLava.TheFloorIsLava;
 import de.lpd.challenges.chg.impl.WaterMLG.WaterMLG;
 import de.lpd.challenges.main.ChallengesMainClass;
 
@@ -26,7 +22,6 @@ public class ChallengesManager {
 		
 		idtoclass.put("theonefoodchallenge", new TheOneFoodChallenge(this.plugin));
 		idtoclass.put("watermlg", new WaterMLG(plugin));
-		idtoclass.put("thefloorislava", new TheFloorIsLava(plugin));
 		idtoclass.put("lockedslots", new LockedSlots(plugin));
 		idtoclass.put("geteilteherzen", new GeteilteHearths(plugin));
 		idtoclass.put("maxheaths", new MaxHearth(plugin));

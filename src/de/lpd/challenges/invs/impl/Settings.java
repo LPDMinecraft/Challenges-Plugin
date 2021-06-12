@@ -1,7 +1,12 @@
 package de.lpd.challenges.invs.impl;
 
+import de.lpd.challenges.chg.ChallengesManager;
+import de.lpd.challenges.settings.Setting;
+import de.lpd.challenges.settings.SettingManager;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 import de.lpd.challenges.invs.Inventory;
@@ -18,19 +23,42 @@ public class Settings extends Inventory {
 	}
 
 	@Override
-	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e) {
-		/*if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(getItemBack())) {
-			p.closeInventory();
-			p.openInventory(ChallengesMainClass.getInvManager().invs.get("menu").getInventory(0));
-		}*/
+	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page) {
+		if(item.getType() != Material.BLACK_STAINED_GLASS_PANE) {
+			for(Setting c : ChallengesMainClass.getSettingManager().settings) {
+				ItemStack i = c.getItem();
+				if(item.getItemMeta().getDisplayName().equalsIgnoreCase(i.getItemMeta().getDisplayName()) && item.getType() == i.getType()) {
+					if(e.getClick() == ClickType.MIDDLE) {
+						c.onMiddleClick(p);
+					} else if(e.isLeftClick()) {
+						c.onLeftClick(p);
+					} else if(e.isRightClick()) {
+						c.onRightClick(p);
+					}
+					Bukkit.getScheduler().runTaskLater(ChallengesMainClass.getPlugin(), new Runnable() {
+
+						@Override
+						public void run() {
+							p.openInventory(ChallengesMainClass.getInvManager().invs.get("settings").getInventory(1, p));
+						}
+
+					}, 1L);
+					break;
+				}
+			}
+		}
 	}
 
 	@Override
-	public org.bukkit.inventory.Inventory getInventory(int page) {
+	public org.bukkit.inventory.Inventory getInventory(int page, Player p) {
 		org.bukkit.inventory.Inventory inv = getInv();
 		inv = de.lpd.challenges.invs.Inventory.placeHolder(inv);
 
 		ArrayList<ItemStack> items = new ArrayList<>();
+
+		for(Setting c : SettingManager.settings) {
+			items.add(c.getItem());
+		}
 
 		inv.setItem(inv.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK()).build());
 

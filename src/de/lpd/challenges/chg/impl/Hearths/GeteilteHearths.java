@@ -1,5 +1,7 @@
 package de.lpd.challenges.chg.impl.Hearths;
 
+import de.lpd.challenges.settings.Setting;
+import de.lpd.challenges.settings.SettingManager;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -7,6 +9,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import de.lpd.challenges.chg.Challenge;
@@ -15,12 +19,14 @@ import de.lpd.challenges.utils.Config;
 import de.lpd.challenges.utils.ItemBuilder;
 import de.lpd.challenges.utils.Starter;
 
+import java.util.ArrayList;
+
 public class GeteilteHearths extends Challenge {
 	
 	public Config cfg;
 
 	public GeteilteHearths(ChallengesMainClass plugin) {
-		super(plugin, "geteilteherzen", "config.yml", "geteiltehearths");
+		super(plugin, "geteilteherzen", "config.yml", "geteiltehearths", 6*9, true, "GeteilteHerzen", "Geteilte Herzen", "challenge-geteilteherzen");
         Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
 			
 			@Override
@@ -98,5 +104,14 @@ public class GeteilteHearths extends Challenge {
 			}
 		}
 	}
-	
+
+	@Override
+	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page) {
+
+	}
+
+	@Override
+	public Inventory getInventory(int page, Player p) {
+		return inv;
+	}
 }

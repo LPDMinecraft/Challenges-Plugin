@@ -1,8 +1,12 @@
 package de.lpd.challenges.chg.impl.Hearths;
 
+import de.lpd.challenges.settings.Setting;
+import de.lpd.challenges.settings.SettingManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import de.lpd.challenges.chg.Challenge;
@@ -11,13 +15,15 @@ import de.lpd.challenges.utils.Config;
 import de.lpd.challenges.utils.ItemBuilder;
 import de.lpd.challenges.utils.Starter;
 
-public class MaxHearth extends Challenge{
+import java.util.ArrayList;
+
+public class MaxHearth extends Challenge {
 	
 	private Config cfg;
 	private ChallengesMainClass plugin;	
 	
 	public MaxHearth(ChallengesMainClass plugin) {
-		super(plugin, "maxhearth", "config.yml", "maxhearth");
+		super(plugin, "maxhearth", "config.yml", "maxhearth", 6*9, true, "MaxHerzen", "Max Herzen", "challenge-maxhearths");
 		this.setPlugin(plugin);
 		
         Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
@@ -54,13 +60,12 @@ public class MaxHearth extends Challenge{
 		} else {
 			ib.setDisplayName("§6MaxLeben " + Starter.STARTPREFIX + "§cOff");
 		}
-		String[] lore = new String[6];
+		String[] lore = new String[5];
 		lore[0] = Starter.STARTPREFIX + "§aIn dieser Challenge muss man Minecraft mit";
 		lore[1] = "§aX Herzen durchspielen.";
 		lore[2] = "§7Derzeitige Herzen§8: §6" + getOption(cfg, "maxhearths.max", 20) + "/20";
-		lore[3] = "§6Linksklick §7> §a-1 Herz";
-		lore[4] = "§6Rechtsklick §7> §a+1 Herz";
-		lore[5] = "§6Mittelklick §7> §aAn/Aus diese Challenge";
+		lore[3] = "§6Mittelklick §7> §aAn/Aus diese Challenge";
+		lore[4] = "§6Linksklick §7> §aÖffne Inventar";
 		
 		ib.setLoreString(lore);
 		return ib.build();
@@ -68,14 +73,16 @@ public class MaxHearth extends Challenge{
 
 	@Override
 	public void onRightClick(Player p) {
-		setOption(cfg, "maxhearths.max", (int)getOption(cfg, "maxhearths.max", 20) + 1);
+		/*setOption(cfg, "maxhearths.max", (int)getOption(cfg, "maxhearths.max", 20) + 1);*/
+
 	}
 
 	@Override
 	public void onLeftClick(Player p) {
-		if((int)getOption(cfg, "maxhearths.max", 20) > 1) {
+		/*if((int)getOption(cfg, "maxhearths.max", 20) > 1) {
 			setOption(cfg, "maxhearths.max", (int)getOption(cfg, "maxhearths.max", 20) - 1);
-		}
+		}*/
+		p.openInventory(getInventory(1, p));
 	}
 
 	@Override
@@ -101,6 +108,37 @@ public class MaxHearth extends Challenge{
 
 	public ChallengesMainClass getPlugin() {
 		return plugin;
+	}
+
+	@Override
+	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page) {
+		if(item.getItemMeta().getDisplayName().equalsIgnoreCase(plusMaxHearth1) && item.getType() == Material.STONE_BUTTON) {
+			setOption(cfg, "maxhearths.max", (int)getOption(cfg, "maxhearths.max", 20) + 1);
+		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(minusMaxHeath1) && item.getType() == Material.STONE_BUTTON) {
+			if((int)getOption(cfg, "maxhearths.max", 20) > 1) {
+				setOption(cfg, "maxhearths.max", (int) getOption(cfg, "maxhearths.max", 20) - 1);
+			}
+		}
+		// p.openInventory(getInventory(page, p));
+	}
+
+	String plusMaxHearth1 = "§6Füge 0,5 Herzen hinzu",
+	       minusMaxHeath1 = "§6Lösche 0,5 Herzen";
+
+	@Override
+	public Inventory getInventory(int page, Player p) {
+		org.bukkit.inventory.Inventory inv = getInv();
+		inv = de.lpd.challenges.invs.Inventory.placeHolder(inv);
+
+		ArrayList<ItemStack> items = new ArrayList<>();
+
+		inv.setItem(0, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(plusMaxHearth1).build());
+		inv.setItem(9, new ItemBuilder(Material.REDSTONE_BLOCK).setDisplayName("§6Maximale Herzen").build());
+		inv.setItem(18, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(minusMaxHeath1).build());
+
+		inv.setItem(inv.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK()).build());
+
+		return getPage(items, inv, page);
 	}
 
 	public void setPlugin(ChallengesMainClass plugin) {

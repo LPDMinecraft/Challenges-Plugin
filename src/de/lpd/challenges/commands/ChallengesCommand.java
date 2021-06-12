@@ -19,7 +19,7 @@ public class ChallengesCommand extends Command {
 		if(s instanceof Player) {
 			Player p = (Player) s;
 			if(args.length == 0) {
-				p.openInventory(ChallengesMainClass.getInvManager().invs.get("menu").getInventory(1));
+				p.openInventory(ChallengesMainClass.getInvManager().invs.get("menu").getInventory(1, p));
 				p.sendMessage(PREFIX + "§aDas Inventar wurde ge§ffnet.");
 			} else if(args.length == 1) {
 				if(args[0].equalsIgnoreCase("reset")) {
