@@ -135,15 +135,16 @@ public class WaterMLG extends Challenge {
 
 		if(item.getItemMeta().getDisplayName().equalsIgnoreCase(plusMaxFood1)) {
 			setOption(cfg, "watermlg.max", (int)getOption(cfg, "watermlg.max", 120) + 5);
+			p.openInventory(getInventory(page, p));
 		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(minusMaxFood1)) {
 			if((int)getOption(cfg, "watermlg.max", 30) > 5) {
 				setOption(cfg, "watermlg.max", (int)getOption(cfg, "watermlg.max", 120) - 5);
+				p.openInventory(getInventory(page, p));
 			}
 		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(itemdisplayname)) {
 			toggle();
+			p.openInventory(getInventory(page, p));
 		}
-
-		p.openInventory(getInventory(page, p));
 	}
 
 	@Override

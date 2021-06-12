@@ -180,13 +180,16 @@ public class LockedSlots extends Challenge {
 		if(item.getItemMeta().getDisplayName().equalsIgnoreCase(plusLockedSlots1) && item.getType() == Material.STONE_BUTTON) {
 			setOption(cfg, "lockedslots.max", (int)getOption(cfg, "lockedslots.max", 0) + 1);
 			a(p);
+			p.openInventory(getInventory(page, p));
 		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(minusLockedSlots1) && item.getType() == Material.STONE_BUTTON) {
 			if((int)getOption(cfg, "lockedslots.max", 0) > 1) {
 				setOption(cfg, "lockedslots.max", (int) getOption(cfg, "lockedslots.max", 0) - 1);
 				a(p);
+				p.openInventory(getInventory(page, p));
 			}
 		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(itemdisplayname)) {
 			toggle();
+			p.openInventory(getInventory(page, p));
 		}
 		p.openInventory(getInventory(page, p));
 	}
