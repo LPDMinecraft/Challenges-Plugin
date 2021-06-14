@@ -173,7 +173,7 @@ public abstract class Inventory implements Listener {
 												p.openInventory(ChallengesMainClass.getInvManager().invs.get("menu").getInventory(1, p));
 											}
 										} else {
-											onClickOnItemEvent(p, e.getCurrentItem(), e, getCurrentPage(e.getView().getTitle()));
+											onClickOnItemEvent(p, e.getCurrentItem(), e, currentpage);
 											Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
 												@Override
 												public void run() {
