@@ -130,6 +130,15 @@ public class BreakUpgradeTool extends Challenge {
 
 	@Override
 	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page) {
+		if(item.getItemMeta().getDisplayName().equalsIgnoreCase(plusMaxHearth1)) {
+			int level = (int) getOption(cfg, "breakupgradetool.levelplus", 1);
+			level++;
+			setOption(cfg, "breakupgradetool.levelplus", level);
+		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(minusMaxHeath1)) {
+			int level = (int) getOption(cfg, "breakupgradetool.levelplus", 1);
+			level--;
+			setOption(cfg, "breakupgradetool.levelplus", level);
+		}
 
 	}
 

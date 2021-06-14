@@ -115,11 +115,9 @@ public class TheOneFoodChallenge extends Challenge {
 
 		if(item.getItemMeta().getDisplayName().equalsIgnoreCase(plusMaxFood1)) {
 			setOption(cfg, "foodchallenge.max", (int) getOption(cfg, "foodchallenge.max", 1) + 1);
-			p.openInventory(getInventory(page, p));
 		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(minusMaxFood1)) {
 			if((int) getOption(cfg, "foodchallenge.max", 1) > 1) {
 				setOption(cfg, "foodchallenge.max", (int) getOption(cfg, "foodchallenge.max", 1) - 1);
-				p.openInventory(getInventory(page, p));
 			}
 		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(itemdisplayname)) {
 			toggle();

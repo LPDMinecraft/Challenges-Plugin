@@ -116,15 +116,12 @@ public class MaxHearth extends Challenge {
 
 		if(item.getItemMeta().getDisplayName().equalsIgnoreCase(plusMaxHearth1) && item.getType() == Material.STONE_BUTTON) {
 			setOption(cfg, "maxhearths.max", (int)getOption(cfg, "maxhearths.max", 20) + 1);
-			p.openInventory(getInventory(page, p));
 		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(minusMaxHeath1) && item.getType() == Material.STONE_BUTTON) {
 			if((int)getOption(cfg, "maxhearths.max", 20) > 1) {
 				setOption(cfg, "maxhearths.max", (int) getOption(cfg, "maxhearths.max", 20) - 1);
-				p.openInventory(getInventory(page, p));
 			}
 		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(itemdisplayname)) {
 			toggle();
-			p.openInventory(getInventory(page, p));
 		}
 
 	}

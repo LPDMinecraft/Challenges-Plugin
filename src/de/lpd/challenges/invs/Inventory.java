@@ -22,7 +22,8 @@ public abstract class Inventory implements Listener {
 			             ITEM_BACK = "§cZur§ck zum §6",
 			             ITEM_NextPage = "§6§lN§chste Seite",
 			             ITEM_BeforePage = "§6§lVorherige Seite",
-	                     NAME;
+	                     NAME,
+	                     BACK_NAME;
 	private Config cfg;
 	public org.bukkit.inventory.Inventory inv;
 
@@ -59,6 +60,7 @@ public abstract class Inventory implements Listener {
 		this.hasMoreThen1Site = hasMoreThen1Site;
 		NAME = name;
 
+		BACK_NAME = backName;
 		NAME = (String) cfg.getOption(cfg, "settings.name", NAME);
 
 		TITLE = TITLE + NAME;
@@ -165,9 +167,22 @@ public abstract class Inventory implements Listener {
 											}
 										} else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ITEM_BACK)) {
 											p.closeInventory();
-											p.openInventory(ChallengesMainClass.getInvManager().invs.get("menu").getInventory(1, p));
+											if(isCanBack) {
+												p.openInventory(ChallengesMainClass.getInvManager().invs.get(BACK_NAME).getInventory(1, p));
+											} else {
+												p.openInventory(ChallengesMainClass.getInvManager().invs.get("menu").getInventory(1, p));
+											}
 										} else {
 											onClickOnItemEvent(p, e.getCurrentItem(), e, getCurrentPage(e.getView().getTitle()));
+											Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
+												@Override
+												public void run() {
+													org.bukkit.inventory.Inventory inv = getInventory(currentpage, p);
+													if(inv != null) {
+														//p.openInventory(inv);
+													}
+												}
+											}, 3l);
 										}
 									}
 								}

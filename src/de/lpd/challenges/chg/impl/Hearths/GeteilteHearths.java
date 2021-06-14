@@ -108,7 +108,6 @@ public class GeteilteHearths extends Challenge {
         }
 		if(item.getItemMeta().getDisplayName().equalsIgnoreCase(itemdisplayname)) {
 			toggle();
-			p.openInventory(getInventory(page, p));
 		}
 	}
 
