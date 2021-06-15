@@ -126,10 +126,17 @@ public class BreakUpgradeTool extends Challenge {
 	}
 
 	String plusMaxHearth1 = "§6+1 Entchantment Level",
-			minusMaxHeath1 = "§6-1 Entchantment Level";
+			minusMaxHeath1 = "§6-1 Entchantment Level",
+	        namei;
 
 	@Override
 	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page) {
+		if(isToggled()) {
+			namei = "§aEntchante jedes Abbauen(" + isToggled() + "): §6" + getOption(cfg, "breakupgradetool.levelplus", 1) + " Level";
+		} else {
+			namei = "§aEntchante jedes Abbauen(" + isToggled() + "): §6" + getOption(cfg, "breakupgradetool.levelplus", 1) + " Level";
+		}
+
 		if(item.getItemMeta().getDisplayName().equalsIgnoreCase(plusMaxHearth1)) {
 			int level = (int) getOption(cfg, "breakupgradetool.levelplus", 1);
 			level++;
@@ -138,6 +145,8 @@ public class BreakUpgradeTool extends Challenge {
 			int level = (int) getOption(cfg, "breakupgradetool.levelplus", 1);
 			level--;
 			setOption(cfg, "breakupgradetool.levelplus", level);
+		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(namei)) {
+			toggle();
 		}
 
 	}
@@ -148,10 +157,15 @@ public class BreakUpgradeTool extends Challenge {
 
 		ArrayList<ItemStack> items = new ArrayList<>();
 		ItemBuilder ib = new ItemBuilder(Material.REDSTONE_BLOCK);
-		ib.setDisplayName("§aEntchante jedes Abbauen: §6" + getOption(cfg, "breakupgradetool.levelplus", 1) + " Level");
+
+		if(isToggled()) {
+			namei = "§aEntchante jedes Abbauen(" + isToggled() + "): §6" + getOption(cfg, "breakupgradetool.levelplus", 1) + " Level";
+		} else {
+			namei = "§aEntchante jedes Abbauen(" + isToggled() + "): §6" + getOption(cfg, "breakupgradetool.levelplus", 1) + " Level";
+		}
 
 		inv.setItem(0, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(plusMaxHearth1).build());
-		inv.setItem(9, ib.build());
+		inv.setItem(9, ib.setDisplayName(namei).build());
 		inv.setItem(18, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(minusMaxHeath1).build());
 
 		inv.setItem(inv.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK()).build());
