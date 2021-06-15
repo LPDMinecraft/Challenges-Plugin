@@ -25,6 +25,9 @@ public abstract class Challenge extends Inventory implements Listener {
 		plugin.registerListener(this);
 		cfg(new Config("challenges//" + cfgPath, filename));
 		ChallengesMainClass.getInvManager().invs.put(id, this);
+		if(!ChallengesMainClass.getInvManager().invs.containsKey(id)) {
+			ChallengesMainClass.getInvManager().invs.put(id, this);
+		}
 		this.root = root;
 	}
 	

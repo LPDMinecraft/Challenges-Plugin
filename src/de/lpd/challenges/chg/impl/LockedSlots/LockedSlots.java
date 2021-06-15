@@ -23,11 +23,9 @@ import java.util.ArrayList;
 public class LockedSlots extends Challenge {
 	
 	private Config cfg;
-	private ChallengesMainClass plugin;
 	
 	public LockedSlots(ChallengesMainClass plugin) {
-		super(plugin, "lockedslots", "lockedslots.yml", "lockedslots", 6*9, true, "LockedSlots", "chmenu", "challenge-lockedslots", "Challenges Menu");
-		this.setPlugin(plugin);
+		super(plugin, "lockedslots", "lockedslots.yml", "lockedslots", 3*9, true, "Locked Slots", "chmenu", "challenge-lockedslots", "Challenges Menu");
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
 			
 			@Override
@@ -58,11 +56,10 @@ public class LockedSlots extends Challenge {
 	public ItemStack getItem() {
 		ItemBuilder ib = new ItemBuilder(Material.RED_STAINED_GLASS);
 
-		String[] lore = new String[4];
+		String[] lore = new String[3];
 		lore[0] = Starter.START_PREFIX + "§aIn dieser Challenge muss man Minecraft mit";
 		lore[1] = "§aX Slots durchspielen.";
-		lore[2] = "§7Derzeitig gespeerte Slots§8: §6" + getOption(cfg, "lockedslots.max", 0);
-		lore[3] = "§6Mittelklick §7> §aOpen Inventory";
+		lore[2] = "§6Mittelklick §7> §aOpen Inventory";
 		
 		ib.setLoreString(lore);
 		return ib.build();
@@ -161,59 +158,46 @@ public class LockedSlots extends Challenge {
 		}
 	}
 
-	public ChallengesMainClass getPlugin() {
-		return plugin;
-	}
-
 	String plusLockedSlots1 = "§6Sperre ein 1 Slot mehr",
 			minusLockedSlots1 = "§6Entsperre ein weiteren 1 Slot",
-			itemdisplayname = "";
+			namei = "";
 
 	@Override
 	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page) {
-		if(isToggled()) {
-			itemdisplayname = "§6Locked Slots " + Starter.START_PREFIX + "§aOn";
-		} else {
-			itemdisplayname = "§6Locked Slots " + Starter.START_PREFIX + "§cOff";
-		}
+		namei = "§6Locked Slots(" + isToggled() + "): " + (int)getOption(cfg, "lockedslots.max", 0) + " Slots sind locked";
 
-		if(item.getItemMeta().getDisplayName().equalsIgnoreCase(plusLockedSlots1) && item.getType() == Material.STONE_BUTTON) {
+		if(item.getItemMeta().getDisplayName().equalsIgnoreCase(plusLockedSlots1)) {
 			setOption(cfg, "lockedslots.max", (int)getOption(cfg, "lockedslots.max", 0) + 1);
 			a(p);
-		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(minusLockedSlots1) && item.getType() == Material.STONE_BUTTON) {
+		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(minusLockedSlots1)) {
 			if((int)getOption(cfg, "lockedslots.max", 0) > 1) {
 				setOption(cfg, "lockedslots.max", (int) getOption(cfg, "lockedslots.max", 0) - 1);
 				a(p);
 			}
-		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(itemdisplayname)) {
+		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(namei)) {
 			toggle();
 		}
 	}
 
 	@Override
 	public Inventory getInventory(int page, Player p) {
-		org.bukkit.inventory.Inventory inv = getInv();
 		inv = de.lpd.challenges.invs.Inventory.placeHolder(inv);
 
-		if(isToggled()) {
-			itemdisplayname = "§6Locked Slots " + Starter.START_PREFIX + "§aOn";
-		} else {
-			itemdisplayname = "§6Locked Slots " + Starter.START_PREFIX + "§cOff";
-		}
+		namei = "§6Locked Slots(" + isToggled() + "): " + (int)getOption(cfg, "lockedslots.max", 0) + " Slots sind locked";
 
 		ArrayList<ItemStack> items = new ArrayList<>();
 
 		inv.setItem(0, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(plusLockedSlots1).build());
-		inv.setItem(9, new ItemBuilder(Material.REDSTONE_BLOCK).setDisplayName(itemdisplayname).build());
+		if(isToggled()) {
+			inv.setItem(9, new ItemBuilder(Material.EMERALD_BLOCK).setDisplayName(namei).build());
+		} else {
+			inv.setItem(9, new ItemBuilder(Material.REDSTONE_BLOCK).setDisplayName(namei).build());
+		}
 		inv.setItem(18, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(minusLockedSlots1).build());
 
 		inv.setItem(inv.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK()).build());
 
 		return getPage(items, inv, page);
-	}
-
-	public void setPlugin(ChallengesMainClass plugin) {
-		this.plugin = plugin;
 	}
 	
 }

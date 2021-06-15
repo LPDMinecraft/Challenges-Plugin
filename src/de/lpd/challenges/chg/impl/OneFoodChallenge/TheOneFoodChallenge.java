@@ -26,9 +26,9 @@ public class TheOneFoodChallenge extends Challenge {
 				"theonefoodchallenge",
 				"config.yml",
 				"foodchallenge",
-				6*9,
+				3*9,
 				true,
-				"TheMaxFood",
+				"The Max Food",
 				"chmenu",
 				"challenge-maxfood",
 				"Challenges Menu");
@@ -123,11 +123,11 @@ public class TheOneFoodChallenge extends Challenge {
 		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(itemdisplayname)) {
 			toggle();
 		}
+		p.openInventory(getInventory(page, p));
 	}
 
 	@Override
 	public Inventory getInventory(int page, Player p) {
-		org.bukkit.inventory.Inventory inv = getInv();
 		inv = de.lpd.challenges.invs.Inventory.placeHolder(inv);
 
 		if(isToggled()) {

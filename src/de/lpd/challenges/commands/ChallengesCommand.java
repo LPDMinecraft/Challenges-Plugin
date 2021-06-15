@@ -23,8 +23,8 @@ public class ChallengesCommand extends Command {
 				p.sendMessage(PREFIX + "§aDas Inventar wurde ge§ffnet.");
 			} else if(args.length == 1) {
 				if(args[0].equalsIgnoreCase("reset")) {
-					if(ChallengesManager.idtoclass != null) {
-						for(Challenge ch : ChallengesManager.idtoclass.values()) {
+					if(ChallengesManager.getIdtoclass() != null) {
+						for(Challenge ch : ChallengesManager.getIdtoclass().values()) {
 							ch.reset();
 						}
 					}

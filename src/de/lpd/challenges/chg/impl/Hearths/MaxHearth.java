@@ -21,7 +21,7 @@ public class MaxHearth extends Challenge {
 	private ChallengesMainClass plugin;	
 	
 	public MaxHearth(ChallengesMainClass plugin) {
-		super(plugin, "maxhearth", "config.yml", "maxhearth", 6*9, true, "MaxHerzen", "chmenu", "challenge-maxhearths", "Challenges Menu");
+		super(plugin, "maxhearth", "config.yml", "maxhearth", 3*9, true, "Max Herzen", "chmenu", "challenge-maxhearths", "Challenges Menu");
 		this.setPlugin(plugin);
 		
         Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
@@ -123,7 +123,7 @@ public class MaxHearth extends Challenge {
 		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(itemdisplayname)) {
 			toggle();
 		}
-
+		p.openInventory(getInventory(page, p));
 	}
 
 	String plusMaxHearth1 = "§6Füge 0,5 Herzen hinzu",

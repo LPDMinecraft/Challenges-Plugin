@@ -27,11 +27,11 @@ public class ChallengesMenu extends Inventory {
 				ItemStack i = ChallengesManager.getItemStack().get(key);
 				if(item.getItemMeta().getDisplayName().equalsIgnoreCase(i.getItemMeta().getDisplayName()) && item.getType() == i.getType()) {
 					if(e.getClick() == ClickType.MIDDLE) {
-						ChallengesManager.idtoclass.get(key).onMiddleClick(p);
+						ChallengesManager.getIdtoclass().get(key).onMiddleClick(p);
 					} else if(e.isLeftClick()) {
-						ChallengesManager.idtoclass.get(key).onLeftClick(p);
+						ChallengesManager.getIdtoclass().get(key).onLeftClick(p);
 					} else if(e.isRightClick()) {
-						ChallengesManager.idtoclass.get(key).onRightClick(p);
+						ChallengesManager.getIdtoclass().get(key).onRightClick(p);
 					}
 					break;
 				}

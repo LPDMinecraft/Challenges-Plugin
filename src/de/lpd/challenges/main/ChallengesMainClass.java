@@ -113,7 +113,7 @@ public class ChallengesMainClass extends JavaPlugin {
 	
 	public static void fail(int reason) {
 
-		for(Challenge c : getChMa().idtoclass.values()) {
+		for(Challenge c : getChMa().getIdtoclass().values()) {
 			c.ifPlayerDies();
 		}
 		for(Setting c : getSettingManager().settings) {

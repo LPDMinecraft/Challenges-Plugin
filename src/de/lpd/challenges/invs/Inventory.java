@@ -1,5 +1,6 @@
 package de.lpd.challenges.invs;
 
+import de.lpd.challenges.chg.Challenge;
 import de.lpd.challenges.chg.ChallengesManager;
 import de.lpd.challenges.utils.Config;
 import org.bukkit.Bukkit;
@@ -138,11 +139,13 @@ public abstract class Inventory implements Listener {
 	}
 
 	public int getCurrentPage(String title) {
+		int site = 1;
 		try {
-			return Integer.valueOf(title.replaceFirst((TITLE + " "), ""));
-		} catch (Exception e) {
-			return 0;
-		}
+			String numbers = title.replaceFirst(TITLE + " ", "");
+			String numb = numbers.split("/")[0];
+			site = Integer.valueOf(numb);
+		} catch (Exception e) { }
+		return site;
 	}
 
 	public abstract void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page);
@@ -154,9 +157,7 @@ public abstract class Inventory implements Listener {
 			Player p = (Player) e.getWhoClicked();
 			if(e.getView() != null) {
 				if(e.getView().getTitle() != null) {
-					String a = TITLE.split(" §7- ")[0];
-					String b = e.getView().getTitle().split(" §7- ")[0];
-					if(a.startsWith(b)) {
+					if(e.getView().getTitle().startsWith(TITLE)) {
 						e.setCancelled(true);
 						if(e.getCurrentItem() != null) {
 							if (e.getCurrentItem().getItemMeta() != null) {
@@ -189,8 +190,8 @@ public abstract class Inventory implements Listener {
 												public void run() {
 													org.bukkit.inventory.Inventory inv = getInventory(currentpage, p);
 													System.out.println(currentpage);
-													if(inv != null) {
-														//p.openInventory(inv);
+													if(inv != null && p.getOpenInventory() != null && p.getOpenInventory().getTitle().startsWith(TITLE)) {
+														p.openInventory(inv);
 													}
 												}
 											}, 3l);

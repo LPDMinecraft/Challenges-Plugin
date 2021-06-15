@@ -22,7 +22,7 @@ public class WaterMLG extends Challenge {
 	private ChallengesMainClass plugin;
 	
 	public WaterMLG(ChallengesMainClass plugin) {
-		super(plugin, "watermlg", "watermlg.yml", "watermlg", 6*9, true, "WaterMLG", "chmenu", "challenge-watermlg", "Challenges Menu");
+		super(plugin, "watermlg", "watermlg.yml", "watermlg", 3*9, true, "Water MLG", "chmenu", "challenge-watermlg", "Challenges Menu");
 		this.plugin = plugin;
 		send();
 	}
@@ -142,6 +142,7 @@ public class WaterMLG extends Challenge {
 		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(itemdisplayname)) {
 			toggle();
 		}
+		p.openInventory(getInventory(page, p));
 	}
 
 	@Override

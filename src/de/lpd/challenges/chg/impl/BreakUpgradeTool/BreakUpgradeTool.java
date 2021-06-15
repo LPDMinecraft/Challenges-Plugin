@@ -21,11 +21,11 @@ import de.lpd.challenges.utils.Starter;
 import java.util.ArrayList;
 
 public class BreakUpgradeTool extends Challenge {
-	
+
 	private Config cfg;
 	
 	public BreakUpgradeTool(ChallengesMainClass plugin) {
-		super(plugin, "breakupgradetool", "config.yml", "breakupgradetool", 6*9, true, "BreakUpgradeTool", "chmenu", "challenge-breakupgradetool", "Challenges Menu");
+		super(plugin, "breakupgradetool", "config.yml", "breakupgradetool", 3*9, true, "Break Upgrade Tool", "chmenu", "challenge-breakupgradetool", "Challenges Menu");
 	}
 
 	@Override
@@ -38,12 +38,11 @@ public class BreakUpgradeTool extends Challenge {
 	public ItemStack getItem() {
 		ItemBuilder ib = new ItemBuilder(Material.ENCHANTED_BOOK);
 		ib.setDisplayName("§6Entchante jedes Abbauen");
-		String[] lore = new String[5];
+		String[] lore = new String[4];
 		lore[0] = Starter.START_PREFIX + "§aIn dieser Challenge muss man Minecraft";
 		lore[1] = "§adurchspielen. Bei jedem Block abbauen wird es um eine belibige";
 		lore[2] = "§aZahl Entchantmens hochgelevelt auf das Tool.";
-		lore[3] = "§6Linksklick §7> §aChallenges aus/an machen";
-		lore[4] = "§6Mittelklick §7> §aÖffne das Inventart";
+		lore[3] = "§6Mittelklick §7> §aÖffne das Inventart";
 		
 		ib.setLoreString(lore);
 		return ib.build();
@@ -120,9 +119,9 @@ public class BreakUpgradeTool extends Challenge {
 		item.setItemMeta(iMeta);
 		return item;
 	}
-	
+
 	public int getRandomNumber(int min, int max) {
-	    return (int) ((Math.random() * (max - min)) + min);
+		return (int) ((Math.random() * (max - min)) + min);
 	}
 
 	String plusMaxHearth1 = "§6+1 Entchantment Level",
@@ -131,11 +130,7 @@ public class BreakUpgradeTool extends Challenge {
 
 	@Override
 	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page) {
-		if(isToggled()) {
-			namei = "§aEntchante jedes Abbauen(" + isToggled() + "): §6" + getOption(cfg, "breakupgradetool.levelplus", 1) + " Level";
-		} else {
-			namei = "§aEntchante jedes Abbauen(" + isToggled() + "): §6" + getOption(cfg, "breakupgradetool.levelplus", 1) + " Level";
-		}
+		namei = "§aEntchante jedes Abbauen(" + isToggled() + "): §6" + getOption(cfg, "breakupgradetool.levelplus", 1) + " Level";
 
 		if(item.getItemMeta().getDisplayName().equalsIgnoreCase(plusMaxHearth1)) {
 			int level = (int) getOption(cfg, "breakupgradetool.levelplus", 1);
@@ -148,7 +143,6 @@ public class BreakUpgradeTool extends Challenge {
 		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(namei)) {
 			toggle();
 		}
-
 	}
 
 	@Override
@@ -156,16 +150,15 @@ public class BreakUpgradeTool extends Challenge {
 		inv = placeHolder(inv);
 
 		ArrayList<ItemStack> items = new ArrayList<>();
-		ItemBuilder ib = new ItemBuilder(Material.REDSTONE_BLOCK);
 
-		if(isToggled()) {
-			namei = "§aEntchante jedes Abbauen(" + isToggled() + "): §6" + getOption(cfg, "breakupgradetool.levelplus", 1) + " Level";
-		} else {
-			namei = "§aEntchante jedes Abbauen(" + isToggled() + "): §6" + getOption(cfg, "breakupgradetool.levelplus", 1) + " Level";
-		}
+		namei = "§aEntchante jedes Abbauen(" + isToggled() + "): §6" + getOption(cfg, "breakupgradetool.levelplus", 1) + " Level";
 
 		inv.setItem(0, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(plusMaxHearth1).build());
-		inv.setItem(9, ib.setDisplayName(namei).build());
+		if(isToggled()) {
+			inv.setItem(9, new ItemBuilder(Material.EMERALD_BLOCK).setDisplayName(namei).build());
+		} else {
+			inv.setItem(9, new ItemBuilder(Material.REDSTONE_BLOCK).setDisplayName(namei).build());
+		}
 		inv.setItem(18, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(minusMaxHeath1).build());
 
 		inv.setItem(inv.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK()).build());
