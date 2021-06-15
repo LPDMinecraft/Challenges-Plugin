@@ -23,7 +23,8 @@ public abstract class Inventory implements Listener {
 			             ITEM_NextPage = "§6§lN§chste Seite",
 			             ITEM_BeforePage = "§6§lVorherige Seite",
 	                     NAME,
-	                     BACK_NAME;
+	                     BACK_NAME,
+	                     SHOW_BACK_NAME;
 	private Config cfg;
 	public org.bukkit.inventory.Inventory inv;
 
@@ -52,19 +53,25 @@ public abstract class Inventory implements Listener {
 	}
 
 	private int size = 5*9;
-	public Inventory(ChallengesMainClass plugin, int size, boolean hasMoreThen1Site, String name, String backName) {
+	public Inventory(ChallengesMainClass plugin, int size, boolean hasMoreThen1Site, String name, String backName, String showBackName) {
 		cfg = new Config(name, "inv.yml");
 
 		this.size = size;
 		plugin.registerListener(this);
 		this.hasMoreThen1Site = hasMoreThen1Site;
 		NAME = name;
+		this.SHOW_BACK_NAME = showBackName;
 
 		BACK_NAME = backName;
+		if(backName == null) {
+			isCanBack = false;
+		} else {
+			isCanBack = true;
+		}
 		NAME = (String) cfg.getOption(cfg, "settings.name", NAME);
 
 		TITLE = TITLE + NAME;
-		ITEM_BACK = ITEM_BACK + backName;
+		ITEM_BACK = ITEM_BACK + this.SHOW_BACK_NAME;
 
 		TITLE = (String) cfg.getOption(cfg, "settings.title", TITLE);
 		ITEM_NextPage = (String) cfg.getOption(cfg, "settings.nextpage", ITEM_NextPage);
@@ -114,18 +121,20 @@ public abstract class Inventory implements Listener {
 	public org.bukkit.inventory.Inventory getPage(ArrayList<ItemStack> items, org.bukkit.inventory.Inventory inv, int page) {
 		int slot = 0;
 		int i = 0;
+		org.bukkit.inventory.Inventory in = Bukkit.createInventory(null, size, TITLE + " " + page + "/" + getNeedSites(items));
+		in.setContents(inv.getContents());
 		for(i = ((page - 1) * page); i < (page * size); i++) {
 			if(!items.isEmpty()) {
 				try {
 					ItemStack item = items.get(i);
 					if(item != null) {
-						inv.setItem(slot, item);
+						in.setItem(slot, item);
 						slot++;
 					}
 				} catch (Exception e) {}
 			}
 		}
-		return inv;
+		return in;
 	}
 
 	public int getCurrentPage(String title) {
@@ -168,6 +177,7 @@ public abstract class Inventory implements Listener {
 										} else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ITEM_BACK)) {
 											p.closeInventory();
 											if(isCanBack) {
+												System.out.println(BACK_NAME);
 												p.openInventory(ChallengesMainClass.getInvManager().invs.get(BACK_NAME).getInventory(1, p));
 											} else {
 												p.openInventory(ChallengesMainClass.getInvManager().invs.get("menu").getInventory(1, p));
@@ -178,6 +188,7 @@ public abstract class Inventory implements Listener {
 												@Override
 												public void run() {
 													org.bukkit.inventory.Inventory inv = getInventory(currentpage, p);
+													System.out.println(currentpage);
 													if(inv != null) {
 														//p.openInventory(inv);
 													}

@@ -24,7 +24,7 @@ public class GeteilteHearths extends Challenge {
 	public Config cfg;
 
 	public GeteilteHearths(ChallengesMainClass plugin) {
-		super(plugin, "geteilteherzen", "config.yml", "geteiltehearths", 6*9, true, "GeteilteHerzen", "chmenu", "challenge-geteilteherzen");
+		super(plugin, "geteilteherzen", "config.yml", "geteiltehearths", 6*9, true, "GeteilteHerzen", "chmenu", "challenge-geteilteherzen", "Challenges Menu");
         Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
 			
 			@Override

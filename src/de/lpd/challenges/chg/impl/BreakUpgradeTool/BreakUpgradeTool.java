@@ -25,7 +25,7 @@ public class BreakUpgradeTool extends Challenge {
 	private Config cfg;
 	
 	public BreakUpgradeTool(ChallengesMainClass plugin) {
-		super(plugin, "breakupgradetool", "config.yml", "breakupgradetool", 6*9, true, "BreakUpgradeTool", "chmenu", "challenge-breakupgradetool");
+		super(plugin, "breakupgradetool", "config.yml", "breakupgradetool", 6*9, true, "BreakUpgradeTool", "chmenu", "challenge-breakupgradetool", "Challenges Menu");
 	}
 
 	@Override

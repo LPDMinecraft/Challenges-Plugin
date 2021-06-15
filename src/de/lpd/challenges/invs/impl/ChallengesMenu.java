@@ -15,7 +15,7 @@ import de.lpd.challenges.main.ChallengesMainClass;
 public class ChallengesMenu extends Inventory {
 
 	public ChallengesMenu(ChallengesMainClass plugin) {
-		super(plugin, 6*9, true, "Challenges", "Menu");
+		super(plugin, 6*9, true, "Challenges", "menu", "Menu");
 	}
 
 	public static String TITLE = "§6Challenges §aMenu";

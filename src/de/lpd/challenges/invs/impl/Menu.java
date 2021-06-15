@@ -19,7 +19,7 @@ public class Menu extends Inventory {
 	               ITEM_LANGUAGES = "§6Sprachen";
 
 	public Menu(ChallengesMainClass plugin) {
-		super(plugin, 5*9, false, "Menu", null);
+		super(plugin, 5*9, false, "Menu", null, null);
 	}
 
 	@Override

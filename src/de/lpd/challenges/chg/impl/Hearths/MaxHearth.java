@@ -21,7 +21,7 @@ public class MaxHearth extends Challenge {
 	private ChallengesMainClass plugin;	
 	
 	public MaxHearth(ChallengesMainClass plugin) {
-		super(plugin, "maxhearth", "config.yml", "maxhearth", 6*9, true, "MaxHerzen", "chmenu", "challenge-maxhearths");
+		super(plugin, "maxhearth", "config.yml", "maxhearth", 6*9, true, "MaxHerzen", "chmenu", "challenge-maxhearths", "Challenges Menu");
 		this.setPlugin(plugin);
 		
         Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {

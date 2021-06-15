@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class Settings extends Inventory {
 
 	public Settings(ChallengesMainClass plugin) {
-		super(plugin, 5 * 9, true, "Settings", "Menu");
+		super(plugin, 5 * 9, true, "Settings", "menu", "Menu");
 	}
 
 	@Override

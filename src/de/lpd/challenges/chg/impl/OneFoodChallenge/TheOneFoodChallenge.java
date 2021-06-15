@@ -30,7 +30,8 @@ public class TheOneFoodChallenge extends Challenge {
 				true,
 				"TheMaxFood",
 				"chmenu",
-				"challenge-maxfood");
+				"challenge-maxfood",
+				"Challenges Menu");
 		eaten = new HashMap<>();
 	}
 	

@@ -22,7 +22,7 @@ public class WaterMLG extends Challenge {
 	private ChallengesMainClass plugin;
 	
 	public WaterMLG(ChallengesMainClass plugin) {
-		super(plugin, "watermlg", "watermlg.yml", "watermlg", 6*9, true, "WaterMLG", "chmenu", "challenge-watermlg");
+		super(plugin, "watermlg", "watermlg.yml", "watermlg", 6*9, true, "WaterMLG", "chmenu", "challenge-watermlg", "Challenges Menu");
 		this.plugin = plugin;
 		send();
 	}

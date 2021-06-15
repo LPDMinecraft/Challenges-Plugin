@@ -23,8 +23,8 @@ public abstract class Setting extends Inventory implements Listener {
 	private boolean isEnabled = false;
 	private String path = "";
 	
-	public Setting(ChallengesMainClass plugin, String cfgPath, String filename, String root, int size, boolean hasMoreThen1Site, String name, String backName, String id) {
-		super(plugin, size, hasMoreThen1Site, name, backName);
+	public Setting(ChallengesMainClass plugin, String cfgPath, String filename, String root, int size, boolean hasMoreThen1Site, String name, String backName, String id, String showBackName) {
+		super(plugin, size, hasMoreThen1Site, name, backName, showBackName);
 		plugin.registerListener(this);
 		path = "settings//" + cfgPath;
 		cfg(new Config(path, filename));

@@ -26,7 +26,7 @@ public class LockedSlots extends Challenge {
 	private ChallengesMainClass plugin;
 	
 	public LockedSlots(ChallengesMainClass plugin) {
-		super(plugin, "lockedslots", "lockedslots.yml", "lockedslots", 6*9, true, "LockedSlots", "chmenu", "challenge-lockedslots");
+		super(plugin, "lockedslots", "lockedslots.yml", "lockedslots", 6*9, true, "LockedSlots", "chmenu", "challenge-lockedslots", "Challenges Menu");
 		this.setPlugin(plugin);
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
 			

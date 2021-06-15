@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class Languages extends Inventory  {
 
     public Languages(ChallengesMainClass plugin) {
-        super(plugin, 6*9, true, "Sprachen", "Menu");
+        super(plugin, 6*9, true, "Sprachen", "menu", "Menu");
     }
 
     @Override
