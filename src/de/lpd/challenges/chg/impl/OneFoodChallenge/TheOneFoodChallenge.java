@@ -92,7 +92,7 @@ public class TheOneFoodChallenge extends Challenge {
 				a++;
 				eaten.remove(t);
 				eaten.put(t, a);
-				if(a > (double)getOption(cfg, "foodchallenge.max", 1.00)) {
+				if((a - 1) > (double)getOption(cfg, "foodchallenge.max", 1.00)) {
 					ChallengesMainClass.fail(1);
 				}
 			} else {
@@ -103,42 +103,39 @@ public class TheOneFoodChallenge extends Challenge {
 
 	String plusMaxFood1 = "§6Ändere das Maximum vom Essentyp um +1",
 			minusMaxFood1 = "§6Ändere das Maximum vom Essentyp um -1",
-			itemdisplayname = "";
+			namei = "";
 
 	@Override
 	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page) {
-		if(isToggled()) {
-			itemdisplayname = "§6TheOneFoodChallenge " + Starter.START_PREFIX + "§aOn";
-		} else {
-			itemdisplayname = "§6TheOneFoodChallenge " + Starter.START_PREFIX + "§cOff";
-		}
+		namei = "§6The One Food(" + isToggled() + "): " + getOption(cfg, "foodchallenge.max", 1.00) + " Food Arten";
 
 		if(item.getItemMeta().getDisplayName().equalsIgnoreCase(plusMaxFood1)) {
-			setOption(cfg, "foodchallenge.max", (double) getOption(cfg, "foodchallenge.max", 1.00) + 1);
+			setOption(cfg, "foodchallenge.max", (double) getOption(cfg, "foodchallenge.max", 1.00) + 0.5);
 		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(minusMaxFood1)) {
 			if((double) getOption(cfg, "foodchallenge.max", 1) > 1) {
-				setOption(cfg, "foodchallenge.max", (double) getOption(cfg, "foodchallenge.max", 1.00) - 1);
+				setOption(cfg, "foodchallenge.max", (double) getOption(cfg, "foodchallenge.max", 1.00) - 0.5);
 			}
-		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(itemdisplayname)) {
+		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(namei)) {
 			toggle();
 		}
-		p.openInventory(getInventory(page, p));
 	}
 
 	@Override
 	public Inventory getInventory(int page, Player p) {
 		inv = de.lpd.challenges.invs.Inventory.placeHolder(inv);
 
+		namei = "§6The One Food(" + isToggled() + "): " + getOption(cfg, "foodchallenge.max", 1.00) + " Food Arten";
+		Material b;
 		if(isToggled()) {
-			itemdisplayname = "§6TheOneFoodChallenge " + Starter.START_PREFIX + "§aOn";
+			b = Material.EMERALD_BLOCK;
 		} else {
-			itemdisplayname = "§6TheOneFoodChallenge " + Starter.START_PREFIX + "§cOff";
+			b = Material.REDSTONE_BLOCK;
 		}
 
 		ArrayList<ItemStack> items = new ArrayList<>();
 
 		inv.setItem(0, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(plusMaxFood1).build());
-		inv.setItem(9, new ItemBuilder(Material.REDSTONE_BLOCK).setDisplayName(itemdisplayname).build());
+		inv.setItem(9, new ItemBuilder(b).setDisplayName(namei).build());
 		inv.setItem(18, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(minusMaxFood1).build());
 
 		inv.setItem(inv.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK()).build());

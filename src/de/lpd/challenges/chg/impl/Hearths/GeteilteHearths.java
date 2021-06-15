@@ -32,11 +32,11 @@ public class GeteilteHearths extends Challenge {
 				if(isEnabled()) {
 					for(Player p : Bukkit.getOnlinePlayers()) {
 						if(p.getGameMode() == GameMode.SURVIVAL) {
-							double h = (double)getOption(cfg, "geteilteherzen.herzen", 20);
-							if(h > (p.getMaxHealth() * 2)) {
+							double h = (double)getOption(cfg, "geteilteherzen.herzen", 20.00);
+							if(h > p.getMaxHealth()) {
 								setOption(cfg, "geteilteherzen.herzen", p.getMaxHealth());
 							}
-							h = (double)getOption(cfg, "geteilteherzen.herzen", 20);
+							h = (double)getOption(cfg, "geteilteherzen.herzen", 20.00);
 							p.setHealth(h);
 						}
 					}
@@ -78,19 +78,19 @@ public class GeteilteHearths extends Challenge {
 
 	@Override
 	public void reset() {
-		setOption(cfg, "geteilteherzen.herzen", (double)getOption(cfg, "geteilteherzen.herzen", 20));
+		setOption(cfg, "geteilteherzen.herzen", (double)getOption(cfg, "geteilteherzen.herzen", 20.00));
 	}
 
 	@Override
 	public void ifPlayerDies() {
-		setOption(cfg, "geteilteherzen.herzen", (double)getOption(cfg, "geteilteherzen.herzen", 20));
+		setOption(cfg, "geteilteherzen.herzen", (double)getOption(cfg, "geteilteherzen.herzen", 20.00));
 	}
 
 	@EventHandler
 	public void onDamage(EntityDamageEvent e) {
 		if (e.getEntity() instanceof Player) {
 			if (isEnabled()) {
-				setOption(cfg, "geteilteherzen.herzen", (double) getOption(cfg, "geteilteherzen.herzen", 20) - (double) (e.getDamage() * 2));
+				setOption(cfg, "geteilteherzen.herzen", (double) getOption(cfg, "geteilteherzen.herzen", 20.00) - (double) (e.getDamage() * 2));
 			}
 		}
 	}
@@ -99,7 +99,7 @@ public class GeteilteHearths extends Challenge {
 	public void onRegenerate(EntityRegainHealthEvent e) {
 		if(e.getEntity() instanceof Player) {
 			if(isEnabled()) {
-				setOption(cfg, "geteilteherzen.herzen", (double)getOption(cfg, "geteilteherzen.herzen", 20) + (double)e.getAmount());
+				setOption(cfg, "geteilteherzen.herzen", (double)getOption(cfg, "geteilteherzen.herzen", 20.00) + (double)e.getAmount());
 			}
 		}
 	}

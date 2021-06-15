@@ -149,7 +149,7 @@ public class BreakUpgradeTool extends Challenge {
 			setOption(cfg, "breakupgradetool.levelplus", level);
 		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(minusMaxHeath1)) {
 			double level = Double.valueOf(String.valueOf(getOption(cfg, "breakupgradetool.levelplus", 1.00)));
-			level = level + 0.5;
+			level = level - 0.5;
 			setOption(cfg, "breakupgradetool.levelplus", level);
 		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(namei)) {
 			toggle();

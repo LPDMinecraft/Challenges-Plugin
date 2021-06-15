@@ -53,11 +53,21 @@ public class TimerCommand extends Command {
 				} else {
 					s.sendMessage(PREFIX + "§cDer Countdown wurde noch nicht gestartet.");
 				}
+			} else if(args[0].equalsIgnoreCase("restart")) {
+				if(ChallengesMainClass.t.isPaused() || ChallengesMainClass.t.isStarted()) {
+					if(ChallengesMainClass.t.isStarted()) {
+						ChallengesMainClass.t.stop();
+						ChallengesMainClass.t.reset();
+					}
+					ChallengesMainClass.t.start();
+				} else {
+					s.sendMessage(PREFIX + "§cDer Countdown wurde noch nicht gestartet/pausiert.");
+				}
 			} else {
-				s.sendMessage(getHelpMessage("timer", "timer [start, reset, resume, pause, status]"));
+				s.sendMessage(getHelpMessage("timer", "timer [start, reset, resume, pause, restart, status]"));
 			}
 		} else {
-			s.sendMessage(getHelpMessage("timer", "timer [start, reset, resume, pause, status]"));
+			s.sendMessage(getHelpMessage("timer", "timer [start, reset, resume, pause, restart, status]"));
 		}
 		return false;
 	}
