@@ -25,14 +25,18 @@ public class ChallengesManager {
 		Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
 			@Override
 			public void run() {
-				idtoclass.put("theonefoodchallenge", new TheOneFoodChallenge(plugin));
-				idtoclass.put("watermlg", new WaterMLG(plugin));
-				idtoclass.put("geteilteherzen", new GeteilteHearths(plugin));
-				idtoclass.put("maxheaths", new MaxHearth(plugin));
-				idtoclass.put("enchantbreakblocktool", new BreakUpgradeTool(plugin));
-				idtoclass.put("lockedslots", new LockedSlots(plugin));
+				addChallenge(new BreakUpgradeTool(plugin));
+				addChallenge(new TheOneFoodChallenge(plugin));
+				addChallenge(new GeteilteHearths(plugin));
+				addChallenge(new MaxHearth(plugin));
+				addChallenge(new LockedSlots(plugin));
+				addChallenge(new WaterMLG(plugin));
 			}
 		}, 1l);
+	}
+
+	public static void addChallenge(Challenge challenge) {
+		idtoclass.put(challenge.getId(), challenge);
 	}
 
 	public static HashMap<String, Challenge> getIdtoclass() {

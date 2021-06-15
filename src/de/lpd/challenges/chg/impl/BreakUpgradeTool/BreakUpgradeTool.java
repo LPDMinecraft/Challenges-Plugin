@@ -19,6 +19,7 @@ import de.lpd.challenges.utils.ItemBuilder;
 import de.lpd.challenges.utils.Starter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class BreakUpgradeTool extends Challenge {
 
@@ -30,7 +31,6 @@ public class BreakUpgradeTool extends Challenge {
 
 	@Override
 	public void cfg(Config cfg) {
-		getOption(cfg, "breakupgradetool.levelplus", 1);
 		this.cfg = cfg;
 	}
 
@@ -50,17 +50,16 @@ public class BreakUpgradeTool extends Challenge {
 
 	@Override
 	public void onRightClick(Player p) {
-		/*int level = (int) getOption(cfg, "breakupgradetool.levelplus", 1);
+		/*double level = (double) getOption(cfg, "breakupgradetool.levelplus", 1);
 		level++;
 		setOption(cfg, "breakupgradetool.levelplus", level);*/
 	}
 
 	@Override
 	public void onLeftClick(Player p) {
-		/*int level = (int) getOption(cfg, "breakupgradetool.levelplus", 1);
+		/*double level = (double) getOption(cfg, "breakupgradetool.levelplus", 1);
 		level--;
 		setOption(cfg, "breakupgradetool.levelplus", level);*/
-		toggle();
 	}
 
 	@Override
@@ -70,7 +69,7 @@ public class BreakUpgradeTool extends Challenge {
 
 	@Override
 	public void reset() {
-		setOption(cfg, "breakupgradetool.levelplus", 1);
+		setOption(cfg, "breakupgradetool.levelplus", 1.00);
 	}
 
 	@Override
@@ -99,25 +98,37 @@ public class BreakUpgradeTool extends Challenge {
 			}
 		}
 	}
-	
+
+	private HashMap<Player, Integer> fix = new HashMap<>();
+
 	public ItemStack entchant(ItemStack item, Player p) {
-		ItemMeta iMeta = item.getItemMeta();
-		int i = getRandomNumber(0, Enchantment.values().length - 1);
-		
-		if(Enchantment.values()[i].equals(Enchantment.BINDING_CURSE) || Enchantment.values()[i].equals(Enchantment.VANISHING_CURSE) || Enchantment.values()[i].equals(Enchantment.SILK_TOUCH)) {
-			return entchant(item, p);
+		int fix1 = 0;
+		if(fix.containsKey(p)) {
+			fix1 = fix.get(p);
+			fix.remove(p);
 		}
-		
-		int level = (int) getOption(cfg, "breakupgradetool.levelplus", 1);
-		if(iMeta.hasEnchant(Enchantment.values()[i])) {
-			level = iMeta.getEnchantLevel(Enchantment.values()[i]);
-			level = level + (int) getOption(cfg, "breakupgradetool.levelplus", 1);
-			iMeta.removeEnchant(Enchantment.values()[i]);
+		fix1++;
+		fix.put(p, fix1);
+		if(fix1 > 1) {
+			fix.remove(p);
+			ItemMeta iMeta = item.getItemMeta();
+			int i = getRandomNumber(0, Enchantment.values().length - 1);
+
+			if(Enchantment.values()[i].equals(Enchantment.BINDING_CURSE) || Enchantment.values()[i].equals(Enchantment.VANISHING_CURSE) || Enchantment.values()[i].equals(Enchantment.SILK_TOUCH)) {
+				return entchant(item, p);
+			}
+
+			double level = (double)getOption(cfg, "breakupgradetool.levelplus", 1.00);
+			if(iMeta.hasEnchant(Enchantment.values()[i])) {
+				level = iMeta.getEnchantLevel(Enchantment.values()[i]);
+				level = level + (double) getOption(cfg, "breakupgradetool.levelplus", 1.00);
+				iMeta.removeEnchant(Enchantment.values()[i]);
+			}
+			iMeta.addEnchant(Enchantment.values()[i], Math.round(Math.round(level)), true);
+			item.setItemMeta(iMeta);
+			return item;
 		}
-		iMeta.addEnchant(Enchantment.values()[i], level, true);
-		System.out.println(level);
-		item.setItemMeta(iMeta);
-		return item;
+		return null;
 	}
 
 	public int getRandomNumber(int min, int max) {
@@ -130,15 +141,15 @@ public class BreakUpgradeTool extends Challenge {
 
 	@Override
 	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page) {
-		namei = "§aEntchante jedes Abbauen(" + isToggled() + "): §6" + getOption(cfg, "breakupgradetool.levelplus", 1) + " Level";
+		namei = "§aEntchante jedes Abbauen(" + isToggled() + "): §6" + getOption(cfg, "breakupgradetool.levelplus", 1.00) + " Level";
 
 		if(item.getItemMeta().getDisplayName().equalsIgnoreCase(plusMaxHearth1)) {
-			int level = (int) getOption(cfg, "breakupgradetool.levelplus", 1);
-			level++;
+			double level = Double.valueOf(String.valueOf(getOption(cfg, "breakupgradetool.levelplus", 1.00)));
+			level = level + 0.5;
 			setOption(cfg, "breakupgradetool.levelplus", level);
 		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(minusMaxHeath1)) {
-			int level = (int) getOption(cfg, "breakupgradetool.levelplus", 1);
-			level--;
+			double level = Double.valueOf(String.valueOf(getOption(cfg, "breakupgradetool.levelplus", 1.00)));
+			level = level + 0.5;
 			setOption(cfg, "breakupgradetool.levelplus", level);
 		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(namei)) {
 			toggle();
@@ -151,7 +162,7 @@ public class BreakUpgradeTool extends Challenge {
 
 		ArrayList<ItemStack> items = new ArrayList<>();
 
-		namei = "§aEntchante jedes Abbauen(" + isToggled() + "): §6" + getOption(cfg, "breakupgradetool.levelplus", 1) + " Level";
+		namei = "§aEntchante jedes Abbauen(" + isToggled() + "): §6" + getOption(cfg, "breakupgradetool.levelplus", 1.00) + " Level";
 
 		inv.setItem(0, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(plusMaxHearth1).build());
 		if(isToggled()) {

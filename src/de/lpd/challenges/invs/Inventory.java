@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
 import de.lpd.challenges.main.ChallengesMainClass;
@@ -127,12 +128,14 @@ public abstract class Inventory implements Listener {
 		for(i = ((page - 1) * page); i < (page * size); i++) {
 			if(!items.isEmpty()) {
 				try {
-					ItemStack item = items.get(i);
-					if(item != null) {
+					if(items.size() > i && items.get(i) != null) {
+						ItemStack item = items.get(i);
 						in.setItem(slot, item);
 						slot++;
 					}
-				} catch (Exception e) {}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		return in;
@@ -144,15 +147,19 @@ public abstract class Inventory implements Listener {
 			String numbers = title.replaceFirst(TITLE + " ", "");
 			String numb = numbers.split("/")[0];
 			site = Integer.valueOf(numb);
-		} catch (Exception e) { }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return site;
 	}
+
+	private float bugFix2222 = 0;
 
 	public abstract void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page);
 	public abstract org.bukkit.inventory.Inventory getInventory(int page, Player p);
 
-	@EventHandler
-	public void onInteract(InventoryClickEvent e) {
+	@EventHandler(priority = EventPriority.HIGHEST)
+	public void onInteractEvente7237872749872989288283847757573474762366(InventoryClickEvent e) {
 		if(e.getWhoClicked() != null && e.getWhoClicked() instanceof Player) {
 			Player p = (Player) e.getWhoClicked();
 			if(e.getView() != null) {
@@ -161,10 +168,10 @@ public abstract class Inventory implements Listener {
 						e.setCancelled(true);
 						if(e.getCurrentItem() != null) {
 							if (e.getCurrentItem().getItemMeta() != null) {
+								normalClickAnyInventory(p, e.getCurrentItem(), e);
 								if (e.getCurrentItem().getItemMeta().getDisplayName() != null) {
 									if (e.getCurrentItem().getType() != null && e.getCurrentItem().getType() != Material.AIR) {
 										int currentpage = getCurrentPage(e.getView().getTitle());
-
 										if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ITEM_BeforePage)) {
 											if(currentpage > 1) {
 												p.closeInventory();
@@ -184,7 +191,11 @@ public abstract class Inventory implements Listener {
 												p.openInventory(ChallengesMainClass.getInvManager().invs.get("menu").getInventory(1, p));
 											}
 										} else {
-											onClickOnItemEvent(p, e.getCurrentItem(), e, currentpage);
+											bugFix2222++;
+											if(bugFix2222 >= 1) {
+												onClickOnItemEvent(p, e.getCurrentItem(), e, currentpage);
+												bugFix2222 = 0;
+											}
 											Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
 												@Override
 												public void run() {
@@ -194,7 +205,7 @@ public abstract class Inventory implements Listener {
 														p.openInventory(inv);
 													}
 												}
-											}, 3l);
+											}, 5l);
 										}
 									}
 								}
@@ -205,5 +216,9 @@ public abstract class Inventory implements Listener {
 			}
 		}
 	}
-	
+
+	public void normalClickAnyInventory(Player p, ItemStack currentItem, InventoryClickEvent e) {
+
+	}
+
 }

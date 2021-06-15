@@ -5,6 +5,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -25,7 +26,7 @@ public class LockedSlots extends Challenge {
 	private Config cfg;
 	
 	public LockedSlots(ChallengesMainClass plugin) {
-		super(plugin, "lockedslots", "lockedslots.yml", "lockedslots", 3*9, true, "Locked Slots", "chmenu", "challenge-lockedslots", "Challenges Menu");
+		super(plugin, "lockslots", "config.yml", "lockslots", 3*9, true, "Locked Slots", "chmenu", "challenge-lockslots", "Challenges Menu");
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
 			
 			@Override
@@ -55,7 +56,7 @@ public class LockedSlots extends Challenge {
 	@Override
 	public ItemStack getItem() {
 		ItemBuilder ib = new ItemBuilder(Material.RED_STAINED_GLASS);
-
+		ib.setDisplayName("§6Locked Slots");
 		String[] lore = new String[3];
 		lore[0] = Starter.START_PREFIX + "§aIn dieser Challenge muss man Minecraft mit";
 		lore[1] = "§aX Slots durchspielen.";
@@ -70,22 +71,24 @@ public class LockedSlots extends Challenge {
 			p.getInventory().remove(Material.BARRIER);
 		}
 		if(isEnabled()) {
-			for(int i = 0; i < (int)getOption(cfg, "lockedslots.max", 0); i++) {
-				p.getInventory().setItem(((4*9)-1)-i, new ItemBuilder(Material.BARRIER).build());
+			for(int i = 0; i < (double)getOption(cfg, "lockedslots.max", 0); i++) {
+				if(!(i > 4*9)) {
+					p.getInventory().setItem(((4*9)-1)-i, new ItemBuilder(Material.BARRIER).build());
+				}
 			}
 		} 
 	}
 	
 	@Override
 	public void onRightClick(Player p) {
-		/*setOption(cfg, "lockedslots.max", (int)getOption(cfg, "lockedslots.max", 0) + 1);
+		/*setOption(cfg, "lockedslots.max", (double)getOption(cfg, "lockedslots.max", 0) + 1);
 		a(p);*/
 	}
 	
 	@Override
 	public void onLeftClick(Player p) {
-		/*if((int)getOption(cfg, "lockedslots.max", 0) > 1) {
-			setOption(cfg, "lockedslots.max", (int)getOption(cfg, "lockedslots.max", 0) - 1);
+		/*if((double)getOption(cfg, "lockedslots.max", 0) > 1) {
+			setOption(cfg, "lockedslots.max", (double)getOption(cfg, "lockedslots.max", 0) - 1);
 			a(p);
 		}*/
 
@@ -98,7 +101,7 @@ public class LockedSlots extends Challenge {
 	
 	@Override
 	public void reset() {
-		setOption(cfg, "lockedslots.max", 0);
+		setOption(cfg, "lockedslots.max", 0.00);
 	}
 
 	@Override
@@ -106,23 +109,17 @@ public class LockedSlots extends Challenge {
 
 	}
 
-	@EventHandler
-	public void onInteract(InventoryClickEvent e) {
-		if(e.getWhoClicked() instanceof Player) {
-			if(e.getCurrentItem() != null) {
-				if(e.getCurrentItem().getType() != null) {
-					if(e.getCurrentItem().getType() == Material.BARRIER) {
-						if(e.getWhoClicked().getGameMode() == GameMode.SURVIVAL) {
-							if(isEnabled()) {
-								e.setCancelled(true);
-							}
-						}
-					}
+	@Override
+	public void normalClickAnyInventory(Player p, ItemStack currentItem, InventoryClickEvent e) {
+		if(e.getCurrentItem().getType() == Material.BARRIER) {
+			if(e.getWhoClicked().getGameMode() == GameMode.SURVIVAL) {
+				if(isEnabled()) {
+					e.setCancelled(true);
 				}
 			}
 		}
 	}
-	
+
 	@EventHandler
 	public void onPlace(BlockPlaceEvent e) {
 		if(e.getBlock().getType() == Material.BARRIER && e.getPlayer().getGameMode() == GameMode.SURVIVAL && isEnabled()) {
@@ -160,18 +157,22 @@ public class LockedSlots extends Challenge {
 
 	String plusLockedSlots1 = "§6Sperre ein 1 Slot mehr",
 			minusLockedSlots1 = "§6Entsperre ein weiteren 1 Slot",
-			namei = "";
+			namei;
 
 	@Override
 	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page) {
-		namei = "§6Locked Slots(" + isToggled() + "): " + (int)getOption(cfg, "lockedslots.max", 0) + " Slots sind locked";
+		namei = "§6Locked Slots(" + isToggled() + "): " + getOption(cfg, "lockedslots.max", 0) + " Slots sind locked";
 
 		if(item.getItemMeta().getDisplayName().equalsIgnoreCase(plusLockedSlots1)) {
-			setOption(cfg, "lockedslots.max", (int)getOption(cfg, "lockedslots.max", 0) + 1);
+			double l = Double.valueOf(String.valueOf(getOption(cfg, "lockedslots.max", 0.00)));
+			l = l + 0.5;
+			setOption(cfg, "lockedslots.max", l);
 			a(p);
 		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(minusLockedSlots1)) {
-			if((int)getOption(cfg, "lockedslots.max", 0) > 1) {
-				setOption(cfg, "lockedslots.max", (int) getOption(cfg, "lockedslots.max", 0) - 1);
+			double l = Double.valueOf(String.valueOf(getOption(cfg, "lockedslots.max", 0.00)));
+			if(l > 1) {
+				l = l - 0.5;
+				setOption(cfg, "lockedslots.max", l);
 				a(p);
 			}
 		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(namei)) {
@@ -183,8 +184,7 @@ public class LockedSlots extends Challenge {
 	public Inventory getInventory(int page, Player p) {
 		inv = de.lpd.challenges.invs.Inventory.placeHolder(inv);
 
-		namei = "§6Locked Slots(" + isToggled() + "): " + (int)getOption(cfg, "lockedslots.max", 0) + " Slots sind locked";
-
+		namei = "§6Locked Slots(" + isToggled() + "): " + getOption(cfg, "lockedslots.max", 0) + " Slots sind locked";
 		ArrayList<ItemStack> items = new ArrayList<>();
 
 		inv.setItem(0, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(plusLockedSlots1).build());

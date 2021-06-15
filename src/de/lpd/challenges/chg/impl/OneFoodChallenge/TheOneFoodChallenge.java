@@ -17,7 +17,7 @@ import de.lpd.challenges.utils.Starter;
 
 public class TheOneFoodChallenge extends Challenge {
 	
-	// public static HashMap<Material, Integer> eaten = new HashMap<>();
+	// public static HashMap<Material, doubleeger> eaten = new HashMap<>();
 	private Config cfg;
 	private HashMap<Material, Integer> eaten;
 	
@@ -46,14 +46,13 @@ public class TheOneFoodChallenge extends Challenge {
 
 		ib.setDisplayName("§6TheOneFoodChallenge");
 
-		String[] lore = new String[9];
+		String[] lore = new String[6];
 		lore[0] = Starter.START_PREFIX + "§aIn dieser Challenge kannst du 1/2/ect. mal einen Essenstyp essen.";
 		lore[1] = "§cAchtung! §6Es wird in dieser Challenge die Essenmale zusammen gez§hlt.";
 		lore[2] = "§aDas hei§t wenn der 1. Spieler rohes Kuhfleisch gegessen hat und danach ein ";
 		lore[3] = "§aanderer Kuhfleisch ist sind sie tot.";
 		lore[4] = "§aAber nur dann, wenn die maximale Begrenzung auf 1 gestellt ist.";
-		lore[5] = "§7Derzeitig ausgew§hlte Begrenzung§8: §6" + (int) getOption(cfg, "foodchallenge.max", 1);
-		lore[8] = "§6Mittelklick §7> §aÖffne das Inventar";
+		lore[5] = "§6Mittelklick §7> §aÖffne das Inventar";
 		
 		ib.setLoreString(lore);
 		return ib.build();
@@ -93,7 +92,7 @@ public class TheOneFoodChallenge extends Challenge {
 				a++;
 				eaten.remove(t);
 				eaten.put(t, a);
-				if(a > (int) getOption(cfg, "foodchallenge.max", 1)) {
+				if(a > (double)getOption(cfg, "foodchallenge.max", 1.00)) {
 					ChallengesMainClass.fail(1);
 				}
 			} else {
@@ -115,10 +114,10 @@ public class TheOneFoodChallenge extends Challenge {
 		}
 
 		if(item.getItemMeta().getDisplayName().equalsIgnoreCase(plusMaxFood1)) {
-			setOption(cfg, "foodchallenge.max", (int) getOption(cfg, "foodchallenge.max", 1) + 1);
+			setOption(cfg, "foodchallenge.max", (double) getOption(cfg, "foodchallenge.max", 1.00) + 1);
 		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(minusMaxFood1)) {
-			if((int) getOption(cfg, "foodchallenge.max", 1) > 1) {
-				setOption(cfg, "foodchallenge.max", (int) getOption(cfg, "foodchallenge.max", 1) - 1);
+			if((double) getOption(cfg, "foodchallenge.max", 1) > 1) {
+				setOption(cfg, "foodchallenge.max", (double) getOption(cfg, "foodchallenge.max", 1.00) - 1);
 			}
 		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(itemdisplayname)) {
 			toggle();

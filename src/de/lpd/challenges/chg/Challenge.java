@@ -19,7 +19,12 @@ public abstract class Challenge extends Inventory implements Listener {
 	public abstract void ifPlayerDies();
 
 	private String root;
-	
+	private String id;
+
+	public String getId() {
+		return id;
+	}
+
 	public Challenge(ChallengesMainClass plugin, String cfgPath, String filename, String root, int size, boolean hasMoreThen1Site, String name, String backName, String id, String showBackName) {
 		super(plugin, size, hasMoreThen1Site, name, backName, showBackName);
 		plugin.registerListener(this);
@@ -29,6 +34,7 @@ public abstract class Challenge extends Inventory implements Listener {
 			ChallengesMainClass.getInvManager().invs.put(id, this);
 		}
 		this.root = root;
+		this.id = id;
 	}
 	
 	public static Object getOption(Config cfg, String path, Object start) {

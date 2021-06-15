@@ -24,7 +24,7 @@ public class GeteilteHearths extends Challenge {
 	public Config cfg;
 
 	public GeteilteHearths(ChallengesMainClass plugin) {
-		super(plugin, "geteilteherzen", "config.yml", "geteiltehearths", 6*9, true, "GeteilteHerzen", "chmenu", "challenge-geteilteherzen", "Challenges Menu");
+		super(plugin, "geteilteherzen", "config.yml", "geteiltehearths", 3*9, true, "GeteilteHerzen", "chmenu", "challenge-geteilteherzen", "Challenges Menu");
         Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
 			
 			@Override
@@ -32,13 +32,18 @@ public class GeteilteHearths extends Challenge {
 				if(isEnabled()) {
 					for(Player p : Bukkit.getOnlinePlayers()) {
 						if(p.getGameMode() == GameMode.SURVIVAL) {
-							p.setHealth((int)getOption(cfg, "geteilteherzen.herzen", 20));
+							double h = (double)getOption(cfg, "geteilteherzen.herzen", 20);
+							if(h > (p.getMaxHealth() * 2)) {
+								setOption(cfg, "geteilteherzen.herzen", p.getMaxHealth());
+							}
+							h = (double)getOption(cfg, "geteilteherzen.herzen", 20);
+							p.setHealth(h);
 						}
 					}
 				}
 			}
 			
-		}, 0, 1L);
+		}, 1l, 1l);
 	}
 
 	@Override
@@ -73,19 +78,19 @@ public class GeteilteHearths extends Challenge {
 
 	@Override
 	public void reset() {
-		setOption(cfg, "geteilteherzen.herzen", (int)getOption(cfg, "geteilteherzen.herzen", 20));
+		setOption(cfg, "geteilteherzen.herzen", (double)getOption(cfg, "geteilteherzen.herzen", 20));
 	}
 
 	@Override
 	public void ifPlayerDies() {
-		setOption(cfg, "geteilteherzen.herzen", (int)getOption(cfg, "geteilteherzen.herzen", 20));
+		setOption(cfg, "geteilteherzen.herzen", (double)getOption(cfg, "geteilteherzen.herzen", 20));
 	}
 
 	@EventHandler
 	public void onDamage(EntityDamageEvent e) {
 		if (e.getEntity() instanceof Player) {
 			if (isEnabled()) {
-				setOption(cfg, "geteilteherzen.herzen", (int) getOption(cfg, "geteilteherzen.herzen", 20) - (int) (e.getDamage() * 2));
+				setOption(cfg, "geteilteherzen.herzen", (double) getOption(cfg, "geteilteherzen.herzen", 20) - (double) (e.getDamage() * 2));
 			}
 		}
 	}
@@ -94,7 +99,7 @@ public class GeteilteHearths extends Challenge {
 	public void onRegenerate(EntityRegainHealthEvent e) {
 		if(e.getEntity() instanceof Player) {
 			if(isEnabled()) {
-				setOption(cfg, "geteilteherzen.herzen", (int)getOption(cfg, "geteilteherzen.herzen", 20) + (int)e.getAmount());
+				setOption(cfg, "geteilteherzen.herzen", (double)getOption(cfg, "geteilteherzen.herzen", 20) + (double)e.getAmount());
 			}
 		}
 	}
@@ -121,8 +126,10 @@ public class GeteilteHearths extends Challenge {
 		ArrayList<ItemStack> items = new ArrayList<>();
 		ItemBuilder ib = new ItemBuilder(Material.REDSTONE_BLOCK);
 		if(isToggled()) {
+			ib = new ItemBuilder(Material.EMERALD_BLOCK);
 			itemdisplayname = "§6Geteilte Herzen " + Starter.START_PREFIX + "§aOn";
 		} else {
+			ib = new ItemBuilder(Material.REDSTONE_BLOCK);
 			itemdisplayname = "§6Geteilte Herzen " + Starter.START_PREFIX + "§cOff";
 		}
 		ib.setDisplayName(itemdisplayname);

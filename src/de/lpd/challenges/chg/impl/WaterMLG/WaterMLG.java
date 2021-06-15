@@ -1,10 +1,10 @@
 package de.lpd.challenges.chg.impl.WaterMLG;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
+
+import org.bukkit.*;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
@@ -35,17 +35,12 @@ public class WaterMLG extends Challenge {
 	@Override
 	public ItemStack getItem() {
 		ItemBuilder ib = new ItemBuilder(Material.WATER_BUCKET);
-		if(isToggled()) {
-			ib.setDisplayName("§6WaterMLG " + Starter.START_PREFIX + "§aOn");
-		} else {
-			ib.setDisplayName("§6WaterMLG " + Starter.START_PREFIX + "§cOff");
-		}
-		String[] lore = new String[7];
+		ib.setDisplayName("§6WaterMLG");
+		String[] lore = new String[4];
 		lore[0] = Starter.START_PREFIX + "§aIn dieser Challenge muss du in x Sekunden";
 		lore[1] = "§aeinen WaterMLG machen. Wenn einer dabei stirbt ist die Challange";
 		lore[2] = "§avorbei.";
-		lore[3] = "§7Derzeitig ausgew§hlte Zeit§8: §6" + getOption(cfg, "watermlg.max", 120);
-		lore[6] = "§6Mittelklick §7> §aÖffne das Inventart";
+		lore[3] = "§6Mittelklick §7> §aÖffne das Inventart";
 		
 		ib.setLoreString(lore);
 		return ib.build();
@@ -53,13 +48,13 @@ public class WaterMLG extends Challenge {
 	
 	@Override
 	public void onRightClick(Player p) {
-		//setOption(cfg, "watermlg.max", (int)getOption(cfg, "watermlg.max", 120) + 5);
+		//setOption(cfg, "watermlg.max", (double)getOption(cfg, "watermlg.max", 120) + 5);
 	}
 	
 	@Override
 	public void onLeftClick(Player p) {
-		/*if((int)getOption(cfg, "watermlg.max", 30) > 5) {
-			setOption(cfg, "watermlg.max", (int)getOption(cfg, "watermlg.max", 120) - 5);
+		/*if((double)getOption(cfg, "watermlg.max", 30) > 5) {
+			setOption(cfg, "watermlg.max", (double)getOption(cfg, "watermlg.max", 120) - 5);
 		}*/
 	}
 	
@@ -71,7 +66,7 @@ public class WaterMLG extends Challenge {
 	
 	@Override
 	public void reset() {
-		inv = new HashMap<>();
+		invs = new HashMap<>();
 		loc = new HashMap<>();
 	}
 
@@ -80,7 +75,7 @@ public class WaterMLG extends Challenge {
 
 	}
 
-	private HashMap<Player, ItemStack[]> inv = new HashMap<>();
+	private HashMap<Player, ItemStack[]> invs = new HashMap<>();
 	private HashMap<Player, Location> loc = new HashMap<Player, Location>();
 	
 	public void send() {
@@ -88,26 +83,59 @@ public class WaterMLG extends Challenge {
 			
 			@Override
 			public void run() {
-				inv = new HashMap<>();
+				invs = new HashMap<>();
 				if(isEnabled()) {
 					for(Player c : Bukkit.getOnlinePlayers()) {
 						if(c.getGameMode() == GameMode.SURVIVAL) {
-							inv.put(c, c.getInventory().getContents());
+							invs.put(c, c.getInventory().getContents());
 							c.getInventory().clear();
 							c.leaveVehicle();
 							
 							loc.put(c, c.getLocation());
 							
 							// 30 - 50 Blöcke
-							int r = Mathe.getRandom(30, 50);
-							c.teleport(new Location(c.getWorld(), c.getLocation().getX(), ChallengesMainClass.getHighestY(c.getLocation()) + r, c.getLocation().getZ()));
-							c.getInventory().addItem(new ItemBuilder(Material.WATER_BUCKET).setDisplayName("§6Der beste Springer").build());
+							int min = Math.round(Math.round((double)getOption(cfg, "watermlg.hight.min", 50.00)));
+							int max = Math.round(Math.round((double)getOption(cfg, "watermlg.hight.max", 50.00)));
+							int r = Mathe.getRandom(min, max);
+
+							World w;
+							if(Bukkit.getWorld("watermlg") == null) {
+								WorldCreator worldCreator = WorldCreator.name("watermlg");
+								worldCreator.environment(World.Environment.NORMAL);
+								worldCreator.type(WorldType.FLAT);
+								w = Bukkit.createWorld(worldCreator);
+							} else {
+								w = Bukkit.getWorld("watermlg");
+							}
+							System.out.println(Mathe.getRandom(Math.round((int)Math.round((double)getOption(cfg, "watermlg.secounds.min", 300.00))), (int)Math.round(Math.round((double)getOption(cfg, "watermlg.secounds.max", 300.00)))));
+							System.out.println(r);
+							Location locs = new Location(w, 0, 0, 0);
+							locs.setY((ChallengesMainClass.getHighestY(locs) + 1));
+
+							locs.getBlock().setType(Material.AIR);
+							new Location(locs.getWorld(), locs.getX(), locs.getY() - 1, locs.getZ()).getBlock().setType(Material.BEDROCK);
+
+							locs.setY(locs.getY() + r);
+
+							for(int y = (locs.getBlockY() - 2); y > 0; y--) {
+								for(int x = -20; x < 20; x++) {
+									for(int z = -20; z < 20; z++) {
+										w.getBlockAt(new Location(w, x, y, z)).setType(Material.AIR);
+									}
+								}
+							}
+
+							c.teleport(new Location(w, locs.getX(), locs.getY(), locs.getZ()));
+							c.getInventory().addItem(new ItemBuilder(Material.WATER_BUCKET).setDisplayName("§6Der beste Wasser Springer").build());
+							c.getInventory().addItem(new ItemBuilder(Material.SLIME_BLOCK).setDisplayName("§6Der beste Schleimer").build());
+							c.getInventory().addItem(new ItemBuilder(Material.OAK_BOAT).setDisplayName("§6Der beste Fahrer").build());
+							c.getInventory().addItem(new ItemBuilder(Material.HONEY_BLOCK).setDisplayName("§6Der Süßeste").build());
 							Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
 								
 								@Override
 								public void run() {
-									c.getInventory().setContents(inv.get(c));
-									inv.remove(c);
+									c.getInventory().setContents(invs.get(c));
+									invs.remove(c);
 									c.teleport(loc.get(c));
 									loc.remove(c);
 								}
@@ -118,40 +146,101 @@ public class WaterMLG extends Challenge {
 				}
 			}
 			
-		}, 0, (int)getOption(cfg, "watermlg.max", 120) * 20);
+		}, 0, 20 * Mathe.getRandom(Math.round((int)Math.round((double)getOption(cfg, "watermlg.secounds.min", 300.00))), (int)Math.round(Math.round((double)getOption(cfg, "watermlg.secounds.max", 300.00)))));
 	}
 
-	String plusMaxFood1 = "§6Ändere die Zeit bis zum nächsten MLG um +5 Sekunden",
-			minusMaxFood1 = "§6Ändere die Zeit bis zum nächsten MLG um -5 Sekunden",
-			itemdisplayname = "";
+	String plusminSecound = "§6Ändere die minimale Zeit bis zum nächsten MLG um +5 Sekunden",
+			minusminSecound = "§6Ändere die minimale Zeit bis zum nächsten MLG um -5 Sekunden",
+			plusmaxSecound = "§6Ändere die maximale Zeit bis zum nächsten MLG um +5 Sekunden",
+			minusmaxSecound = "§6Ändere die maximale Zeit bis zum nächsten MLG um -5 Sekunden",
+			plusminHöhe = "§6Ändere die minimale Höhe für den nächsten MLG um +2 Blöcke",
+			minusminHöhe = "§6Ändere die minimale Höhe für den nächsten MLG um -2 Blöcke",
+			plusmaxHöhe = "§6Ändere die maximale Höhe für den nächsten MLG um +2 Blöcke",
+			minusmaxHöhe = "§6Ändere die maximale Höhe für den nächsten MLG um -2 Blöcke",
+			namei = "";
 
 	@Override
 	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page) {
-		if(isToggled()) {
-			itemdisplayname = "§6WaterMLG " + Starter.START_PREFIX + "§aOn";
-		} else {
-			itemdisplayname = "§6WaterMLG " + Starter.START_PREFIX + "§cOff";
+		namei = "§6Water MLG(" + isToggled() + ")";
+
+		if(item.getItemMeta().getDisplayName().equalsIgnoreCase(namei)) {
+			toggle();
+		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(plusminSecound)) {
+			double c = (double) getOption(cfg, "watermlg.secounds.min", 300.00);
+			c = c + 2.5;
+			setOption(cfg, "watermlg.secounds.min", c);
+		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(minusminSecound)) {
+			double c = (double) getOption(cfg, "watermlg.secounds.min", 300.00);
+			if(c > 0) {
+				c = c - 2.5;
+				setOption(cfg, "watermlg.secounds.min", c);
+			}
+		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(plusmaxSecound)) {
+			double c = (double) getOption(cfg, "watermlg.secounds.max", 300.00);
+			c = c + 2.5;
+			setOption(cfg, "watermlg.secounds.max", c);
+		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(minusmaxSecound)) {
+			double c = (double) getOption(cfg, "watermlg.secounds.max", 300.00);
+			if(c > 0) {
+				c = c - 2.5;
+				setOption(cfg, "watermlg.secounds.max", c);
+			}
+		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(plusminHöhe)) {
+			double c = (double) getOption(cfg, "watermlg.hight.min", 20.00);
+			c = c + 1;
+			setOption(cfg, "watermlg.watermlg.hight.min", c);
+		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(minusminHöhe)) {
+			double c = (double) getOption(cfg, "watermlg.hight.min", 20.00);
+			if(c > 0) {
+				c = c - 1;
+				setOption(cfg, "watermlg.hight.min", c);
+			}
+		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(plusmaxHöhe)) {
+			double c = (double) getOption(cfg, "watermlg.hight.max", 50.00);
+			c = c + 1;
+			setOption(cfg, "watermlg.hight.max", c);
+		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(minusmaxHöhe)) {
+			double c = (double) getOption(cfg, "watermlg.hight.max", 50.00);
+			if(c > 0) {
+				c = c - 1;
+				setOption(cfg, "watermlg.hight.max", c);
+			}
 		}
 
-		if(item.getItemMeta().getDisplayName().equalsIgnoreCase(plusMaxFood1)) {
-			setOption(cfg, "watermlg.max", (int)getOption(cfg, "watermlg.max", 120) + 5);
-		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(minusMaxFood1)) {
-			if((int)getOption(cfg, "watermlg.max", 30) > 5) {
-				setOption(cfg, "watermlg.max", (int)getOption(cfg, "watermlg.max", 120) - 5);
-			}
-		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(itemdisplayname)) {
-			toggle();
-		}
-		p.openInventory(getInventory(page, p));
 	}
 
 	@Override
 	public Inventory getInventory(int page, Player p) {
+		inv = de.lpd.challenges.invs.Inventory.placeHolder(inv);
+
+		ArrayList<ItemStack> items = new ArrayList<>();
+		namei = "§6Water MLG(" + isToggled() + ")";
+		ItemBuilder b;
 		if(isToggled()) {
-			itemdisplayname = "§6WaterMLG " + Starter.START_PREFIX + "§aOn";
+			b = new ItemBuilder(Material.EMERALD_BLOCK);
 		} else {
-			itemdisplayname = "§6WaterMLG " + Starter.START_PREFIX + "§cOff";
+			b = new ItemBuilder(Material.REDSTONE_BLOCK);
 		}
-		return null;
+		inv.setItem((9 * 2) - 1, b.setDisplayName(namei).build());
+
+		inv.setItem(0, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(plusminSecound).build());
+		inv.setItem(9, new ItemBuilder(Material.CLOCK).setDisplayName("§6Minimale Zeit: " + getOption(cfg, "watermlg.secounds.min", 300.00) + " Sekunden").build());
+		inv.setItem(18, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(minusminSecound).build());
+
+		inv.setItem(1, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(plusmaxSecound).build());
+		inv.setItem(10, new ItemBuilder(Material.CLOCK).setDisplayName("§6Maximale Zeit: " + getOption(cfg, "watermlg.secounds.max", 300.00) + " Sekunden").build());
+		inv.setItem(19, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(minusmaxSecound).build());
+
+		inv.setItem(2, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(plusminHöhe).build());
+		inv.setItem(11, new ItemBuilder(Material.CLOCK).setDisplayName("§6Minimale Höhe: " + getOption(cfg, "watermlg.hight.min", 50.00)).build());
+		inv.setItem(20, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(minusminHöhe).build());
+
+		inv.setItem(3, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(plusmaxHöhe).build());
+		inv.setItem(12, new ItemBuilder(Material.CLOCK).setDisplayName("§6Maximale Höhe: " + getOption(cfg, "watermlg.hight.max", 50.00)).build());
+		inv.setItem(21, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(minusmaxHöhe).build());
+
+		inv.setItem(inv.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK()).build());
+
+		return getPage(items, inv, page);
 	}
 }
