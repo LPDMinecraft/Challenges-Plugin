@@ -27,7 +27,7 @@ public class Languages extends Inventory  {
             for(Language l : LanguagesManager.langs.values()) {
                 if(item.getItemMeta().getDisplayName().equalsIgnoreCase(l.getItem().getItemMeta().getDisplayName()) && item.getType() == l.getItem().getType()) {
                     l.onClick(p, item, e);
-                    LanguagesManager.setPlayer(p.getUniqueId(), );
+                    LanguagesManager.setPlayer(p.getUniqueId(), LanguagesManager.getLanguage(item.getItemMeta().getDisplayName().split(" - ")[0].toLowerCase()));
                     break;
                 }
             }
