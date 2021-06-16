@@ -3,6 +3,7 @@ package de.lpd.challenges.settings;
 import java.util.ArrayList;
 
 import de.lpd.challenges.main.ChallengesMainClass;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class SettingManager {
@@ -17,11 +18,11 @@ public class SettingManager {
 		settings.add(s);
 	}
 
-	public ArrayList<ItemStack> getAllItems() {
+	public ArrayList<ItemStack> getAllItems(Player p) {
 		ArrayList<ItemStack> items = new ArrayList<>();
 
 		for(Setting c : settings) {
-			items.add(c.getItem());
+			items.add(c.getItem(p));
 		}
 
 		return items;

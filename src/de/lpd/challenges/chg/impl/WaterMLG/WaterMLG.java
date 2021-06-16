@@ -3,6 +3,7 @@ package de.lpd.challenges.chg.impl.WaterMLG;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import de.lpd.challenges.languages.LanguagesManager;
 import org.bukkit.*;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -33,14 +34,14 @@ public class WaterMLG extends Challenge {
 	}
 	
 	@Override
-	public ItemStack getItem() {
+	public ItemStack getItem(Player p) {
 		ItemBuilder ib = new ItemBuilder(Material.WATER_BUCKET);
-		ib.setDisplayName("§6WaterMLG");
+		ib.setDisplayName(LanguagesManager.translate("§6WaterMLG", p.getUniqueId()));
 		String[] lore = new String[4];
-		lore[0] = Starter.START_PREFIX + "§aIn dieser Challenge muss du in x Sekunden";
-		lore[1] = "§aeinen WaterMLG machen. Wenn einer dabei stirbt ist die Challange";
-		lore[2] = "§avorbei.";
-		lore[3] = "§6Mittelklick §7> §aÖffne das Inventart";
+		lore[0] = Starter.START_PREFIX + LanguagesManager.translate("§aIn dieser Challenge muss du in x Sekunden", p.getUniqueId());
+		lore[1] = LanguagesManager.translate("§aeinen WaterMLG machen. Wenn einer dabei stirbt ist die Challange", p.getUniqueId());
+		lore[2] = LanguagesManager.translate("§avorbei.", p.getUniqueId());
+		lore[3] = LanguagesManager.translate("§6Mittelklick §7> §aÖffne das Inventar", p.getUniqueId());
 		
 		ib.setLoreString(lore);
 		return ib.build();
@@ -71,7 +72,7 @@ public class WaterMLG extends Challenge {
 	}
 
 	@Override
-	public void ifPlayerDies() {
+	public void ifPlayerDies(Player p) {
 
 	}
 
@@ -161,7 +162,15 @@ public class WaterMLG extends Challenge {
 
 	@Override
 	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page) {
-		namei = "§6Water MLG(" + isToggled() + ")";
+		namei = LanguagesManager.translate("§6Water MLG(" + isToggled() + ")", p.getUniqueId());
+		plusminSecound = LanguagesManager.translate("§6Ändere die minimale Zeit bis zum nächsten MLG um +5 Sekunden", p.getUniqueId());
+		minusminSecound = LanguagesManager.translate("§6Ändere die minimale Zeit bis zum nächsten MLG um -5 Sekunden", p.getUniqueId());
+		plusmaxSecound = LanguagesManager.translate("§6Ändere die maximale Zeit bis zum nächsten MLG um +5 Sekunden", p.getUniqueId());
+		minusmaxSecound = LanguagesManager.translate("§6Ändere die maximale Zeit bis zum nächsten MLG um -5 Sekunden", p.getUniqueId());
+		plusminHöhe = LanguagesManager.translate("§6Ändere die minimale Höhe für den nächsten MLG um +2 Blöcke", p.getUniqueId());
+		minusminHöhe = LanguagesManager.translate("§6Ändere die minimale Höhe für den nächsten MLG um -2 Blöcke", p.getUniqueId());
+		plusmaxHöhe = LanguagesManager.translate("§6Ändere die maximale Höhe für den nächsten MLG um +2 Blöcke", p.getUniqueId());
+		minusmaxHöhe = LanguagesManager.translate("§6Ändere die maximale Höhe für den nächsten MLG um -2 Blöcke", p.getUniqueId());
 
 		if(item.getItemMeta().getDisplayName().equalsIgnoreCase(namei)) {
 			toggle();
@@ -214,7 +223,15 @@ public class WaterMLG extends Challenge {
 		inv = de.lpd.challenges.invs.Inventory.placeHolder(inv);
 
 		ArrayList<ItemStack> items = new ArrayList<>();
-		namei = "§6Water MLG(" + isToggled() + ")";
+		namei = LanguagesManager.translate("§6Water MLG(" + isToggled() + ")", p.getUniqueId());
+		plusminSecound = LanguagesManager.translate("§6Ändere die minimale Zeit bis zum nächsten MLG um +5 Sekunden", p.getUniqueId());
+		minusminSecound = LanguagesManager.translate("§6Ändere die minimale Zeit bis zum nächsten MLG um -5 Sekunden", p.getUniqueId());
+		plusmaxSecound = LanguagesManager.translate("§6Ändere die maximale Zeit bis zum nächsten MLG um +5 Sekunden", p.getUniqueId());
+		minusmaxSecound = LanguagesManager.translate("§6Ändere die maximale Zeit bis zum nächsten MLG um -5 Sekunden", p.getUniqueId());
+		plusminHöhe = LanguagesManager.translate("§6Ändere die minimale Höhe für den nächsten MLG um +2 Blöcke", p.getUniqueId());
+		minusminHöhe = LanguagesManager.translate("§6Ändere die minimale Höhe für den nächsten MLG um -2 Blöcke", p.getUniqueId());
+		plusmaxHöhe = LanguagesManager.translate("§6Ändere die maximale Höhe für den nächsten MLG um +2 Blöcke", p.getUniqueId());
+		minusmaxHöhe = LanguagesManager.translate("§6Ändere die maximale Höhe für den nächsten MLG um -2 Blöcke", p.getUniqueId());
 		ItemBuilder b;
 		if(isToggled()) {
 			b = new ItemBuilder(Material.EMERALD_BLOCK);
@@ -224,19 +241,19 @@ public class WaterMLG extends Challenge {
 		inv.setItem((9 * 2) - 1, b.setDisplayName(namei).build());
 
 		inv.setItem(0, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(plusminSecound).build());
-		inv.setItem(9, new ItemBuilder(Material.CLOCK).setDisplayName("§6Minimale Zeit: " + getOption(cfg, "watermlg.secounds.min", 300.00) + " Sekunden").build());
+		inv.setItem(9, new ItemBuilder(Material.CLOCK).setDisplayName(LanguagesManager.translate("§6Minimale Zeit: ", p.getUniqueId()) + getOption(cfg, "watermlg.secounds.min", 300.00) + " Sekunden").build());
 		inv.setItem(18, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(minusminSecound).build());
 
 		inv.setItem(1, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(plusmaxSecound).build());
-		inv.setItem(10, new ItemBuilder(Material.CLOCK).setDisplayName("§6Maximale Zeit: " + getOption(cfg, "watermlg.secounds.max", 300.00) + " Sekunden").build());
+		inv.setItem(10, new ItemBuilder(Material.CLOCK).setDisplayName(LanguagesManager.translate("§6Maximale Zeit: ", p.getUniqueId()) + getOption(cfg, "watermlg.secounds.max", 300.00) + " Sekunden").build());
 		inv.setItem(19, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(minusmaxSecound).build());
 
 		inv.setItem(2, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(plusminHöhe).build());
-		inv.setItem(11, new ItemBuilder(Material.CLOCK).setDisplayName("§6Minimale Höhe: " + getOption(cfg, "watermlg.hight.min", 50.00)).build());
+		inv.setItem(11, new ItemBuilder(Material.CLOCK).setDisplayName(LanguagesManager.translate("§6Minimale Höhe: ", p.getUniqueId()) + getOption(cfg, "watermlg.hight.min", 50.00)).build());
 		inv.setItem(20, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(minusminHöhe).build());
 
 		inv.setItem(3, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(plusmaxHöhe).build());
-		inv.setItem(12, new ItemBuilder(Material.CLOCK).setDisplayName("§6Maximale Höhe: " + getOption(cfg, "watermlg.hight.max", 50.00)).build());
+		inv.setItem(12, new ItemBuilder(Material.CLOCK).setDisplayName(LanguagesManager.translate("§6Maximale Höhe: ", p.getUniqueId()) + getOption(cfg, "watermlg.hight.max", 50.00)).build());
 		inv.setItem(21, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(minusmaxHöhe).build());
 
 		inv.setItem(inv.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK()).build());

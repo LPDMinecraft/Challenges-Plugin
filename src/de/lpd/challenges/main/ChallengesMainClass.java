@@ -1,6 +1,7 @@
 package de.lpd.challenges.main;
 
 import de.lpd.challenges.chg.Challenge;
+import de.lpd.challenges.languages.LanguagesManager;
 import de.lpd.challenges.settings.Setting;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -34,6 +35,7 @@ public class ChallengesMainClass extends JavaPlugin {
 	private static InventoryManager invManager;
 	private static SettingManager settingManager;
 	private static ChallengesManager ChMa;
+	private static LanguagesManager langManager;
 	
 	public static Timer t;
 	
@@ -54,6 +56,7 @@ public class ChallengesMainClass extends JavaPlugin {
 		t.reset();
 		invManager = new InventoryManager(plugin);
 		ChMa = new ChallengesManager(plugin);
+		langManager = new LanguagesManager();
 		settingManager = new SettingManager(plugin);
 		new Starter().startPlugin(mainCFG, plugin);
 		
@@ -64,7 +67,11 @@ public class ChallengesMainClass extends JavaPlugin {
 
 		registerListener(new DeathEvent());
 	}
-	
+
+	public static LanguagesManager getLangManager() {
+		return langManager;
+	}
+
 	@Override
 	public void onEnable() {
 		load();
@@ -111,13 +118,17 @@ public class ChallengesMainClass extends JavaPlugin {
 		return y;
 	}
 	
-	public static void fail(int reason) {
+	public static void fail(int reason, Player p) {
 
 		for(Challenge c : getChMa().getIdtoclass().values()) {
-			c.ifPlayerDies();
+			if(p != null) {
+				c.ifPlayerDies(p);
+			}
 		}
 		for(Setting c : getSettingManager().settings) {
-			c.ifPlayerDies();
+			if(p != null) {
+				c.ifPlayerDies(p);
+			}
 		}
 
 		if(reason == 0) {
@@ -125,7 +136,7 @@ public class ChallengesMainClass extends JavaPlugin {
 			Bukkit.broadcastMessage("§6Der Enderdrache wurde besiegt!");
 			Bukkit.broadcastMessage("§6Die Challenge ist bestanden.");
 			Bukkit.broadcastMessage("");
-			Bukkit.broadcastMessage("§6" + t.getDisplay("", ""));
+			Bukkit.broadcastMessage("§6" + t.getDisplay("", "", p));
 			Bukkit.broadcastMessage("§7Seed§8: §6" + Bukkit.getWorld("world").getSeed());
 			Bukkit.broadcastMessage("§7---------------------------------------");
 		} else if(reason == 1) {
@@ -133,7 +144,7 @@ public class ChallengesMainClass extends JavaPlugin {
 			Bukkit.broadcastMessage("§6Die Challenge ist nicht bestanden.");
 			Bukkit.broadcastMessage("§a#pech §6in den Chat.");
 			Bukkit.broadcastMessage("");
-			Bukkit.broadcastMessage("§6" + t.getDisplay("", ""));
+			Bukkit.broadcastMessage("§6" + t.getDisplay("", "", p));
 			Bukkit.broadcastMessage("§7Seed§8: §6" + Bukkit.getWorld("world").getSeed());
 			Bukkit.broadcastMessage("§7---------------------------------------");
 		} else if(reason == 2) {
@@ -141,7 +152,7 @@ public class ChallengesMainClass extends JavaPlugin {
 			Bukkit.broadcastMessage("§6Die Challenge ist nicht bestanden. [Tod]");
 			Bukkit.broadcastMessage("§a#pech §6in den Chat.");
 			Bukkit.broadcastMessage("");
-			Bukkit.broadcastMessage("§6" + t.getDisplay("", ""));
+			Bukkit.broadcastMessage("§6" + t.getDisplay("", "", p));
 			Bukkit.broadcastMessage("§7Seed§8: §6" + Bukkit.getWorld("world").getSeed());
 			Bukkit.broadcastMessage("§7---------------------------------------");
 		}

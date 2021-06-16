@@ -1,5 +1,6 @@
 package de.lpd.challenges.chg.impl.LockedSlots;
 
+import de.lpd.challenges.languages.LanguagesManager;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -54,13 +55,13 @@ public class LockedSlots extends Challenge {
 	}
 	
 	@Override
-	public ItemStack getItem() {
+	public ItemStack getItem(Player p) {
 		ItemBuilder ib = new ItemBuilder(Material.RED_STAINED_GLASS);
-		ib.setDisplayName("§6Locked Slots");
+		ib.setDisplayName(LanguagesManager.translate("§6Locked Slots", p.getUniqueId()));
 		String[] lore = new String[3];
-		lore[0] = Starter.START_PREFIX + "§aIn dieser Challenge muss man Minecraft mit";
-		lore[1] = "§aX Slots durchspielen.";
-		lore[2] = "§6Mittelklick §7> §aOpen Inventory";
+		lore[0] = Starter.START_PREFIX + LanguagesManager.translate("§aIn dieser Challenge muss man Minecraft mit", p.getUniqueId());
+		lore[1] = LanguagesManager.translate("§aX Slots durchspielen.", p.getUniqueId());
+		lore[2] = LanguagesManager.translate("§6Mittelklick §7> §aOpen Inventory", p.getUniqueId());
 		
 		ib.setLoreString(lore);
 		return ib.build();
@@ -105,7 +106,7 @@ public class LockedSlots extends Challenge {
 	}
 
 	@Override
-	public void ifPlayerDies() {
+	public void ifPlayerDies(Player p) {
 
 	}
 
@@ -161,7 +162,9 @@ public class LockedSlots extends Challenge {
 
 	@Override
 	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page) {
-		namei = "§6Locked Slots(" + isToggled() + "): " + getOption(cfg, "lockedslots.max", 0) + " Slots sind locked";
+		namei = LanguagesManager.translate("§6Locked Slots(" + isToggled() + "): ", p.getUniqueId()) + getOption(cfg, "lockedslots.max", 0) + " Slots sind locked";
+		plusLockedSlots1 = LanguagesManager.translate("§6Sperre ein 1 Slot mehr", p.getUniqueId());
+		minusLockedSlots1 = LanguagesManager.translate("§6Entsperre ein weiteren 1 Slot", p.getUniqueId());
 
 		if(item.getItemMeta().getDisplayName().equalsIgnoreCase(plusLockedSlots1)) {
 			double l = Double.valueOf(String.valueOf(getOption(cfg, "lockedslots.max", 0.00)));
@@ -184,7 +187,9 @@ public class LockedSlots extends Challenge {
 	public Inventory getInventory(int page, Player p) {
 		inv = de.lpd.challenges.invs.Inventory.placeHolder(inv);
 
-		namei = "§6Locked Slots(" + isToggled() + "): " + getOption(cfg, "lockedslots.max", 0) + " Slots sind locked";
+		namei = LanguagesManager.translate("§6Locked Slots(" + isToggled() + "): ", p.getUniqueId()) + getOption(cfg, "lockedslots.max", 0) + " Slots sind locked";
+		plusLockedSlots1 = LanguagesManager.translate("§6Sperre ein 1 Slot mehr", p.getUniqueId());
+		minusLockedSlots1 = LanguagesManager.translate("§6Entsperre ein weiteren 1 Slot", p.getUniqueId());
 		ArrayList<ItemStack> items = new ArrayList<>();
 
 		inv.setItem(0, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(plusLockedSlots1).build());
@@ -194,7 +199,6 @@ public class LockedSlots extends Challenge {
 			inv.setItem(9, new ItemBuilder(Material.REDSTONE_BLOCK).setDisplayName(namei).build());
 		}
 		inv.setItem(18, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(minusLockedSlots1).build());
-
 		inv.setItem(inv.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK()).build());
 
 		return getPage(items, inv, page);

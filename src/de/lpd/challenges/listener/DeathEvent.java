@@ -12,14 +12,14 @@ public class DeathEvent implements Listener {
 	
 	@EventHandler
 	public void onDeath(PlayerDeathEvent e) {
-		ChallengesMainClass.fail(2);
+		ChallengesMainClass.fail(2, e.getEntity());
 		e.getEntity().setHealth(e.getEntity().getMaxHealth());
 	}
 	
 	@EventHandler
 	public void onEnderDeath(EntityDeathEvent e) {
 		if(e.getEntityType() == EntityType.ENDER_DRAGON) {
-			ChallengesMainClass.fail(0);
+			ChallengesMainClass.fail(0, null);
 		}
 	}
 	

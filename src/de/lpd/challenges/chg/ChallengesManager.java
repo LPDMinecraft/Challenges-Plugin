@@ -3,7 +3,9 @@ package de.lpd.challenges.chg;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javafx.print.PageLayout;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import de.lpd.challenges.chg.impl.BreakUpgradeTool.BreakUpgradeTool;
 import de.lpd.challenges.chg.impl.Hearths.GeteilteHearths;
@@ -43,26 +45,26 @@ public class ChallengesManager {
 		return idtoclass;
 	}
 
-	public ArrayList<ItemStack> getAllItems() {
+	public ArrayList<ItemStack> getAllItems(Player p) {
 		ArrayList<ItemStack> items = new ArrayList<>();
 		for(Challenge c : idtoclass.values()) {
-			items.add(c.getItem());
+			items.add(c.getItem(p));
 		}
 		return items;
 	}
 	
-	public static HashMap<String, ItemStack> getItemStack() {
+	public static HashMap<String, ItemStack> getItemStack(Player p) {
 		HashMap<String, ItemStack> all = new HashMap<>();
 		for(String s : idtoclass.keySet()) {
-			all.put(s, idtoclass.get(s).getItem());
+			all.put(s, idtoclass.get(s).getItem(p));
 		}
 		return all;
 	}
 	
-	public static ArrayList<ItemStack> getItemStackArray() {
+	public static ArrayList<ItemStack> getItemStackArray(Player p) {
 		ArrayList<ItemStack> i = new ArrayList<>();
-		for(String key : getItemStack().keySet()) {
-			i.add(getItemStack().get(key));
+		for(String key : getItemStack(p).keySet()) {
+			i.add(getItemStack(p).get(key));
 		}
 		return i;
 	}

@@ -26,7 +26,7 @@ public class Settings extends Inventory {
 	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page) {
 		if(item.getType() != Material.BLACK_STAINED_GLASS_PANE) {
 			for(Setting c : ChallengesMainClass.getSettingManager().settings) {
-				ItemStack i = c.getItem();
+				ItemStack i = c.getItem(p);
 				if(item.getItemMeta().getDisplayName().equalsIgnoreCase(i.getItemMeta().getDisplayName()) && item.getType() == i.getType()) {
 					if(e.getClick() == ClickType.MIDDLE) {
 						c.onMiddleClick(p);
@@ -57,7 +57,7 @@ public class Settings extends Inventory {
 		ArrayList<ItemStack> items = new ArrayList<>();
 
 		for(Setting c : SettingManager.settings) {
-			items.add(c.getItem());
+			items.add(c.getItem(p));
 		}
 
 		inv.setItem(inv.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK()).build());

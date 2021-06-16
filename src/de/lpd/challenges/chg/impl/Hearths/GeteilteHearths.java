@@ -1,5 +1,6 @@
 package de.lpd.challenges.chg.impl.Hearths;
 
+import de.lpd.challenges.languages.LanguagesManager;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -52,14 +53,14 @@ public class GeteilteHearths extends Challenge {
 	}
 
 	@Override
-	public ItemStack getItem() {
+	public ItemStack getItem(Player p) {
 		ItemBuilder ib = new ItemBuilder(Material.HEART_OF_THE_SEA, 2);
-		ib.setDisplayName("§6GeteilteHerzen");
+		ib.setDisplayName(LanguagesManager.translate("§6GeteilteHerzen", p.getUniqueId()));
 		String[] lore = new String[4];
-		lore[0] = Starter.START_PREFIX + "§aIn dieser Challenge muss man Minecraft mit";
-		lore[1] = "§ageteilten Herzen durspielen. Das hei§t. Wenn Spieler 1 Damage";
-		lore[2] = "§abekommt, bekommt der Rest auch Damage.";
-		lore[3] = "§6Mittelklick §7> §aInventar aufmachen";
+		lore[0] = Starter.START_PREFIX + LanguagesManager.translate("§aIn dieser Challenge muss man Minecraft mit", p.getUniqueId());
+		lore[1] = LanguagesManager.translate("§ageteilten Herzen durspielen. Das hei§t. Wenn Spieler 1 Damage", p.getUniqueId());
+		lore[2] = LanguagesManager.translate("§abekommt, bekommt der Rest auch Damage.", p.getUniqueId());
+		lore[3] = LanguagesManager.translate("§6Mittelklick §7> §aInventar aufmachen", p.getUniqueId());
 		
 		ib.setLoreString(lore);
 		return ib.build();
@@ -82,7 +83,7 @@ public class GeteilteHearths extends Challenge {
 	}
 
 	@Override
-	public void ifPlayerDies() {
+	public void ifPlayerDies(Player p) {
 		setOption(cfg, "geteilteherzen.herzen", (double)getOption(cfg, "geteilteherzen.herzen", 20.00));
 	}
 
@@ -107,9 +108,9 @@ public class GeteilteHearths extends Challenge {
 	@Override
 	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page) {
         if(isToggled()) {
-            itemdisplayname = "§6Geteilte Herzen " + Starter.START_PREFIX.replace("§r", "") + "§aOn";
+			LanguagesManager.translate("§6Geteilte Herzen " + Starter.START_PREFIX + "§aOn", p.getUniqueId());
         } else {
-            itemdisplayname = "§6Geteilte Herzen " + Starter.START_PREFIX.replace("§r", "") + "§cOff";
+			LanguagesManager.translate("§6Geteilte Herzen " + Starter.START_PREFIX + "§cOff", p.getUniqueId());
         }
 		if(item.getItemMeta().getDisplayName().equalsIgnoreCase(itemdisplayname)) {
 			toggle();
@@ -127,10 +128,10 @@ public class GeteilteHearths extends Challenge {
 		ItemBuilder ib = new ItemBuilder(Material.REDSTONE_BLOCK);
 		if(isToggled()) {
 			ib = new ItemBuilder(Material.EMERALD_BLOCK);
-			itemdisplayname = "§6Geteilte Herzen " + Starter.START_PREFIX + "§aOn";
+			itemdisplayname = LanguagesManager.translate("§6Geteilte Herzen " + Starter.START_PREFIX + "§aOn", p.getUniqueId());
 		} else {
 			ib = new ItemBuilder(Material.REDSTONE_BLOCK);
-			itemdisplayname = "§6Geteilte Herzen " + Starter.START_PREFIX + "§cOff";
+			itemdisplayname = LanguagesManager.translate("§6Geteilte Herzen " + Starter.START_PREFIX + "§cOff", p.getUniqueId());
 		}
 		ib.setDisplayName(itemdisplayname);
 

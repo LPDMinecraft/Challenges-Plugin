@@ -1,5 +1,6 @@
 package de.lpd.challenges.chg.impl.Hearths;
 
+import de.lpd.challenges.languages.LanguagesManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -48,13 +49,13 @@ public class MaxHearth extends Challenge {
 	}
 
 	@Override
-	public ItemStack getItem() {
+	public ItemStack getItem(Player p) {
 		ItemBuilder ib = new ItemBuilder(Material.CUT_RED_SANDSTONE_SLAB);
-		ib.setDisplayName("§6MaxLeben");
+		ib.setDisplayName(LanguagesManager.translate("§6MaxLeben", p.getUniqueId()));
 		String[] lore = new String[3];
-		lore[0] = Starter.START_PREFIX + "§aIn dieser Challenge muss man Minecraft mit";
-		lore[1] = "§aX Herzen durchspielen.";
-		lore[2] = "§6Mittelklick §7> §aÖffne Inventar";
+		lore[0] = Starter.START_PREFIX + LanguagesManager.translate("§aIn dieser Challenge muss man Minecraft mit", p.getUniqueId());
+		lore[1] = LanguagesManager.translate("§aX Herzen durchspielen.", p.getUniqueId());
+		lore[2] = LanguagesManager.translate("§6Mittelklick §7> §aÖffne Inventar", p.getUniqueId());
 		
 		ib.setLoreString(lore);
 		return ib.build();
@@ -90,7 +91,7 @@ public class MaxHearth extends Challenge {
 	}
 
 	@Override
-	public void ifPlayerDies() {
+	public void ifPlayerDies(Player p) {
 
 	}
 
@@ -100,7 +101,10 @@ public class MaxHearth extends Challenge {
 
 	@Override
 	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page) {
-		namei = "§6Max Hearth(" + isToggled() + "): " + ((double)getOption(cfg, "maxhearths.max", 20.00) / 2) + " Herzen sind das maximum";
+		namei = LanguagesManager.translate("§6Max Hearth(" + isToggled() + "): ", p.getUniqueId()) + ((double)getOption(cfg, "maxhearths.max", 20.00) / 2) + " Herzen sind das maximum";
+
+		plusMaxHearth1 = LanguagesManager.translate("§6Füge 0,5 Herzen hinzu", p.getUniqueId());
+	    minusMaxHeath1 = LanguagesManager.translate("§6Lösche 0,5 Herzen", p.getUniqueId());
 
 		if(item.getItemMeta().getDisplayName().equalsIgnoreCase(plusMaxHearth1) && item.getType() == Material.STONE_BUTTON) {
 			setOption(cfg, "maxhearths.max", (double)getOption(cfg, "maxhearths.max", 20.00) + 0.5);
@@ -131,8 +135,13 @@ public class MaxHearth extends Challenge {
 			ib = Material.REDSTONE_BLOCK;
 		}
 
+		namei = LanguagesManager.translate("§6Max Hearth(" + isToggled() + "): ", p.getUniqueId()) + ((double)getOption(cfg, "maxhearths.max", 20.00) / 2) + " Herzen sind das maximum";
+
+		plusMaxHearth1 = LanguagesManager.translate("§6Füge 0,5 Herzen hinzu", p.getUniqueId());
+		minusMaxHeath1 = LanguagesManager.translate("§6Lösche 0,5 Herzen", p.getUniqueId());
+
 		inv.setItem(0, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(plusMaxHearth1).build());
-		inv.setItem(9, new ItemBuilder(ib).setDisplayName("§6Max Hearth(" + isToggled() + "): " + ((double)getOption(cfg, "maxhearths.max", 20.00) / 2) + " Herzen sind das maximum").build());
+		inv.setItem(9, new ItemBuilder(ib).setDisplayName(namei).build());
 		inv.setItem(18, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(minusMaxHeath1).build());
 
 		inv.setItem(inv.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK()).build());

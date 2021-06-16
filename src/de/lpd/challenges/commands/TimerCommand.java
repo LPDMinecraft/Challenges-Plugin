@@ -1,5 +1,6 @@
 package de.lpd.challenges.commands;
 
+import de.lpd.challenges.languages.LanguagesManager;
 import org.bukkit.command.CommandSender;
 
 import de.lpd.challenges.main.ChallengesMainClass;
@@ -23,22 +24,22 @@ public class TimerCommand extends Command {
 				if(!ChallengesMainClass.t.isStarted()) {
 					if(ChallengesMainClass.t.getMillsecounds() == 0) {
 						ChallengesMainClass.t.start();
-						s.sendMessage(PREFIX + "§aDer Countdown wurde gestartet.");
+						s.sendMessage(PREFIX + LanguagesManager.translate("§aDer Countdown wurde gestartet.", "en"));
 					} else {
-						s.sendMessage(PREFIX + "§cDer Countdown wurde bereits gestartet. " + getHelpMessage("timer resume"));
+						s.sendMessage(PREFIX + LanguagesManager.translate("§cDer Countdown wurde bereits gestartet. ", "en") + getHelpMessage(null, "timer resume"));
 					}
 				} else {
-					s.sendMessage(PREFIX + "§cDer Countdown ist bereit gestartet.");
+					s.sendMessage(PREFIX + LanguagesManager.translate("§cDer Countdown ist bereit gestartet.", "en"));
 				}
 			} else if(args[0].equalsIgnoreCase("reset")) {
 				ChallengesMainClass.t.reset();
-				s.sendMessage(PREFIX + "§aDer Countdown wurde resetet.");
+				s.sendMessage(PREFIX + LanguagesManager.translate("§aDer Countdown wurde resetet.", "en"));
 			} else if(args[0].equalsIgnoreCase("resume")) {
 				if(!ChallengesMainClass.t.isStarted()) {
 					if(ChallengesMainClass.t.getMillsecounds() != 0) {
 						ChallengesMainClass.t.resume();
 					} else {
-						s.sendMessage(PREFIX + "§cDer Countdown wurde noch nicht gestartet.");
+						s.sendMessage(PREFIX + LanguagesManager.translate("§cDer Countdown wurde noch nicht gestartet.", "en"));
 					}
 				} else {
 					s.sendMessage(PREFIX + "§cDer Countdown l§uft bereits.");
@@ -48,10 +49,10 @@ public class TimerCommand extends Command {
 					if(ChallengesMainClass.t.getMillsecounds() != 0) {
 						ChallengesMainClass.t.pause();
 					} else {
-						s.sendMessage(PREFIX + "§cDer Countdown wurde noch nicht gestartet.");
+						s.sendMessage(PREFIX + LanguagesManager.translate("§cDer Countdown wurde noch nicht gestartet.", "en"));
 					}
 				} else {
-					s.sendMessage(PREFIX + "§cDer Countdown wurde noch nicht gestartet.");
+					s.sendMessage(PREFIX + LanguagesManager.translate("§cDer Countdown wurde noch nicht gestartet.", "en"));
 				}
 			} else if(args[0].equalsIgnoreCase("restart")) {
 				if(ChallengesMainClass.t.isPaused() || ChallengesMainClass.t.isStarted()) {
@@ -61,13 +62,13 @@ public class TimerCommand extends Command {
 					}
 					ChallengesMainClass.t.start();
 				} else {
-					s.sendMessage(PREFIX + "§cDer Countdown wurde noch nicht gestartet/pausiert.");
+					s.sendMessage(PREFIX + LanguagesManager.translate("§cDer Countdown wurde noch nicht gestartet/pausiert.", "en"));
 				}
 			} else {
-				s.sendMessage(getHelpMessage("timer", "timer [start, reset, resume, pause, restart, status]"));
+				s.sendMessage(getHelpMessage(null, "timer", "timer [start, reset, resume, pause, restart, status]"));
 			}
 		} else {
-			s.sendMessage(getHelpMessage("timer", "timer [start, reset, resume, pause, restart, status]"));
+			s.sendMessage(getHelpMessage(null, "timer", "timer [start, reset, resume, pause, restart, status]"));
 		}
 		return false;
 	}
@@ -76,12 +77,12 @@ public class TimerCommand extends Command {
 		String msg = "";
 		if(!ChallengesMainClass.t.isStarted()) {
 			if(ChallengesMainClass.t.getMillsecounds() == 0) {
-				msg = PREFIX + "§aDer CountDown ist §6noch nicht gestartet worden§a.";
+				msg = PREFIX + LanguagesManager.translate("§aDer CountDown ist §6noch nicht gestartet worden§a.", "en");
 			} else if(ChallengesMainClass.t.isPaused()) {
-				msg = PREFIX + "§aDer CountDown ist §6bereits gestoppt§a.";
+				msg = PREFIX + LanguagesManager.translate("§aDer CountDown ist §6bereits gestoppt§a.", "en");
 			}
 		} else {
-			msg = PREFIX + "§aDer CountDown ist §6bereits gestartet§a.";
+			msg = PREFIX + LanguagesManager.translate("§aDer CountDown ist §6bereits gestartet§a.", "en");
 		}
 		return msg;
 	}

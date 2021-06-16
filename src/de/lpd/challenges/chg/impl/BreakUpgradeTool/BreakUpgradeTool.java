@@ -1,5 +1,6 @@
 package de.lpd.challenges.chg.impl.BreakUpgradeTool;
 
+import de.lpd.challenges.languages.LanguagesManager;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.HumanEntity;
@@ -35,14 +36,14 @@ public class BreakUpgradeTool extends Challenge {
 	}
 
 	@Override
-	public ItemStack getItem() {
+	public ItemStack getItem(Player p) {
 		ItemBuilder ib = new ItemBuilder(Material.ENCHANTED_BOOK);
-		ib.setDisplayName("§6Entchante jedes Abbauen");
+		ib.setDisplayName(LanguagesManager.translate("§6Entchante jedes Abbauen", p.getUniqueId()));
 		String[] lore = new String[4];
-		lore[0] = Starter.START_PREFIX + "§aIn dieser Challenge muss man Minecraft";
-		lore[1] = "§adurchspielen. Bei jedem Block abbauen wird es um eine belibige";
-		lore[2] = "§aZahl Entchantmens hochgelevelt auf das Tool.";
-		lore[3] = "§6Mittelklick §7> §aÖffne das Inventart";
+		lore[0] = Starter.START_PREFIX + LanguagesManager.translate("§aIn dieser Challenge muss man Minecraft", p.getUniqueId());
+		lore[1] = LanguagesManager.translate("§adurchspielen. Bei jedem Block abbauen wird es um eine belibige", p.getUniqueId());
+		lore[2] = LanguagesManager.translate("§aZahl Entchantmens hochgelevelt auf das Tool.", p.getUniqueId());
+		lore[3] = LanguagesManager.translate("§6Mittelklick §7> §aÖffne das Inventart", p.getUniqueId());
 		
 		ib.setLoreString(lore);
 		return ib.build();
@@ -73,7 +74,7 @@ public class BreakUpgradeTool extends Challenge {
 	}
 
 	@Override
-	public void ifPlayerDies() {
+	public void ifPlayerDies(Player p2) {
 
 	}
 
@@ -135,13 +136,16 @@ public class BreakUpgradeTool extends Challenge {
 		return (int) ((Math.random() * (max - min)) + min);
 	}
 
-	String plusMaxHearth1 = "§6+1 Entchantment Level",
-			minusMaxHeath1 = "§6-1 Entchantment Level",
+	String plusMaxHearth1,
+			minusMaxHeath1,
 	        namei;
 
 	@Override
 	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page) {
-		namei = "§aEntchante jedes Abbauen(" + isToggled() + "): §6" + getOption(cfg, "breakupgradetool.levelplus", 1.00) + " Level";
+		namei = LanguagesManager.translate("§aEntchante jedes Abbauen(" + isToggled() + "):", p.getUniqueId()) + "§6" + getOption(cfg, "breakupgradetool.levelplus", 1.00) + " Level";
+
+		plusMaxHearth1 = LanguagesManager.translate("§6+1 Entchantment Level", p.getUniqueId());
+		minusMaxHeath1 = LanguagesManager.translate("§6-1 Entchantment Level", p.getUniqueId());
 
 		if(item.getItemMeta().getDisplayName().equalsIgnoreCase(plusMaxHearth1)) {
 			double level = Double.valueOf(String.valueOf(getOption(cfg, "breakupgradetool.levelplus", 1.00)));
@@ -159,10 +163,11 @@ public class BreakUpgradeTool extends Challenge {
 	@Override
 	public Inventory getInventory(int page, Player p) {
 		inv = placeHolder(inv);
-
 		ArrayList<ItemStack> items = new ArrayList<>();
 
-		namei = "§aEntchante jedes Abbauen(" + isToggled() + "): §6" + getOption(cfg, "breakupgradetool.levelplus", 1.00) + " Level";
+		plusMaxHearth1 = LanguagesManager.translate("§6+1 Entchantment Level", p.getUniqueId());
+		minusMaxHeath1 = LanguagesManager.translate("§6-1 Entchantment Level", p.getUniqueId());
+		namei = LanguagesManager.translate("§aEntchante jedes Abbauen(" + isToggled() + "):", p.getUniqueId()) + "§6" + getOption(cfg, "breakupgradetool.levelplus", 1.00) + " Level";
 
 		inv.setItem(0, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(plusMaxHearth1).build());
 		if(isToggled()) {
@@ -171,7 +176,6 @@ public class BreakUpgradeTool extends Challenge {
 			inv.setItem(9, new ItemBuilder(Material.REDSTONE_BLOCK).setDisplayName(namei).build());
 		}
 		inv.setItem(18, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(minusMaxHeath1).build());
-
 		inv.setItem(inv.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK()).build());
 
 		return getPage(items, inv, page);

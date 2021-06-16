@@ -19,7 +19,7 @@ public abstract class Language {
         this.interName = interName;
     }
 
-    public abstract ItemStack getItem();
+    public abstract ItemStack getItem(Player p);
     public abstract void onClick(Player p, ItemStack item, InventoryClickEvent e);
 
     public Config getCfg() {

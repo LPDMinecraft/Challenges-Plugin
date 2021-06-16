@@ -23,8 +23,8 @@ public class ChallengesMenu extends Inventory {
 	@Override
 	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page) {
 		if(item.getType() != Material.BLACK_STAINED_GLASS_PANE) {
-			for(String key : ChallengesManager.getItemStack().keySet()) {
-				ItemStack i = ChallengesManager.getItemStack().get(key);
+			for(String key : ChallengesManager.getItemStack(p).keySet()) {
+				ItemStack i = ChallengesManager.getItemStack(p).get(key);
 				if(item.getItemMeta().getDisplayName().equalsIgnoreCase(i.getItemMeta().getDisplayName()) && item.getType() == i.getType()) {
 					if(e.getClick() == ClickType.MIDDLE) {
 						ChallengesManager.getIdtoclass().get(key).onMiddleClick(p);
@@ -45,7 +45,7 @@ public class ChallengesMenu extends Inventory {
 
 		inv.setItem(inv.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK()).build());
 		
-		return getPage(ChallengesMainClass.getChMa().getAllItems(), inv, page);
+		return getPage(ChallengesMainClass.getChMa().getAllItems(p), inv, page);
 	}
 	
 }

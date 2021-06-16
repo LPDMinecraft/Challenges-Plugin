@@ -2,6 +2,8 @@ package de.lpd.challenges.chg.impl.OneFoodChallenge;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import de.lpd.challenges.languages.LanguagesManager;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -41,18 +43,18 @@ public class TheOneFoodChallenge extends Challenge {
 	}
 	
 	@Override
-	public ItemStack getItem() {
+	public ItemStack getItem(Player p) {
 		ItemBuilder ib = new ItemBuilder(Material.COOKED_BEEF);
 
-		ib.setDisplayName("§6TheOneFoodChallenge");
+		ib.setDisplayName(LanguagesManager.translate("§6TheOneFoodChallenge", p.getUniqueId()));
 
 		String[] lore = new String[6];
-		lore[0] = Starter.START_PREFIX + "§aIn dieser Challenge kannst du 1/2/ect. mal einen Essenstyp essen.";
-		lore[1] = "§cAchtung! §6Es wird in dieser Challenge die Essenmale zusammen gez§hlt.";
-		lore[2] = "§aDas hei§t wenn der 1. Spieler rohes Kuhfleisch gegessen hat und danach ein ";
-		lore[3] = "§aanderer Kuhfleisch ist sind sie tot.";
-		lore[4] = "§aAber nur dann, wenn die maximale Begrenzung auf 1 gestellt ist.";
-		lore[5] = "§6Mittelklick §7> §aÖffne das Inventar";
+		lore[0] = Starter.START_PREFIX + LanguagesManager.translate("§aIn dieser Challenge kannst du 1/2/ect. mal einen Essenstyp essen.", p.getUniqueId());
+		lore[1] = LanguagesManager.translate("§cAchtung! §6Es wird in dieser Challenge die Essenmale zusammen gez§hlt.", p.getUniqueId());
+		lore[2] = LanguagesManager.translate("§aDas hei§t wenn der 1. Spieler rohes Kuhfleisch gegessen hat und danach ein ", p.getUniqueId());
+		lore[3] = LanguagesManager.translate("§aanderer Kuhfleisch ist sind sie tot.", p.getUniqueId());
+		lore[4] = LanguagesManager.translate("§aAber nur dann, wenn die maximale Begrenzung auf 1 gestellt ist.", p.getUniqueId());
+		lore[5] = LanguagesManager.translate("§6Mittelklick §7> §aÖffne das Inventar", p.getUniqueId());
 		
 		ib.setLoreString(lore);
 		return ib.build();
@@ -79,7 +81,7 @@ public class TheOneFoodChallenge extends Challenge {
 	}
 
 	@Override
-	public void ifPlayerDies() {
+	public void ifPlayerDies(Player p) {
 		eaten = new HashMap<>();
 	}
 
@@ -93,7 +95,7 @@ public class TheOneFoodChallenge extends Challenge {
 				eaten.remove(t);
 				eaten.put(t, a);
 				if((a - 1) > (double)getOption(cfg, "foodchallenge.max", 1.00)) {
-					ChallengesMainClass.fail(1);
+					ChallengesMainClass.fail(1, e.getPlayer());
 				}
 			} else {
 				eaten.put(e.getItem().getType(), 1);
@@ -107,7 +109,9 @@ public class TheOneFoodChallenge extends Challenge {
 
 	@Override
 	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page) {
-		namei = "§6The One Food(" + isToggled() + "): " + getOption(cfg, "foodchallenge.max", 1.00) + " Food Arten";
+		namei = LanguagesManager.translate("§6The One Food(" + isToggled() + "): ", p.getUniqueId()) + getOption(cfg, "foodchallenge.max", 1.00) + LanguagesManager.translate(" Food Arten", p.getUniqueId());
+		plusMaxFood1 = LanguagesManager.translate("§6Ändere das Maximum vom Essentyp um +1", p.getUniqueId());
+		minusMaxFood1 = LanguagesManager.translate("§6Ändere das Maximum vom Essentyp um -1", p.getUniqueId());
 
 		if(item.getItemMeta().getDisplayName().equalsIgnoreCase(plusMaxFood1)) {
 			setOption(cfg, "foodchallenge.max", (double) getOption(cfg, "foodchallenge.max", 1.00) + 0.5);
@@ -124,7 +128,9 @@ public class TheOneFoodChallenge extends Challenge {
 	public Inventory getInventory(int page, Player p) {
 		inv = de.lpd.challenges.invs.Inventory.placeHolder(inv);
 
-		namei = "§6The One Food(" + isToggled() + "): " + getOption(cfg, "foodchallenge.max", 1.00) + " Food Arten";
+		namei = LanguagesManager.translate("§6The One Food(" + isToggled() + "): ", p.getUniqueId()) + getOption(cfg, "foodchallenge.max", 1.00) + LanguagesManager.translate(" Food Arten", p.getUniqueId());
+		plusMaxFood1 = LanguagesManager.translate("§6Ändere das Maximum vom Essentyp um +1", p.getUniqueId());
+		minusMaxFood1 = LanguagesManager.translate("§6Ändere das Maximum vom Essentyp um -1", p.getUniqueId());
 		Material b;
 		if(isToggled()) {
 			b = Material.EMERALD_BLOCK;

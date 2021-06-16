@@ -1,9 +1,11 @@
 package de.lpd.challenges.utils;
 
+import de.lpd.challenges.languages.LanguagesManager;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 import de.lpd.challenges.main.ChallengesMainClass;
+import org.bukkit.entity.Player;
 
 public abstract class Command extends Starter implements CommandExecutor {
 	
@@ -21,13 +23,16 @@ public abstract class Command extends Starter implements CommandExecutor {
 		return run(arg0, arg1, arg2, arg3);
 	}
 	
-	public String getHelpMessage(String... help) {
+	public String getHelpMessage(Player p, String... help) {
 		String end = PREFIX + "§cBitte benutze §6/" + help[0];
 		for(int i = 1; i < help.length; i++) {
 			end = end + " §coder §6/" + help[i];
 		}
 		end = end + " §c!";
-		return end;
+		if(p == null) {
+			return end;
+		}
+		return LanguagesManager.translate(end, p.getUniqueId());
 	}
 	
 }

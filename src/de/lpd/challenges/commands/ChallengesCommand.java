@@ -30,10 +30,10 @@ public class ChallengesCommand extends Command {
 					}
 					p.sendMessage(PREFIX + "§aAlle Einstellungen wurden erfolgreich reseted.");
 				} else {
-					p.sendMessage(getHelpMessage("challenges", "challenges [reset]", "ch", "ch [reset]"));
+					p.sendMessage(getHelpMessage(p, "challenges", "challenges [reset]", "ch", "ch [reset]"));
 				}
 			} else {
-				p.sendMessage(getHelpMessage("challenges", "challenges [reset]", "ch", "ch [reset]"));
+				p.sendMessage(getHelpMessage(p, "challenges", "challenges [reset]", "ch", "ch [reset]"));
 			}
 		} else {
 			s.sendMessage(NO_PLAYER);

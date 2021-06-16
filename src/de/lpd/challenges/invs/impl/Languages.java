@@ -25,9 +25,10 @@ public class Languages extends Inventory  {
     public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page) {
         if(item.getType() != Material.BLACK_STAINED_GLASS_PANE) {
             for(Language l : LanguagesManager.langs.values()) {
-                if(item.getItemMeta().getDisplayName().equalsIgnoreCase(l.getItem().getItemMeta().getDisplayName()) && item.getType() == l.getItem().getType()) {
+                if(item.getItemMeta().getDisplayName().startsWith(l.getItem(p).getItemMeta().getDisplayName())) {
                     l.onClick(p, item, e);
-                    LanguagesManager.setPlayer(p.getUniqueId(), LanguagesManager.getLanguage(item.getItemMeta().getDisplayName().split(" - ")[0].toLowerCase()));
+                    String c = item.getItemMeta().getDisplayName().split(" - ")[0].toLowerCase().replace("§6", "");
+                    LanguagesManager.setPlayer(p.getUniqueId(), LanguagesManager.getLanguage(c));
                     break;
                 }
             }
@@ -38,11 +39,8 @@ public class Languages extends Inventory  {
     public org.bukkit.inventory.Inventory getInventory(int page, Player p) {
         inv = placeHolder(inv);
 
-        inv.setItem(inv.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK()).build());
-
-        ArrayList<ItemStack> items = new ArrayList<>();
-
-        items.add(new ItemBuilder(Material.RED_STAINED_GLASS_PANE).setDisplayName("§cIst in Arbeit").build());
+        ArrayList<ItemStack> items = LanguagesManager.getAllItems(p);
+        items.add(new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK()).build());
 
         return getPage(items, inv, page);
     }

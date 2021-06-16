@@ -2,8 +2,11 @@ package de.lpd.challenges.utils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+
+import de.lpd.challenges.languages.LanguagesManager;
 import de.lpd.challenges.main.ChallengesMainClass;
 import de.lpd.challenges.settings.SettingManager;
+import org.bukkit.entity.Player;
 
 public class Timer {
 
@@ -76,7 +79,7 @@ public class Timer {
 		return getHours() / 24;
 	}
 	
-	public String getDisplay(String start, String end) {
+	public String getDisplay(String start, String end, Player p) {
 		if(isStarted()) {
 			DateFormat day = new SimpleDateFormat("dd");
 			DateFormat hour = new SimpleDateFormat("HH");
@@ -86,7 +89,7 @@ public class Timer {
 			String s = "§a";
 			if(Integer.valueOf(day.format((int)cfg.cfg().get("timer.millsecounds"))) > 0) {
 				if((Integer.valueOf(day.format((int)cfg.cfg().get("timer.millsecounds"))) - 1) != 0) {
-					s = s + correntSay((Integer.valueOf(day.format((int)cfg.cfg().get("timer.millsecounds"))) - 1), "ein Tag ", " Tage ");
+					s = s + correntSay((Integer.valueOf(day.format((int)cfg.cfg().get("timer.millsecounds"))) - 1), LanguagesManager.translate("ein Tag ", p.getUniqueId()), LanguagesManager.translate(" Tage ", p.getUniqueId()));
 				}
 			}
 			if(Integer.valueOf(hour.format((int)cfg.cfg().get("timer.millsecounds"))) > 0 || Integer.valueOf(day.format((int)cfg.cfg().get("timer.millsecounds"))) > 0) {
@@ -124,9 +127,9 @@ public class Timer {
 			
 			return s;
 		} else if(isPaused()) {
-			return "§aDer Countdown ist pausitert.";
+			return LanguagesManager.translate("§aDer Countdown ist pausitert.", p.getUniqueId());
 		} else {
-			return "§aDer Countdown wurde noch nicht gestartet.";
+			return LanguagesManager.translate("§aDer Countdown wurde noch nicht gestartet.", p.getUniqueId());
 		}
 	}
 	

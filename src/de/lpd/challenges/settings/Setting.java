@@ -13,12 +13,12 @@ public abstract class Setting extends Inventory implements Listener {
 	public abstract void onTimerStarted();
 	public abstract void onTimerStoped();
 	public abstract void cfg(Config cfg);
-	public abstract ItemStack getItem();
+	public abstract ItemStack getItem(Player p);
 	public abstract void onRightClick(Player p);
 	public abstract void onLeftClick(Player p);
 	public abstract void onMiddleClick(Player p);
 	public abstract void reset();
-	public abstract void ifPlayerDies();
+	public abstract void ifPlayerDies(Player p);
 	
 	private boolean isEnabled = false;
 	private String path = "";

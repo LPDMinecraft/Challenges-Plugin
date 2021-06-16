@@ -51,7 +51,7 @@ public class Starter {
 			@Override
 			public void scheduler() {
 				for(Player current : Bukkit.getOnlinePlayers()) {
-					sendActionBar(current, ChallengesMainClass.t.getDisplay("§a", ""));
+					sendActionBar(current, ChallengesMainClass.t.getDisplay("§a", "", current));
 				}
 			}
 		};

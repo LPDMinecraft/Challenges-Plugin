@@ -32,7 +32,7 @@ public class ResetCommand extends Command {
 			
 			Bukkit.spigot().restart();
 		} else {
-			s.sendMessage(getHelpMessage("reset"));
+			s.sendMessage(getHelpMessage(null, "reset"));
 		}
 		return false;
 	}

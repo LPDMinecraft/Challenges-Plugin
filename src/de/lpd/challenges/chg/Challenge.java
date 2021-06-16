@@ -11,12 +11,12 @@ import de.lpd.challenges.utils.Config;
 public abstract class Challenge extends Inventory implements Listener {
 	
 	public abstract void cfg(Config cfg);
-	public abstract ItemStack getItem();
+	public abstract ItemStack getItem(Player p);
 	public abstract void onRightClick(Player p);
 	public abstract void onLeftClick(Player p);
 	public abstract void onMiddleClick(Player p);
 	public abstract void reset();
-	public abstract void ifPlayerDies();
+	public abstract void ifPlayerDies(Player p);
 
 	private String root;
 	private String id;
