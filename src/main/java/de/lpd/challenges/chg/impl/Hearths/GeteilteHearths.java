@@ -108,9 +108,9 @@ public class GeteilteHearths extends Challenge {
 	@Override
 	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page) {
         if(isToggled()) {
-			LanguagesManager.translate("§6Geteilte Herzen " + Starter.START_PREFIX + "§aOn", p.getUniqueId());
+			itemdisplayname = LanguagesManager.translate("§6Geteilte Herzen " + Starter.START_PREFIX + "§aOn", p.getUniqueId());
         } else {
-			LanguagesManager.translate("§6Geteilte Herzen " + Starter.START_PREFIX + "§cOff", p.getUniqueId());
+			itemdisplayname = LanguagesManager.translate("§6Geteilte Herzen " + Starter.START_PREFIX + "§cOff", p.getUniqueId());
         }
 		if(item.getItemMeta().getDisplayName().equalsIgnoreCase(itemdisplayname)) {
 			toggle();
