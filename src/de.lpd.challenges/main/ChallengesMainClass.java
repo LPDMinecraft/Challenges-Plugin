@@ -1,23 +1,21 @@
 package de.lpd.challenges.main;
 
-import de.lpd.challenges.chg.*;
+import de.lpd.challenges.chg.Challenge;
+import de.lpd.challenges.chg.ChallengesManager;
 import de.lpd.challenges.commands.*;
-import de.lpd.challenges.languages.*;
-import de.lpd.challenges.permissions.*;
-import de.lpd.challenges.settings.*;
+import de.lpd.challenges.invs.InventoryManager;
+import de.lpd.challenges.languages.LanguagesManager;
+import de.lpd.challenges.listener.DeathEvent;
+import de.lpd.challenges.permissions.PermissionsManager;
+import de.lpd.challenges.settings.Setting;
+import de.lpd.challenges.settings.SettingManager;
+import de.lpd.challenges.utils.*;
 import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.*;
 import org.bukkit.plugin.java.*;
-import de.lpd.challenges.invs.*;
-import de.lpd.challenges.listener.*;
-import de.lpd.challenges.utils.*;
 
 public class ChallengesMainClass extends JavaPlugin {
-	
-	// Commands:   Locations(/loc)
-	// Settings:   DeathRun
-	// Challenges: GeteiltesEssen, RandomBlocks, NoCrafting, RandomLoot, FallingAnvils, BedrockWall
 	
 	private static ChallengesMainClass plugin;
 	private static Config mainCFG;
@@ -59,6 +57,8 @@ public class ChallengesMainClass extends JavaPlugin {
 		registerCommand("info", new InfoCommand(this));
 		registerCommand("loc", new LocCommand(this));
 		registerCommand("location", new LocCommand(this));
+		registerCommand("entchant", new EntchantCommand(this));
+		registerCommand("invsee", new InvSeeCommand(this));
 
 		registerListener(new DeathEvent());
 	}

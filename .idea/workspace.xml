@@ -1,49 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="Challenges" />
+    </artifacts-to-build>
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eae659b9-c1d7-47fc-afcf-e88b48ef3c96" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/Challenges.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/de.lpd.challenges/commands/EntchantCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/de.lpd.challenges/commands/InvSeeCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/spigot_1_16_5.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/spigot_1_16_5.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Challenges Plugin.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Challenges Plugin.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/lpd/challenges/chg/Challenge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/lpd/challenges/chg/Challenge.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/lpd/challenges/chg/ChallengesManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/lpd/challenges/chg/ChallengesManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/lpd/challenges/chg/impl/BreakUpgradeTool/BreakUpgradeTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/lpd/challenges/chg/impl/BreakUpgradeTool/BreakUpgradeTool.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/lpd/challenges/chg/impl/Hearths/GeteilteHearths.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/lpd/challenges/chg/impl/Hearths/GeteilteHearths.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/lpd/challenges/chg/impl/Hearths/MaxHearth.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/lpd/challenges/chg/impl/Hearths/MaxHearth.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/lpd/challenges/chg/impl/LockedSlots/LockedSlots.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/lpd/challenges/chg/impl/LockedSlots/LockedSlots.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/lpd/challenges/chg/impl/OneFoodChallenge/TheOneFoodChallenge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/lpd/challenges/chg/impl/OneFoodChallenge/TheOneFoodChallenge.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/lpd/challenges/chg/impl/WaterMLG/WaterMLG.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/lpd/challenges/chg/impl/WaterMLG/WaterMLG.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/lpd/challenges/commands/ChallengesCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/lpd/challenges/commands/ChallengesCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/lpd/challenges/commands/ResetCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/lpd/challenges/commands/ResetCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/lpd/challenges/commands/TimerCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/lpd/challenges/commands/TimerCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/lpd/challenges/invs/Inventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/lpd/challenges/invs/Inventory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/lpd/challenges/invs/InventoryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/lpd/challenges/invs/InventoryManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/lpd/challenges/invs/impl/ChallengesMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/lpd/challenges/invs/impl/ChallengesMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/lpd/challenges/invs/impl/Languages.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/lpd/challenges/invs/impl/Languages.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/lpd/challenges/invs/impl/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/lpd/challenges/invs/impl/Menu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/lpd/challenges/invs/impl/Settings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/lpd/challenges/invs/impl/Settings.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/lpd/challenges/languages/Language.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/lpd/challenges/languages/Language.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/lpd/challenges/languages/LanguagesManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/lpd/challenges/languages/LanguagesManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/lpd/challenges/languages/impl/English.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/lpd/challenges/languages/impl/English.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/lpd/challenges/languages/impl/German.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/lpd/challenges/languages/impl/German.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/lpd/challenges/listener/DeathEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/lpd/challenges/listener/DeathEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/lpd/challenges/main/ChallengesMainClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/lpd/challenges/main/ChallengesMainClass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/lpd/challenges/settings/Setting.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/lpd/challenges/settings/Setting.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/lpd/challenges/settings/SettingManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/lpd/challenges/settings/SettingManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/lpd/challenges/utils/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/lpd/challenges/utils/Command.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/lpd/challenges/utils/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/lpd/challenges/utils/Config.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/lpd/challenges/utils/HeadBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/lpd/challenges/utils/HeadBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/lpd/challenges/utils/ItemBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/lpd/challenges/utils/ItemBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/lpd/challenges/utils/Mathe.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/lpd/challenges/utils/Mathe.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/lpd/challenges/utils/Scheduler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/lpd/challenges/utils/Scheduler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/lpd/challenges/utils/Starter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/lpd/challenges/utils/Starter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/lpd/challenges/utils/Timer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/lpd/challenges/utils/Timer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/lpd/challenges/utils/WorldUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/lpd/challenges/utils/WorldUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/plugin.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/de.lpd.challenges/main/ChallengesMainClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/de.lpd.challenges/main/ChallengesMainClass.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,8 +47,8 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/LuckPerms-Bungee-5.3.48.jar" />
-    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/plugin.yml" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
@@ -100,6 +74,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
