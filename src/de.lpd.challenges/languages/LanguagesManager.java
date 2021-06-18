@@ -70,7 +70,7 @@ public class LanguagesManager {
     }
 
     public static String translate(String normal, Language lang) {
-        Config cfg = lang.getCfg();
+        Config cfg = lang.getCfgLang();
 
         int id = 0;
         int bid = 0;

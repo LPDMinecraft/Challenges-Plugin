@@ -2,6 +2,7 @@ package de.lpd.challenges.invs.impl;
 
 import java.util.Arrays;
 import de.lpd.challenges.invs.Inventory;
+import de.lpd.challenges.utils.Config;
 import de.lpd.challenges.utils.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -15,7 +16,7 @@ import de.lpd.challenges.main.ChallengesMainClass;
 public class ChallengesMenu extends Inventory {
 
 	public ChallengesMenu(ChallengesMainClass plugin) {
-		super(plugin, 6*9, true, "Challenges", "menu", "Menu");
+		super(plugin, 6*9, true, "Challenges", "menu", "Menu", new Config("invs/challengesmenu", "config.yml"));
 	}
 
 	public static String TITLE = "§6Challenges §aMenu";

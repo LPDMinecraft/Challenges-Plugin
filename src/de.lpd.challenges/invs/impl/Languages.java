@@ -5,6 +5,7 @@ import de.lpd.challenges.invs.Inventory;
 import de.lpd.challenges.languages.Language;
 import de.lpd.challenges.languages.LanguagesManager;
 import de.lpd.challenges.main.ChallengesMainClass;
+import de.lpd.challenges.utils.Config;
 import de.lpd.challenges.utils.HeadBuilder;
 import de.lpd.challenges.utils.ItemBuilder;
 import org.bukkit.Material;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 public class Languages extends Inventory  {
 
     public Languages(ChallengesMainClass plugin) {
-        super(plugin, 6*9, true, "Sprachen", "menu", "Menu");
+        super(plugin, 6*9, true, "Sprachen", "menu", "Menu", new Config("invs/langs", "config.yml"));
     }
 
     @Override

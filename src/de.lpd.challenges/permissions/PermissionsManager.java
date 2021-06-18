@@ -68,6 +68,8 @@ public class PermissionsManager {
         root = "";
         for(String c : permission.split(".")) {
             root = root + c + ".";
+            allPermissionsCfg.cfg().set("permissions." + root + ".name", root);
+            allPermissionsCfg.save();
             if(p.hasPermission(root + "*")) {
                 return true;
             }

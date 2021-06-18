@@ -3,6 +3,7 @@ package de.lpd.challenges.invs.impl;
 import de.lpd.challenges.chg.ChallengesManager;
 import de.lpd.challenges.settings.Setting;
 import de.lpd.challenges.settings.SettingManager;
+import de.lpd.challenges.utils.Config;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 public class Settings extends Inventory {
 
 	public Settings(ChallengesMainClass plugin) {
-		super(plugin, 5 * 9, true, "Settings", "menu", "Menu");
+		super(plugin, 5 * 9, true, "Settings", "menu", "Menu", new Config("invs/settings", "config.yml"));
 	}
 
 	@Override

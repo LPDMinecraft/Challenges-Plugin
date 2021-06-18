@@ -55,6 +55,10 @@ public class ChallengesMainClass extends JavaPlugin {
 		registerCommand("ch", new ChallengesCommand(this));
 		registerCommand("reset", new ResetCommand(this));
 		registerCommand("heal", new HealCommand(this));
+		registerCommand("help", new HelpCommand(this));
+		registerCommand("info", new InfoCommand(this));
+		registerCommand("loc", new LocCommand(this));
+		registerCommand("location", new LocCommand(this));
 
 		registerListener(new DeathEvent());
 	}

@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 
-public class HealCommand extends Command  {
+public class HealCommand extends Command {
 
     public HealCommand(ChallengesMainClass plugin) {
         super(plugin);

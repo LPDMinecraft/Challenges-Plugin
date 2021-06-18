@@ -20,3 +20,11 @@ commands:
       description: "Reseted die Map"
    heal:
       description: "Das heilt Leute"
+   help:
+      description: "Gibt dir Hilfe aus"
+   info:
+      description: "Gibt dir alle Informationen dieses Plugin"
+   loc:
+      description: "Speichert einen Standpunckt"
+   location:
+      description: "Speichert einen Standpunckt"

@@ -26,7 +26,7 @@ public abstract class Challenge extends Inventory implements Listener {
 	}
 
 	public Challenge(ChallengesMainClass plugin, String cfgPath, String filename, String root, int size, boolean hasMoreThen1Site, String name, String backName, String id, String showBackName) {
-		super(plugin, size, hasMoreThen1Site, name, backName, showBackName);
+		super(plugin, size, hasMoreThen1Site, name, backName, showBackName, new Config("challenges//" + cfgPath, "inv.yml"));
 		plugin.registerListener(this);
 		cfg(new Config("challenges//" + cfgPath, filename));
 		ChallengesMainClass.getInvManager().invs.put(id, this);

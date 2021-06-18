@@ -24,7 +24,7 @@ public abstract class Setting extends Inventory implements Listener {
 	private String path = "";
 	
 	public Setting(ChallengesMainClass plugin, String cfgPath, String filename, String root, int size, boolean hasMoreThen1Site, String name, String backName, String id, String showBackName) {
-		super(plugin, size, hasMoreThen1Site, name, backName, showBackName);
+		super(plugin, size, hasMoreThen1Site, name, backName, showBackName, new Config("settings//" + cfgPath, "inv.yml"));
 		plugin.registerListener(this);
 		path = "settings//" + cfgPath;
 		cfg(new Config(path, filename));

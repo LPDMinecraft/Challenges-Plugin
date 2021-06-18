@@ -2,6 +2,7 @@ package de.lpd.challenges.invs;
 
 import de.lpd.challenges.chg.Challenge;
 import de.lpd.challenges.chg.ChallengesManager;
+import de.lpd.challenges.languages.LanguagesManager;
 import de.lpd.challenges.utils.Config;
 import de.lpd.challenges.utils.Starter;
 import org.bukkit.Bukkit;
@@ -18,12 +19,13 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.UUID;
 
 public abstract class Inventory extends Starter implements Listener {
 
 	private String TITLE = "§aChallenges §7- §6",
-			             ITEM_BACK = "§cZur§ck zum §6",
-			             ITEM_NextPage = "§6§lN§chste Seite",
+			             ITEM_BACK = "§cZurück zum §6",
+			             ITEM_NextPage = "§6§lNächste Seite",
 			             ITEM_BeforePage = "§6§lVorherige Seite",
 	                     NAME,
 	                     BACK_NAME,
@@ -31,20 +33,20 @@ public abstract class Inventory extends Starter implements Listener {
 	private Config cfg;
 	public org.bukkit.inventory.Inventory inv;
 
-	public String getITEM_BACK() {
-		return ITEM_BACK;
+	public String getITEM_BACK(UUID p) {
+		return LanguagesManager.translate(ITEM_BACK, p);
 	}
 
 	public String getTITLE() {
 		return TITLE;
 	}
 
-	public String getITEM_BeforePage() {
-		return ITEM_BeforePage;
+	public String getITEM_BeforePage(UUID p) {
+		return LanguagesManager.translate(ITEM_BeforePage, p);
 	}
 
-	public String getITEM_NextPage() {
-		return ITEM_NextPage;
+	public String getITEM_NextPage(UUID p) {
+		return LanguagesManager.translate(ITEM_NextPage, p);
 	}
 
 	public String getNAME() {
@@ -56,8 +58,8 @@ public abstract class Inventory extends Starter implements Listener {
 	}
 
 	private int size = 5*9;
-	public Inventory(ChallengesMainClass plugin, int size, boolean hasMoreThen1Site, String name, String backName, String showBackName) {
-		cfg = new Config(name, "inv.yml");
+	public Inventory(ChallengesMainClass plugin, int size, boolean hasMoreThen1Site, String name, String backName, String showBackName, Config invConfig) {
+		cfg = invConfig;
 
 		this.size = size;
 		plugin.registerListener(this);
@@ -75,10 +77,6 @@ public abstract class Inventory extends Starter implements Listener {
 
 		TITLE = TITLE + NAME;
 		ITEM_BACK = ITEM_BACK + this.SHOW_BACK_NAME;
-
-		TITLE = (String) cfg.getOption(cfg, "settings.title", TITLE);
-		ITEM_NextPage = (String) cfg.getOption(cfg, "settings.nextpage", ITEM_NextPage);
-		ITEM_BeforePage = (String) cfg.getOption(cfg, "settings.beforepage", ITEM_BeforePage);
 
 		inv = Bukkit.createInventory(null, size, TITLE);
 		this.plugin = plugin;

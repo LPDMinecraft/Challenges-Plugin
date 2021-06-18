@@ -1,6 +1,7 @@
 package de.lpd.challenges.invs.impl;
 
 import de.lpd.challenges.languages.LanguagesManager;
+import de.lpd.challenges.utils.Config;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -20,7 +21,7 @@ public class Menu extends Inventory {
 	               ITEM_LANGUAGES = "§6Sprachen";
 
 	public Menu(ChallengesMainClass plugin) {
-		super(plugin, 5*9, false, "Menu", null, null);
+		super(plugin, 5*9, false, "Menu", null, null, new Config("invs/menu", "config.yml"));
 	}
 
 	@Override

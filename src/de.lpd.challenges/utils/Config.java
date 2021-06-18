@@ -116,6 +116,10 @@ public class Config {
         }
     	return list;
     }*/
+
+	public void saveBlockLocation(String root, Location loc) {
+		saveBlockLocation(root, loc.getWorld(), loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
+	}
     
     public void saveBlockLocation(String root, World world, int x, int y, int z) {
     	if(!root.endsWith(".")) root = root + ".";
@@ -142,6 +146,40 @@ public class Config {
     	Location loc = new Location(w, x, y, z);
     	return loc;
     }
+
+    public void saveLocation(String root, Location loc) {
+    	saveLocation(root, loc.getWorld(), loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
+	}
+
+	public void saveLocation(String root, World world, double x, double y, double z, float yaw, float pitch) {
+		if(!root.endsWith(".")) root = root + ".";
+
+		cfg.set(root + "world", world.getName());
+		cfg.set(root + "x", x);
+		cfg.set(root + "y", y);
+		cfg.set(root + "z", z);
+		cfg.set(root + "yaw", yaw);
+		cfg.set(root + "pitch", pitch);
+
+		save();
+	}
+
+	public Location getLocation(String root) {
+		if(!root.endsWith(".")) root = root + ".";
+
+		System.out.println(root + "world");
+		System.out.println(cfg.getString(root + "world"));
+
+		World w = Bukkit.getWorld(cfg.getString(root + "world"));
+		double x = cfg.getInt(root + "x");
+		double y = cfg.getInt(root + "y");
+		double z = cfg.getInt(root + "z");
+		float yaw = cfg.getInt(root + "yaw");
+		float pitch = cfg.getInt(root + "pitch");
+
+		Location loc = new Location(w, x, y, z, yaw, pitch);
+		return loc;
+	}
 	
 	public void save() {
 		try {

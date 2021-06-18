@@ -10,10 +10,12 @@ public abstract class Language {
     private String name,
                    langName,
                    interName;
-    private Config cfg;
+    private Config cfgLang,
+                   cfg;
 
     public Language(String name, String langName, String interName) {
-        cfg = new Config("langs", name + ".yml");
+        cfgLang = new Config("langs/" + name, "translations.yml");
+        cfg = new Config("langs/" + name, "config.yml");
         this.name = name;
         this.langName = langName;
         this.interName = interName;
@@ -22,8 +24,8 @@ public abstract class Language {
     public abstract ItemStack getItem(Player p);
     public abstract void onClick(Player p, ItemStack item, InventoryClickEvent e);
 
-    public Config getCfg() {
-        return cfg;
+    public Config getCfgLang() {
+        return cfgLang;
     }
     public String getInterName() {
         return interName;
@@ -34,7 +36,26 @@ public abstract class Language {
     public String getName() {
         return name;
     }
-    public void setCfg(Config cfg) {
-        this.cfg = cfg;
+    public void setCfgLang(Config cfgLang) {
+        this.cfgLang = cfgLang;
     }
+    public String[] getHelp() {
+        if(cfg.cfg().contains("config.help")) {
+            String[] help = new String[cfg.cfg().getConfigurationSection("config.help").getKeys(false).size()];
+            int i = 0;
+            for(String root : cfg.cfg().getConfigurationSection("config.help").getKeys(false)) {
+                help[i] = cfg.cfg().getString("config.help" + root);
+                i++;
+            }
+            return help;
+        }
+        String[] help = new String[1];
+        help[0] = "§6Das ist noch nicht eingerichtet jetzt";
+
+        cfg.cfg().set("config.help.0", help[0]);
+        cfg.save();
+
+        return help;
+    }
+
 }
