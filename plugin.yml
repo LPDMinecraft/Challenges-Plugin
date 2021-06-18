@@ -28,7 +28,7 @@ commands:
       description: "Speichert einen Standpunckt"
    location:
       description: "Speichert einen Standpunckt"
-   enchant:
+   entchant:
       description: "Entchanted alle Sachen"
    invsee:
       description: "Öffnet das Inventar von anderen"

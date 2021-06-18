@@ -84,6 +84,18 @@ public class EntchantCommand extends Command {
                 } else {
                     p.sendMessage(LanguagesManager.translate(NO_PERMISSIONS, p.getUniqueId()));
                 }
+            } else if(args.length == 1) {
+                if(args[0].equalsIgnoreCase("list")) {
+                    if(hasPermissions(p, "ch.entchant.list")) {
+                        for(Enchantment enchantment : Enchantment.values()) {
+                            p.sendMessage(LanguagesManager.translate("§6" + enchantment.getName(), p.getUniqueId()));
+                        }
+                    } else {
+                        p.sendMessage(LanguagesManager.translate(NO_PERMISSIONS, p.getUniqueId()));
+                    }
+                } else {
+                    p.sendMessage(getHelpMessage(p, "entchant [Entchantment] [Level]", "entchant [Spieler] [Entchantment] [Level]", "enchant list"));
+                }
             } else {
                 p.sendMessage(getHelpMessage(p, "entchant [Entchantment] [Level]", "entchant [Spieler] [Entchantment] [Level]", "enchant list"));
             }
@@ -97,7 +109,7 @@ public class EntchantCommand extends Command {
         if(p.getItemInHand().containsEnchantment(enchantment)) {
             level = level + p.getItemInHand().getEnchantmentLevel(enchantment);
         }
-        p.getItemInHand().addEnchantment(enchantment, level);
+        p.getItemInHand().addUnsafeEnchantment(enchantment, level);
     }
 
 }

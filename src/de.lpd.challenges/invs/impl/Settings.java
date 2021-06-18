@@ -61,7 +61,7 @@ public class Settings extends Inventory {
 			items.add(c.getItem(p));
 		}
 
-		inv.setItem(inv.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK()).build());
+		inv.setItem(inv.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK(p.getUniqueId())).build());
 
 		return getPage(items, inv, page);
 	}

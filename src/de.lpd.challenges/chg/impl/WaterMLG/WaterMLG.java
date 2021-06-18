@@ -256,7 +256,7 @@ public class WaterMLG extends Challenge {
 		inv.setItem(12, new ItemBuilder(Material.CLOCK).setDisplayName(LanguagesManager.translate("§6Maximale Höhe: ", p.getUniqueId()) + getOption(cfg, "watermlg.hight.max", 50.00)).build());
 		inv.setItem(21, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(minusmaxHöhe).build());
 
-		inv.setItem(inv.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK()).build());
+		inv.setItem(inv.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK(p.getUniqueId())).build());
 
 		return getPage(items, inv, page);
 	}

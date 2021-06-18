@@ -44,7 +44,8 @@ public abstract class Language {
             String[] help = new String[cfg.cfg().getConfigurationSection("config.help").getKeys(false).size()];
             int i = 0;
             for(String root : cfg.cfg().getConfigurationSection("config.help").getKeys(false)) {
-                help[i] = cfg.cfg().getString("config.help" + root);
+                help[i] = cfg.cfg().getString("config.help." + root);
+                System.out.println(cfg.cfg().getString("config.help." + root));
                 i++;
             }
             return help;

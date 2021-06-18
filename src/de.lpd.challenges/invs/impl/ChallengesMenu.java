@@ -44,7 +44,7 @@ public class ChallengesMenu extends Inventory {
 		org.bukkit.inventory.Inventory inv = getInv();
 		inv = de.lpd.challenges.invs.Inventory.placeHolder(inv);
 
-		inv.setItem(inv.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK()).build());
+		inv.setItem(inv.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK(p.getUniqueId())).build());
 		
 		return getPage(ChallengesMainClass.getChMa().getAllItems(p), inv, page);
 	}

@@ -144,7 +144,7 @@ public class TheOneFoodChallenge extends Challenge {
 		inv.setItem(9, new ItemBuilder(b).setDisplayName(namei).build());
 		inv.setItem(18, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(minusMaxFood1).build());
 
-		inv.setItem(inv.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK()).build());
+		inv.setItem(inv.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK(p.getUniqueId())).build());
 
 		return getPage(items, inv, page);
 	}

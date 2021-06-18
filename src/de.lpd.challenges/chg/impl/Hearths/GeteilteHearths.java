@@ -135,7 +135,7 @@ public class GeteilteHearths extends Challenge {
 		ib.setDisplayName(itemdisplayname);
 
 		inv.setItem(9, ib.build());
-		inv.setItem(inv.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK()).build());
+		inv.setItem(inv.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK(p.getUniqueId())).build());
 
 		return getPage(items, inv, page);
 	}
