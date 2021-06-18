@@ -36,6 +36,7 @@ public class ChallengesMainClass extends JavaPlugin {
 	private static SettingManager settingManager;
 	private static ChallengesManager ChMa;
 	private static LanguagesManager langManager;
+	private static PermissionsManager permsManager;
 	
 	public static Timer t;
 	
@@ -54,6 +55,7 @@ public class ChallengesMainClass extends JavaPlugin {
 		plugin = this;
 		t = new Timer(plugin);
 		t.reset();
+		permsManager = new PermissionsManager(plugin);
 		invManager = new InventoryManager(plugin);
 		ChMa = new ChallengesManager(plugin);
 		langManager = new LanguagesManager();
