@@ -3,6 +3,7 @@ package de.lpd.challenges.invs;
 import de.lpd.challenges.chg.Challenge;
 import de.lpd.challenges.chg.ChallengesManager;
 import de.lpd.challenges.utils.Config;
+import de.lpd.challenges.utils.Starter;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -18,7 +19,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public abstract class Inventory implements Listener {
+public abstract class Inventory extends Starter implements Listener {
 
 	private String TITLE = "§aChallenges §7- §6",
 			             ITEM_BACK = "§cZur§ck zum §6",

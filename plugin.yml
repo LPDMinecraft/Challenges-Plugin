@@ -1,7 +1,13 @@
 name: Challenges
-version: 3.3
+version: 3.4
 main: de.lpd.challenges.main.ChallengesMainClass
 api-version: 1.16
+authors:
+   - LPD (eigentliche Programmierer)
+   - Lets Play Nik
+   - Lukas008
+website: lcraft.de
+
 
 commands:
    timer:
@@ -12,3 +18,5 @@ commands:
       description: "Öffnet das Menu"
    reset:
       description: "Reseted die Map"
+   heal:
+      description: "Das heilt Leute"

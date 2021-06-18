@@ -8,6 +8,8 @@ import de.lpd.challenges.chg.ChallengesManager;
 import de.lpd.challenges.main.ChallengesMainClass;
 import de.lpd.challenges.utils.Command;
 
+import java.util.ArrayList;
+
 public class ChallengesCommand extends Command {
 	
 	public ChallengesCommand(ChallengesMainClass plugin) {
@@ -16,6 +18,10 @@ public class ChallengesCommand extends Command {
 
 	@Override
 	public boolean run(CommandSender s, org.bukkit.command.Command cmd, String label, String[] args) {
+		ArrayList all = new ArrayList<String>();
+		all.add("reset");
+		addTabComplete(cmd.getName(), new String[0], all);
+
 		if(s instanceof Player) {
 			Player p = (Player) s;
 			if(args.length == 0) {

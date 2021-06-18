@@ -3,7 +3,11 @@ package de.lpd.challenges.commands;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Comparator;
+
+import de.lpd.challenges.chg.Challenge;
+import de.lpd.challenges.chg.ChallengesManager;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -20,19 +24,31 @@ public class ResetCommand extends Command {
 	
 	@Override
 	public boolean run(CommandSender s, org.bukkit.command.Command cmd, String label, String[] args) {
-		if(args.length == 0) {
-			
-			for(Player p : Bukkit.getOnlinePlayers()) {
-				p.kickPlayer("§6Restart");
+		ArrayList all = new ArrayList<String>();
+		all.add("world");
+		all.add("challenges-options");
+		addTabComplete(cmd.getName(), new String[0], all);
+
+		if(args.length == 1) {
+			if(args[0].equalsIgnoreCase("world")) {
+				for(Player p : Bukkit.getOnlinePlayers()) {
+					p.kickPlayer("§6Restart");
+				}
+
+				Config cfg = new Config("config.yml");
+				cfg.cfg().set("command.reset", true);
+				cfg.save();
+
+				Bukkit.spigot().restart();
+			} else if(args[0].equalsIgnoreCase("challenges-options")) {
+				for(Challenge ch : ChallengesManager.getIdtoclass().values()) {
+					ch.reset();
+				}
+			} else {
+				s.sendMessage(getHelpMessage(null, "reset [world, options]"));
 			}
-			
-			Config cfg = new Config("config.yml");
-			cfg.cfg().set("command.reset", true);
-			cfg.save();
-			
-			Bukkit.spigot().restart();
 		} else {
-			s.sendMessage(getHelpMessage(null, "reset"));
+			s.sendMessage(getHelpMessage(null, "reset [world, options]"));
 		}
 		return false;
 	}

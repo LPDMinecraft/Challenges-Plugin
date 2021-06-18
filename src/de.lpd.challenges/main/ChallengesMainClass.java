@@ -1,28 +1,17 @@
 package de.lpd.challenges.main;
 
-import de.lpd.challenges.chg.Challenge;
-import de.lpd.challenges.languages.LanguagesManager;
-import de.lpd.challenges.settings.Setting;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
-import org.bukkit.plugin.java.JavaPlugin;
-import de.lpd.challenges.chg.ChallengesManager;
-import de.lpd.challenges.commands.ChallengesCommand;
-import de.lpd.challenges.commands.ResetCommand;
-import de.lpd.challenges.commands.TimerCommand;
-import de.lpd.challenges.invs.InventoryManager;
-import de.lpd.challenges.invs.impl.ChallengesMenu;
-import de.lpd.challenges.listener.DeathEvent;
-import de.lpd.challenges.settings.SettingManager;
-import de.lpd.challenges.utils.Command;
-import de.lpd.challenges.utils.Config;
-import de.lpd.challenges.utils.Starter;
-import de.lpd.challenges.utils.Timer;
-import de.lpd.challenges.utils.WorldUtil;
+import de.lpd.challenges.chg.*;
+import de.lpd.challenges.commands.*;
+import de.lpd.challenges.languages.*;
+import de.lpd.challenges.permissions.*;
+import de.lpd.challenges.settings.*;
+import org.bukkit.*;
+import org.bukkit.entity.*;
+import org.bukkit.event.*;
+import org.bukkit.plugin.java.*;
+import de.lpd.challenges.invs.*;
+import de.lpd.challenges.listener.*;
+import de.lpd.challenges.utils.*;
 
 public class ChallengesMainClass extends JavaPlugin {
 	
@@ -53,19 +42,19 @@ public class ChallengesMainClass extends JavaPlugin {
 	
 	public void load() {
 		plugin = this;
-		t = new Timer(plugin);
-		t.reset();
+		new Starter().startPlugin(mainCFG, plugin);
 		permsManager = new PermissionsManager(plugin);
+		t = new Timer(plugin);
 		invManager = new InventoryManager(plugin);
 		ChMa = new ChallengesManager(plugin);
 		langManager = new LanguagesManager();
 		settingManager = new SettingManager(plugin);
-		new Starter().startPlugin(mainCFG, plugin);
 		
 		registerCommand("timer", new TimerCommand(this));
 		registerCommand("challenges", new ChallengesCommand(this));
 		registerCommand("ch", new ChallengesCommand(this));
 		registerCommand("reset", new ResetCommand(this));
+		registerCommand("heal", new HealCommand(this));
 
 		registerListener(new DeathEvent());
 	}
@@ -111,7 +100,15 @@ public class ChallengesMainClass extends JavaPlugin {
 	public static SettingManager getSettingManager() {
 		return settingManager;
 	}
-	
+
+	public static Config getMainCFG() {
+		return mainCFG;
+	}
+
+	public static PermissionsManager getPermsManager() {
+		return permsManager;
+	}
+
 	public static int getHighestY(Location loc) {
 		int y = 255;
 		while(new Location(loc.getWorld(), loc.getX(), y, loc.getZ()).getBlock().getType() == Material.AIR) {

@@ -1,5 +1,6 @@
 package de.lpd.challenges.invs.impl;
 
+import de.lpd.challenges.languages.LanguagesManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -24,13 +25,13 @@ public class Menu extends Inventory {
 
 	@Override
 	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page) {
-		if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ITEM_CHALLENGES)) {
+		if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ITEM_CHALLENGES) && item.getType() == Material.CLOCK) {
 			p.closeInventory();
 			p.openInventory(ChallengesMainClass.getInvManager().invs.get("chmenu").getInventory(1, p));
-		} else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ITEM_SETTINGS)) {
+		} else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ITEM_SETTINGS) && item.getType() == Material.REDSTONE) {
 			p.closeInventory();
 			p.openInventory(ChallengesMainClass.getInvManager().invs.get("settings").getInventory(1, p));
-		} else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ITEM_LANGUAGES)) {
+		} else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ITEM_LANGUAGES) && item.getType() == Material.DIRT) {
 			p.closeInventory();
 			p.openInventory(ChallengesMainClass.getInvManager().invs.get("langs").getInventory(1, p));
 		}
@@ -43,8 +44,16 @@ public class Menu extends Inventory {
 		ArrayList<ItemStack> items = new ArrayList<>();
 
 		inv.setItem(13 + 9, new HeadBuilder("Cooler_LK").setDisplayName("§bDev §7| §6Cooler_LK").build());
-		inv.setItem(11 + 9, new ItemBuilder(Material.REDSTONE).setDisplayName(ITEM_SETTINGS).build());
-		inv.setItem(15 + 9, new ItemBuilder(Material.CLOCK).setDisplayName(ITEM_CHALLENGES).build());
+		if(ChallengesMainClass.getPermsManager().hasPermissions(p, "ch.invs.challenges")) {
+			inv.setItem(11 + 9, new ItemBuilder(Material.REDSTONE).setDisplayName(ITEM_SETTINGS).build());
+		} else {
+			inv.setItem(11 + 9, new ItemBuilder(Material.REDSTONE_BLOCK).setDisplayName(LanguagesManager.translate(NO_PERMISSIONS, p.getUniqueId())).build());
+		}
+		if(ChallengesMainClass.getPermsManager().hasPermissions(p, "ch.invs.challenges")) {
+			inv.setItem(15 + 9, new ItemBuilder(Material.CLOCK).setDisplayName(ITEM_CHALLENGES).build());
+		} else {
+			inv.setItem(15 + 9, new ItemBuilder(Material.REDSTONE_BLOCK).setDisplayName(LanguagesManager.translate(NO_PERMISSIONS, p.getUniqueId())).build());
+		}
 		inv.setItem(4 + (9 * 3), new ItemBuilder(Material.DIRT).setDisplayName(ITEM_LANGUAGES).build());
 
 		return getPage(items, inv, page);

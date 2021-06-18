@@ -16,7 +16,8 @@ public class Starter {
             NO_NUMBER = "§cDies ist keine g§ltige Nummer.",
             ON_LOAD = PREFIX + "§aDas Plugin wurde erfolgreich geladen.",
             ON_START = PREFIX + "§aDas Plugin wurde erfolgreich gestartet.",
-            ON_STOP = PREFIX + "§aDas Plugin wurde erfolgreich gestoppt.";
+            ON_STOP = PREFIX + "§aDas Plugin wurde erfolgreich gestoppt.",
+			NO_PLAYER_FOUND = "§cDieser Spieler wurde nich gefunden";
 	
 	public void startPlugin(Config mainCFG, ChallengesMainClass plugin) {
 		try {
@@ -27,7 +28,8 @@ public class Starter {
 			NO_PLAYER = (String) Config.getOption(mainCFG, "challenges.NO_PLAYER", NO_PLAYER);
 			NO_COMMAND_FOUND = (String) Config.getOption(mainCFG, "challenges.NO_COMMAND_FOUND", NO_COMMAND_FOUND);
 			NO_NUMBER = (String) Config.getOption(mainCFG, "challenges.NO_NUMBER", NO_NUMBER);
-			
+			NO_PLAYER_FOUND = (String) Config.getOption(mainCFG, "challenges.NO_PLAYER_FOUND", NO_PLAYER_FOUND);
+
 			ON_LOAD = (String) Config.getOption(mainCFG, "challenges.ON_LOAD", ON_LOAD);
 			ON_START = (String) Config.getOption(mainCFG, "challenges.ON_START", ON_START);
 			ON_STOP = (String) Config.getOption(mainCFG, "challenges.ON_STOP", ON_STOP);
