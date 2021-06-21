@@ -1,34 +1,10 @@
 name: Challenges
-version: 3.4
+version: 2.3
 main: de.lpd.challenges.main.ChallengesMainClass
 api-version: 1.16
-authors:
-   - LPD (eigentliche Programmierer)
-   - Lets Play Nik
-   - Lukas008
-website: lcraft.de
-
 
 commands:
    timer:
-      description: "Handelt den Timer"
    challenges:
-      description: "Öffnet das Menu"
    ch:
-      description: "Öffnet das Menu"
    reset:
-      description: "Reseted die Map"
-   heal:
-      description: "Das heilt Leute"
-   help:
-      description: "Gibt dir Hilfe aus"
-   info:
-      description: "Gibt dir alle Informationen dieses Plugin"
-   loc:
-      description: "Speichert einen Standpunckt"
-   location:
-      description: "Speichert einen Standpunckt"
-   entchant:
-      description: "Entchanted alle Sachen"
-   invsee:
-      description: "Öffnet das Inventar von anderen"
