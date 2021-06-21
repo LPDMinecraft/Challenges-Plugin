@@ -85,7 +85,7 @@ public class WaterMLG extends Challenge {
 			@Override
 			public void run() {
 				invs = new HashMap<>();
-				if(isEnabled()) {
+				if(isEnabled("default")) {
 					for(Player c : Bukkit.getOnlinePlayers()) {
 						if(c.getGameMode() == GameMode.SURVIVAL) {
 							invs.put(c, c.getInventory().getContents());
@@ -162,7 +162,7 @@ public class WaterMLG extends Challenge {
 
 	@Override
 	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page) {
-		namei = LanguagesManager.translate("§6Water MLG(" + isToggled() + ")", p.getUniqueId());
+		namei = LanguagesManager.translate("§6Water MLG(" + isToggled("default") + ")", p.getUniqueId());
 		plusminSecound = LanguagesManager.translate("§6Ändere die minimale Zeit bis zum nächsten MLG um +5 Sekunden", p.getUniqueId());
 		minusminSecound = LanguagesManager.translate("§6Ändere die minimale Zeit bis zum nächsten MLG um -5 Sekunden", p.getUniqueId());
 		plusmaxSecound = LanguagesManager.translate("§6Ändere die maximale Zeit bis zum nächsten MLG um +5 Sekunden", p.getUniqueId());
@@ -173,7 +173,7 @@ public class WaterMLG extends Challenge {
 		minusmaxHöhe = LanguagesManager.translate("§6Ändere die maximale Höhe für den nächsten MLG um -2 Blöcke", p.getUniqueId());
 
 		if(item.getItemMeta().getDisplayName().equalsIgnoreCase(namei)) {
-			toggle();
+			toggle("default");
 		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(plusminSecound)) {
 			double c = (double) getOption(cfg, "watermlg.secounds.min", 300.00);
 			c = c + 2.5;
@@ -223,7 +223,7 @@ public class WaterMLG extends Challenge {
 		inv = de.lpd.challenges.invs.Inventory.placeHolder(inv);
 
 		ArrayList<ItemStack> items = new ArrayList<>();
-		namei = LanguagesManager.translate("§6Water MLG(" + isToggled() + ")", p.getUniqueId());
+		namei = LanguagesManager.translate("§6MLG(" + isToggled("default") + ")", p.getUniqueId());
 		plusminSecound = LanguagesManager.translate("§6Ändere die minimale Zeit bis zum nächsten MLG um +5 Sekunden", p.getUniqueId());
 		minusminSecound = LanguagesManager.translate("§6Ändere die minimale Zeit bis zum nächsten MLG um -5 Sekunden", p.getUniqueId());
 		plusmaxSecound = LanguagesManager.translate("§6Ändere die maximale Zeit bis zum nächsten MLG um +5 Sekunden", p.getUniqueId());
@@ -233,7 +233,7 @@ public class WaterMLG extends Challenge {
 		plusmaxHöhe = LanguagesManager.translate("§6Ändere die maximale Höhe für den nächsten MLG um +2 Blöcke", p.getUniqueId());
 		minusmaxHöhe = LanguagesManager.translate("§6Ändere die maximale Höhe für den nächsten MLG um -2 Blöcke", p.getUniqueId());
 		ItemBuilder b;
-		if(isToggled()) {
+		if(isToggled("default")) {
 			b = new ItemBuilder(Material.EMERALD_BLOCK);
 		} else {
 			b = new ItemBuilder(Material.REDSTONE_BLOCK);
@@ -258,6 +258,6 @@ public class WaterMLG extends Challenge {
 
 		inv.setItem(inv.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK(p.getUniqueId())).build());
 
-		return getPage(items, inv, page);
+		return getPage(items, inv, page, 0);
 	}
 }

@@ -107,22 +107,22 @@ public abstract class Inventory extends Starter implements Listener {
 		return inv;
 	}
 
-	public int getNeedSites(ArrayList<ItemStack> items) {
+	public int getNeedSites(ArrayList<ItemStack> items, int plus) {
 		int maxitems = size;
 		// Die Menge von Challenges
-		int needpages = 1;
+		int needpages = 1 + plus;
 		int i = items.size();
 		while(i > maxitems) {
 			needpages++;
-			i = i - 5*9;
+			i = i - (5*9 - 3);
 		}
 		return needpages;
 	}
 
-	public org.bukkit.inventory.Inventory getPage(ArrayList<ItemStack> items, org.bukkit.inventory.Inventory inv, int page) {
+	public org.bukkit.inventory.Inventory getPage(ArrayList<ItemStack> items, org.bukkit.inventory.Inventory inv, int page, int pluspages) {
 		int slot = 0;
 		int i = 0;
-		org.bukkit.inventory.Inventory in = Bukkit.createInventory(null, size, TITLE + " " + page + "/" + getNeedSites(items));
+		org.bukkit.inventory.Inventory in = Bukkit.createInventory(null, size, TITLE + " " + page + "/" + getNeedSites(items, pluspages));
 		in.setContents(inv.getContents());
 		for(i = ((page - 1) * page); i < (page * size); i++) {
 			if(!items.isEmpty()) {

@@ -57,6 +57,6 @@ public class Menu extends Inventory {
 		}
 		inv.setItem(4 + (9 * 3), new ItemBuilder(Material.DIRT).setDisplayName(ITEM_LANGUAGES).build());
 
-		return getPage(items, inv, page);
+		return getPage(items, inv, page, 0);
 	}
 }

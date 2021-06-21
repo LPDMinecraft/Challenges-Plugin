@@ -30,7 +30,7 @@ public class GeteilteHearths extends Challenge {
 			
 			@Override
 			public void run() {
-				if(isEnabled()) {
+				if(isEnabled("default")) {
 					for(Player p : Bukkit.getOnlinePlayers()) {
 						if(p.getGameMode() == GameMode.SURVIVAL) {
 							double h = (double)getOption(cfg, "geteilteherzen.herzen", 20.00);
@@ -90,7 +90,7 @@ public class GeteilteHearths extends Challenge {
 	@EventHandler
 	public void onDamage(EntityDamageEvent e) {
 		if (e.getEntity() instanceof Player) {
-			if (isEnabled()) {
+			if (isEnabled("default")) {
 				setOption(cfg, "geteilteherzen.herzen", (double) getOption(cfg, "geteilteherzen.herzen", 20.00) - (double) (e.getDamage() * 2));
 			}
 		}
@@ -99,7 +99,7 @@ public class GeteilteHearths extends Challenge {
 	@EventHandler
 	public void onRegenerate(EntityRegainHealthEvent e) {
 		if(e.getEntity() instanceof Player) {
-			if(isEnabled()) {
+			if(isEnabled("default")) {
 				setOption(cfg, "geteilteherzen.herzen", (double)getOption(cfg, "geteilteherzen.herzen", 20.00) + (double)e.getAmount());
 			}
 		}
@@ -107,13 +107,13 @@ public class GeteilteHearths extends Challenge {
 
 	@Override
 	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page) {
-        if(isToggled()) {
+        if(isToggled("default")) {
 			itemdisplayname = LanguagesManager.translate("§6Geteilte Herzen " + Starter.START_PREFIX + "§aOn", p.getUniqueId());
         } else {
 			itemdisplayname = LanguagesManager.translate("§6Geteilte Herzen " + Starter.START_PREFIX + "§cOff", p.getUniqueId());
         }
 		if(item.getItemMeta().getDisplayName().equalsIgnoreCase(itemdisplayname)) {
-			toggle();
+			toggle("default");
 		}
 	}
 
@@ -125,7 +125,7 @@ public class GeteilteHearths extends Challenge {
 
 		ArrayList<ItemStack> items = new ArrayList<>();
 		ItemBuilder ib = new ItemBuilder(Material.REDSTONE_BLOCK);
-		if(isToggled()) {
+		if(isToggled("default")) {
 			ib = new ItemBuilder(Material.EMERALD_BLOCK);
 			itemdisplayname = LanguagesManager.translate("§6Geteilte Herzen " + Starter.START_PREFIX + "§aOn", p.getUniqueId());
 		} else {
@@ -137,6 +137,6 @@ public class GeteilteHearths extends Challenge {
 		inv.setItem(9, ib.build());
 		inv.setItem(inv.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK(p.getUniqueId())).build());
 
-		return getPage(items, inv, page);
+		return getPage(items, inv, page, 0);
 	}
 }

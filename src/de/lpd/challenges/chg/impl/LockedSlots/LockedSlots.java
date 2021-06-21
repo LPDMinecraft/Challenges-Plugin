@@ -32,14 +32,14 @@ public class LockedSlots extends Challenge {
 			
 			@Override
 			public void run() {
-				if(isEnabled()) {
+				if(isEnabled("all")) {
 					for(Player c : Bukkit.getOnlinePlayers()) {
 						if(c.getGameMode() == GameMode.SURVIVAL) {
 							a(c);
 						}
 					}
 				}
-				if(!isEnabled()) {
+				if(!isEnabled("all")) {
 					for(Player c : Bukkit.getOnlinePlayers()) {
 						c.getInventory().remove(Material.BARRIER);
 					}
@@ -68,10 +68,10 @@ public class LockedSlots extends Challenge {
 	}
 	
 	public void a(Player p) {
-		if(isToggled()) {
+		if(isToggled("all")) {
 			p.getInventory().remove(Material.BARRIER);
 		}
-		if(isEnabled()) {
+		if(isEnabled("all")) {
 			for(int i = 0; i < (double)getOption(cfg, "lockedslots.max", 0); i++) {
 				if(!(i > 4*9)) {
 					p.getInventory().setItem(((4*9)-1)-i, new ItemBuilder(Material.BARRIER).build());
@@ -114,7 +114,7 @@ public class LockedSlots extends Challenge {
 	public void normalClickAnyInventory(Player p, ItemStack currentItem, InventoryClickEvent e) {
 		if(e.getCurrentItem().getType() == Material.BARRIER) {
 			if(e.getWhoClicked().getGameMode() == GameMode.SURVIVAL) {
-				if(isEnabled()) {
+				if(isEnabled("all")) {
 					e.setCancelled(true);
 				}
 			}
@@ -123,14 +123,14 @@ public class LockedSlots extends Challenge {
 
 	@EventHandler
 	public void onPlace(BlockPlaceEvent e) {
-		if(e.getBlock().getType() == Material.BARRIER && e.getPlayer().getGameMode() == GameMode.SURVIVAL && isEnabled()) {
+		if(e.getBlock().getType() == Material.BARRIER && e.getPlayer().getGameMode() == GameMode.SURVIVAL && isEnabled("all")) {
 			e.setCancelled(true);
 		}
 	}
 	
 	@EventHandler
 	public void onDrop(PlayerDropItemEvent e) {
-		if(e.getItemDrop().getItemStack().getType() == Material.BARRIER && e.getPlayer().getGameMode() == GameMode.SURVIVAL && isEnabled()) {
+		if(e.getItemDrop().getItemStack().getType() == Material.BARRIER && e.getPlayer().getGameMode() == GameMode.SURVIVAL && isEnabled("all")) {
 			e.setCancelled(true);
 		}
 	}
@@ -143,7 +143,7 @@ public class LockedSlots extends Challenge {
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
 		Player c = e.getPlayer();
-		if(isEnabled()) {
+		if(isEnabled("all")) {
 			if(ChallengesMainClass.t.isStarted()) {
 				if(c.getGameMode() == GameMode.SURVIVAL) {
 					a(c);
@@ -162,7 +162,7 @@ public class LockedSlots extends Challenge {
 
 	@Override
 	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page) {
-		namei = LanguagesManager.translate("§6Locked Slots(" + isToggled() + "): ", p.getUniqueId()) + getOption(cfg, "lockedslots.max", 0) + " Slots sind locked";
+		namei = LanguagesManager.translate("§6Locked Slots(" + isToggled("all") + "): ", p.getUniqueId()) + getOption(cfg, "lockedslots.max", 0) + " Slots sind locked";
 		plusLockedSlots1 = LanguagesManager.translate("§6Sperre ein 1 Slot mehr", p.getUniqueId());
 		minusLockedSlots1 = LanguagesManager.translate("§6Entsperre ein weiteren 1 Slot", p.getUniqueId());
 
@@ -179,7 +179,7 @@ public class LockedSlots extends Challenge {
 				a(p);
 			}
 		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(namei)) {
-			toggle();
+			toggle("all");
 		}
 	}
 
@@ -187,13 +187,13 @@ public class LockedSlots extends Challenge {
 	public Inventory getInventory(int page, Player p) {
 		inv = de.lpd.challenges.invs.Inventory.placeHolder(inv);
 
-		namei = LanguagesManager.translate("§6Locked Slots(" + isToggled() + "): ", p.getUniqueId()) + getOption(cfg, "lockedslots.max", 0) + " Slots sind locked";
+		namei = LanguagesManager.translate("§6Locked Slots(" + isToggled("all") + "): ", p.getUniqueId()) + getOption(cfg, "lockedslots.max", 0) + " Slots sind locked";
 		plusLockedSlots1 = LanguagesManager.translate("§6Sperre ein 1 Slot mehr", p.getUniqueId());
 		minusLockedSlots1 = LanguagesManager.translate("§6Entsperre ein weiteren 1 Slot", p.getUniqueId());
 		ArrayList<ItemStack> items = new ArrayList<>();
 
 		inv.setItem(0, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(plusLockedSlots1).build());
-		if(isToggled()) {
+		if(isToggled("all")) {
 			inv.setItem(9, new ItemBuilder(Material.EMERALD_BLOCK).setDisplayName(namei).build());
 		} else {
 			inv.setItem(9, new ItemBuilder(Material.REDSTONE_BLOCK).setDisplayName(namei).build());
@@ -201,7 +201,7 @@ public class LockedSlots extends Challenge {
 		inv.setItem(18, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(minusLockedSlots1).build());
 		inv.setItem(inv.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK(p.getUniqueId())).build());
 
-		return getPage(items, inv, page);
+		return getPage(items, inv, page, 0);
 	}
 	
 }

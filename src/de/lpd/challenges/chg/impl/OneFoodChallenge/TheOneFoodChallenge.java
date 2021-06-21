@@ -87,7 +87,7 @@ public class TheOneFoodChallenge extends Challenge {
 
 	@EventHandler
 	public void onEat(PlayerItemConsumeEvent e) {
-		if(isEnabled()) {
+		if(isEnabled("default")) {
 			if(eaten.containsKey(e.getItem().getType())) {
 				Material t = e.getItem().getType();
 				int a = (int) eaten.get(e.getItem().getType());
@@ -109,7 +109,7 @@ public class TheOneFoodChallenge extends Challenge {
 
 	@Override
 	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page) {
-		namei = LanguagesManager.translate("§6The One Food(" + isToggled() + "): ", p.getUniqueId()) + getOption(cfg, "foodchallenge.max", 1.00) + LanguagesManager.translate(" Food Arten", p.getUniqueId());
+		namei = LanguagesManager.translate("§6The One Food(" + isToggled("default") + "): ", p.getUniqueId()) + getOption(cfg, "foodchallenge.max", 1.00) + LanguagesManager.translate(" Food Arten", p.getUniqueId());
 		plusMaxFood1 = LanguagesManager.translate("§6Ändere das Maximum vom Essentyp um +1", p.getUniqueId());
 		minusMaxFood1 = LanguagesManager.translate("§6Ändere das Maximum vom Essentyp um -1", p.getUniqueId());
 
@@ -120,7 +120,7 @@ public class TheOneFoodChallenge extends Challenge {
 				setOption(cfg, "foodchallenge.max", (double) getOption(cfg, "foodchallenge.max", 1.00) - 0.5);
 			}
 		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(namei)) {
-			toggle();
+			toggle("default");
 		}
 	}
 
@@ -128,11 +128,11 @@ public class TheOneFoodChallenge extends Challenge {
 	public Inventory getInventory(int page, Player p) {
 		inv = de.lpd.challenges.invs.Inventory.placeHolder(inv);
 
-		namei = LanguagesManager.translate("§6The One Food(" + isToggled() + "): ", p.getUniqueId()) + getOption(cfg, "foodchallenge.max", 1.00) + LanguagesManager.translate(" Food Arten", p.getUniqueId());
+		namei = LanguagesManager.translate("§6The One Food(" + isToggled("default") + "): ", p.getUniqueId()) + getOption(cfg, "foodchallenge.max", 1.00) + LanguagesManager.translate(" Food Arten", p.getUniqueId());
 		plusMaxFood1 = LanguagesManager.translate("§6Ändere das Maximum vom Essentyp um +1", p.getUniqueId());
 		minusMaxFood1 = LanguagesManager.translate("§6Ändere das Maximum vom Essentyp um -1", p.getUniqueId());
 		Material b;
-		if(isToggled()) {
+		if(isToggled("default")) {
 			b = Material.EMERALD_BLOCK;
 		} else {
 			b = Material.REDSTONE_BLOCK;
@@ -146,6 +146,6 @@ public class TheOneFoodChallenge extends Challenge {
 
 		inv.setItem(inv.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK(p.getUniqueId())).build());
 
-		return getPage(items, inv, page);
+		return getPage(items, inv, page, 0);
 	}
 }

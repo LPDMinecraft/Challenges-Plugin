@@ -81,7 +81,7 @@ public class BreakUpgradeTool extends Challenge {
 	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onBreak(BlockBreakEvent e) {
-		if(isEnabled()) {
+		if(isEnabled("default")) {
 			if(e.getPlayer() != null && e.getPlayer().getItemInHand() != null) {
 				entchant(e.getPlayer().getItemInHand(), e.getPlayer());
 			}
@@ -91,7 +91,7 @@ public class BreakUpgradeTool extends Challenge {
 	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onDamage(EntityDamageByEntityEvent e) {
-		if(isEnabled() && e.getDamager() != null) {
+		if(isEnabled("default") && e.getDamager() != null) {
 			if(e.getDamager() instanceof Player) {
 				if(((HumanEntity) e.getDamager()).getItemInHand() != null) {
 					entchant(((Player) e.getDamager()).getItemInHand(), (Player) e.getDamager());
@@ -142,7 +142,7 @@ public class BreakUpgradeTool extends Challenge {
 
 	@Override
 	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page) {
-		namei = LanguagesManager.translate("§aEntchante jedes Abbauen(" + isToggled() + "):", p.getUniqueId()) + "§6" + getOption(cfg, "breakupgradetool.levelplus", 1.00) + " Level";
+		namei = LanguagesManager.translate("§aEntchante jedes Abbauen(" + isToggled("default") + "):", p.getUniqueId()) + "§6" + getOption(cfg, "breakupgradetool.levelplus", 1.00) + " Level";
 
 		plusMaxHearth1 = LanguagesManager.translate("§6+1 Entchantment Level", p.getUniqueId());
 		minusMaxHeath1 = LanguagesManager.translate("§6-1 Entchantment Level", p.getUniqueId());
@@ -156,7 +156,7 @@ public class BreakUpgradeTool extends Challenge {
 			level = level - 0.5;
 			setOption(cfg, "breakupgradetool.levelplus", level);
 		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(namei)) {
-			toggle();
+			toggle("default");
 		}
 	}
 
@@ -167,10 +167,10 @@ public class BreakUpgradeTool extends Challenge {
 
 		plusMaxHearth1 = LanguagesManager.translate("§6+1 Entchantment Level", p.getUniqueId());
 		minusMaxHeath1 = LanguagesManager.translate("§6-1 Entchantment Level", p.getUniqueId());
-		namei = LanguagesManager.translate("§aEntchante jedes Abbauen(" + isToggled() + "):", p.getUniqueId()) + "§6" + getOption(cfg, "breakupgradetool.levelplus", 1.00) + " Level";
+		namei = LanguagesManager.translate("§aEntchante jedes Abbauen(" + isToggled("default") + "):", p.getUniqueId()) + "§6" + getOption(cfg, "breakupgradetool.levelplus", 1.00) + " Level";
 
 		inv.setItem(0, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(plusMaxHearth1).build());
-		if(isToggled()) {
+		if(isToggled("default")) {
 			inv.setItem(9, new ItemBuilder(Material.EMERALD_BLOCK).setDisplayName(namei).build());
 		} else {
 			inv.setItem(9, new ItemBuilder(Material.REDSTONE_BLOCK).setDisplayName(namei).build());
@@ -178,6 +178,6 @@ public class BreakUpgradeTool extends Challenge {
 		inv.setItem(18, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(minusMaxHeath1).build());
 		inv.setItem(inv.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK(p.getUniqueId())).build());
 
-		return getPage(items, inv, page);
+		return getPage(items, inv, page, 0);
 	}
 }

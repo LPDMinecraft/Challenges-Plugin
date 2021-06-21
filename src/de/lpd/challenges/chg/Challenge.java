@@ -52,22 +52,22 @@ public abstract class Challenge extends Inventory implements Listener {
 		cfg.save();
 	}
 	
-	public boolean isEnabled() {
-		if(isToggled() && ChallengesMainClass.t.isStarted()) {
+	public boolean isEnabled(String option) {
+		if(isToggled(option) && ChallengesMainClass.t.isStarted()) {
 			return true;
 		}
 		return false;
 	}
 	
-	public boolean isToggled() {
-		return (boolean) getOption(this.getCfg(), root + ".isEnabled", false);
+	public boolean isToggled(String option) {
+		return (boolean) getOption(this.getCfg(), root + "." + option + ".isEnabled", false);
 	}
 	
-	public void toggle() {
-		if((boolean) getOption(this.getCfg(), root + ".isEnabled", false)) {
-			setOption(this.getCfg(), root + ".isEnabled", false);
+	public void toggle(String option) {
+		if((boolean) getOption(this.getCfg(), root + "." + option + ".isEnabled", false)) {
+			setOption(this.getCfg(), root + "." + option + ".isEnabled", false);
 		} else {
-			setOption(this.getCfg(), root + ".isEnabled", true);
+			setOption(this.getCfg(), root + "." + option + ".isEnabled", true);
 		}
 	}
 	

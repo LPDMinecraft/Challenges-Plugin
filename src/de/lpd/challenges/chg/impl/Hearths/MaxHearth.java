@@ -31,7 +31,7 @@ public class MaxHearth extends Challenge {
 			@Override
 			public void run() {
 				
-				if(isEnabled()) {
+				if(isEnabled("all")) {
 					for(Player p : Bukkit.getOnlinePlayers()) {
 						if(p.getMaxHealth() != (double) getOption(cfg, "maxhearths.max", 20.00)) {
 							p.setMaxHealth((double) getOption(cfg, "maxhearths.max", 20.00));
@@ -82,7 +82,7 @@ public class MaxHearth extends Challenge {
 	@SuppressWarnings("deprecation")
 	@Override
 	public void reset() {
-		if(isEnabled()) {
+		if(isEnabled("all")) {
 			setOption(cfg, "maxhearths.max", 20);
 			for(Player p : Bukkit.getOnlinePlayers()) {
 				p.setMaxHealth((double) getOption(cfg, "maxhearths.max", 20.00));
@@ -101,7 +101,7 @@ public class MaxHearth extends Challenge {
 
 	@Override
 	public void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page) {
-		namei = LanguagesManager.translate("§6Max Hearth(" + isToggled() + "): ", p.getUniqueId()) + ((double)getOption(cfg, "maxhearths.max", 20.00) / 2) + " Herzen sind das maximum";
+		namei = LanguagesManager.translate("§6Max Hearth(" + isToggled("all") + "): ", p.getUniqueId()) + ((double)getOption(cfg, "maxhearths.max", 20.00) / 2) + " Herzen sind das maximum";
 
 		plusMaxHearth1 = LanguagesManager.translate("§6Füge 0,5 Herzen hinzu", p.getUniqueId());
 	    minusMaxHeath1 = LanguagesManager.translate("§6Lösche 0,5 Herzen", p.getUniqueId());
@@ -113,7 +113,7 @@ public class MaxHearth extends Challenge {
 				setOption(cfg, "maxhearths.max", (double) getOption(cfg, "maxhearths.max", 20.00) - 0.5);
 			}
 		} else if(item.getItemMeta().getDisplayName().equalsIgnoreCase(namei)) {
-			toggle();
+			toggle("all");
 		}
 		p.openInventory(getInventory(page, p));
 	}
@@ -129,13 +129,13 @@ public class MaxHearth extends Challenge {
 		ArrayList<ItemStack> items = new ArrayList<>();
 
 		Material ib;
-		if(isToggled()) {
+		if(isToggled("all")) {
 			ib = Material.EMERALD_BLOCK;
 		} else {
 			ib = Material.REDSTONE_BLOCK;
 		}
 
-		namei = LanguagesManager.translate("§6Max Hearth(" + isToggled() + "): ", p.getUniqueId()) + ((double)getOption(cfg, "maxhearths.max", 20.00) / 2) + " Herzen sind das maximum";
+		namei = LanguagesManager.translate("§6Max Hearth(" + isToggled("all") + "): ", p.getUniqueId()) + ((double)getOption(cfg, "maxhearths.max", 20.00) / 2) + " Herzen sind das maximum";
 
 		plusMaxHearth1 = LanguagesManager.translate("§6Füge 0,5 Herzen hinzu", p.getUniqueId());
 		minusMaxHeath1 = LanguagesManager.translate("§6Lösche 0,5 Herzen", p.getUniqueId());
@@ -146,7 +146,7 @@ public class MaxHearth extends Challenge {
 
 		inv.setItem(inv.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK(p.getUniqueId())).build());
 
-		return getPage(items, inv, page);
+		return getPage(items, inv, page, 0);
 	}
 
 	public void setPlugin(ChallengesMainClass plugin) {
