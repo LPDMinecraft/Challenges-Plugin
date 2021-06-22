@@ -124,7 +124,7 @@ public abstract class Inventory extends Starter implements Listener {
 		int i = 0;
 		org.bukkit.inventory.Inventory in = Bukkit.createInventory(null, size, TITLE + " " + page + "/" + getNeedSites(items, pluspages));
 		in.setContents(inv.getContents());
-		for(i = ((page - 1) * page); i < (page * size); i++) {
+		for(i = ((page - 1) * page); i < (page * (size - 3)); i++) {
 			if(!items.isEmpty()) {
 				try {
 					if(items.size() > i && items.get(i) != null) {
@@ -137,6 +137,14 @@ public abstract class Inventory extends Starter implements Listener {
 				}
 			}
 		}
+
+		if(page > 1) {
+			in.setItem(in.getSize() - 2, new ItemBuilder(Material.PAPER).setDisplayName(ITEM_BeforePage).build());
+		}
+		if(page < getNeedSites(items, pluspages)) {
+			in.setItem(in.getSize() - 3, new ItemBuilder(Material.PAPER).setDisplayName(ITEM_NextPage).build());
+		}
+
 		return in;
 	}
 
@@ -184,7 +192,6 @@ public abstract class Inventory extends Starter implements Listener {
 										} else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ITEM_BACK)) {
 											p.closeInventory();
 											if(isCanBack) {
-												System.out.println(BACK_NAME);
 												p.openInventory(ChallengesMainClass.getInvManager().invs.get(BACK_NAME).getInventory(1, p));
 											} else {
 												p.openInventory(ChallengesMainClass.getInvManager().invs.get("menu").getInventory(1, p));
@@ -199,7 +206,6 @@ public abstract class Inventory extends Starter implements Listener {
 												@Override
 												public void run() {
 													org.bukkit.inventory.Inventory inv = getInventory(currentpage, p);
-													System.out.println(currentpage);
 													if(inv != null && p.getOpenInventory() != null && p.getOpenInventory().getTitle().startsWith(TITLE)) {
 														p.openInventory(inv);
 													}

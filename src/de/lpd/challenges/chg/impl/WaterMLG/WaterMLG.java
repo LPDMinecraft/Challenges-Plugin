@@ -108,8 +108,6 @@ public class WaterMLG extends Challenge {
 							} else {
 								w = Bukkit.getWorld("watermlg");
 							}
-							System.out.println(Mathe.getRandom(Math.round((int)Math.round((double)getOption(cfg, "watermlg.secounds.min", 300.00))), (int)Math.round(Math.round((double)getOption(cfg, "watermlg.secounds.max", 300.00)))));
-							System.out.println(r);
 							Location locs = new Location(w, 0, 0, 0);
 							locs.setY((ChallengesMainClass.getHighestY(locs) + 1));
 

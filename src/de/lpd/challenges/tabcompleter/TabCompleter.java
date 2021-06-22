@@ -23,10 +23,7 @@ public class TabCompleter implements Listener, org.bukkit.command.TabCompleter {
 
     @Override
     public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] strings) {
-        System.out.println(command.getName());
         if(commandSlash.equals(command.getName())) {
-            System.out.println(strings[0]);
-            System.out.println(beforeArgs[0]);
             if(strings == beforeArgs) {
                 return pos;
             }

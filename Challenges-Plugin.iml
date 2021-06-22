@@ -8,6 +8,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="api-5.3" level="project" />
-    <orderEntry type="library" name="spigot-1.16.5 (1)" level="project" />
+    <orderEntry type="library" name="spigot-1.16.5" level="project" />
   </component>
 </module>

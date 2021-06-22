@@ -90,7 +90,7 @@ public class PermissionsManager {
             }
         }
 
-        if(activatedLuckPerms) {
+        /*if(activatedLuckPerms) {
             try {
                 RegisteredServiceProvider<net.luckperms.api.LuckPerms> provider = Bukkit.getServicesManager().getRegistration(net.luckperms.api.LuckPerms.class);
                 net.luckperms.api.LuckPerms api = null;
@@ -137,7 +137,7 @@ public class PermissionsManager {
                     return false;
                 }
             } catch (Exception e) {}
-        }
+        }*/
 
         if(p.hasPermission(permission)) {
             return true;

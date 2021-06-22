@@ -3,6 +3,7 @@ package de.lpd.challenges.chg;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import de.lpd.challenges.chg.impl.Randomizer.Randomizer;
 import javafx.print.PageLayout;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -33,6 +34,7 @@ public class ChallengesManager {
 				addChallenge(new MaxHearth(plugin));
 				addChallenge(new LockedSlots(plugin));
 				addChallenge(new WaterMLG(plugin));
+				addChallenge(new Randomizer(plugin));
 			}
 		}, 1l);
 	}

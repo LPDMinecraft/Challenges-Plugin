@@ -148,6 +148,9 @@ public class Timer {
 	}
 	
 	public boolean isPaused() {
+		if(!cfg.cfg().contains("timer.millsecounds")) {
+			return false;
+		}
 		if((int)cfg.cfg().get("timer.millsecounds") != 0 && isStarted == false) {
 			return true;
 		}

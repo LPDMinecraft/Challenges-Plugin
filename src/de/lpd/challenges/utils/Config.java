@@ -135,9 +135,6 @@ public class Config {
     public Location getBlockLocation(String root) {
     	if(!root.endsWith(".")) root = root + ".";
     	
-    	System.out.println(root + "world");
-    	System.out.println(cfg.getString(root + "world"));
-    	
     	World w = Bukkit.getWorld(cfg.getString(root + "world"));
     	int x = cfg.getInt(root + "x");
     	int y = cfg.getInt(root + "y");
@@ -166,9 +163,6 @@ public class Config {
 
 	public Location getLocation(String root) {
 		if(!root.endsWith(".")) root = root + ".";
-
-		System.out.println(root + "world");
-		System.out.println(cfg.getString(root + "world"));
 
 		World w = Bukkit.getWorld(cfg.getString(root + "world"));
 		double x = cfg.getInt(root + "x");

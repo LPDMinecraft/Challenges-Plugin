@@ -30,7 +30,7 @@ public class Randomizer extends Challenge {
 
     @Override
     public ItemStack getItem(Player p) {
-        ItemBuilder ib = new ItemBuilder(Material.WATER_BUCKET);
+        ItemBuilder ib = new ItemBuilder(Material.BROWN_MUSHROOM);
         ib.setDisplayName(LanguagesManager.translate("§6Randomizer", p.getUniqueId()));
         String[] lore = new String[3];
         lore[0] = Starter.START_PREFIX + LanguagesManager.translate("§aIn werden bestimmte Dinge vertauscht.", p.getUniqueId());
@@ -197,7 +197,7 @@ public class Randomizer extends Challenge {
         randomizer4_anzahl_min = LanguagesManager.translate("§6Derzeitige minimale Anzahl von Mobs: ", p.getUniqueId()) + cfg.cfg().get("random.mobs.amount.min");
         randomizer4_anzahl_max = LanguagesManager.translate("§6Derzeitige maximale Anzahl von Mobs: ", p.getUniqueId()) + cfg.cfg().get("random.mobs.amount.max");
         randomizer4_types_min = LanguagesManager.translate("§6Derzeitige minimale Types von Mobs: ", p.getUniqueId()) + cfg.cfg().get("random.mobs.types.min");
-        randomizer4_types_max = LanguagesManager.translate("§6Derzeitige maximale Types von Mobs: ", p.getUniqueId()) + cfg.cfg().get("random.mob.types.max");
+        randomizer4_types_max = LanguagesManager.translate("§6Derzeitige maximale Types von Mobs: ", p.getUniqueId()) + cfg.cfg().get("random.mobs.types.max");
     }
 
     @Override
@@ -208,46 +208,46 @@ public class Randomizer extends Challenge {
         if(!cfg.cfg().contains("random.block.amount.max")) cfg.cfg().set("random.block.amount.max", 2.00);
         if(!cfg.cfg().contains("random.block.types.min")) cfg.cfg().set("random.block.types.min", 1.00);
         if(!cfg.cfg().contains("random.block.types.max")) cfg.cfg().set("random.block.types.max", 4.00);
+        cfg.save();
 
         switch (page) {
             case 1:
                 if(item.getItemMeta().getDisplayName().equals(randomizer1)) {
                     toggle("blocks");
                 } else if(item.getItemMeta().getDisplayName().equals(randomizer1_anzahl_plus_min)) {
-                    cfg.cfg().set("random.block.amount.min", cfg.cfg().getDouble("random.block.amount.min") + 1.00);
+                    cfg.cfg().set("random.block.amount.min", cfg.cfg().getDouble("random.block.amount.min") + 0.5);
                 } else if(item.getItemMeta().getDisplayName().equals(randomizer1_anzahl_minus_min)) {
-                    if(cfg.cfg().getDouble("random.block.amount.min") > 1.00) {
+                    if(cfg.cfg().getDouble("random.block.amount.min") > 1.0) {
                         if(cfg.cfg().getDouble("random.block.amount.max") > cfg.cfg().getDouble("random.block.amount.min")) {
-                            cfg.cfg().set("random.block.amount.min", cfg.cfg().getDouble("random.block.amount.min") - 1.00);
+                            cfg.cfg().set("random.block.amount.min", cfg.cfg().getDouble("random.block.amount.min") - 0.5);
                         }
                     }
                 } else if(item.getItemMeta().getDisplayName().equals(randomizer1_anzahl_plus_max)) {
-                    cfg.cfg().set("random.block.amount.max", cfg.cfg().getDouble("random.block.amount.max") + 1.00);
+                    cfg.cfg().set("random.block.amount.max", cfg.cfg().getDouble("random.block.amount.max") + 0.5);
                 } else if(item.getItemMeta().getDisplayName().equals(randomizer1_anzahl_minus_max)) {
                     if(cfg.cfg().getDouble("random.block.amount.max") > 1.00) {
                         if(cfg.cfg().getDouble("random.block.amount.max") > cfg.cfg().getDouble("random.block.amount.min")) {
-                            cfg.cfg().set("random.block.amount.max", cfg.cfg().getDouble("random.block.amount.max") - 1.00);
+                            cfg.cfg().set("random.block.amount.max", cfg.cfg().getDouble("random.block.amount.max") - 0.5);
                         }
                     }
                 } else if(item.getItemMeta().getDisplayName().equals(randomizer1_types_plus_min)) {
-                    cfg.cfg().set("random.block.types.min", cfg.cfg().getDouble("random.block.types.min") + 1.00);
+                    cfg.cfg().set("random.block.types.min", cfg.cfg().getDouble("random.block.types.min") + 0.5);
                 } else if(item.getItemMeta().getDisplayName().equals(randomizer1_types_minus_min)) {
                     if(cfg.cfg().getDouble("random.block.types.min") > 1.00) {
                         if(cfg.cfg().getDouble("random.block.types.max") > cfg.cfg().getDouble("random.block.types.min")) {
-                            cfg.cfg().set("random.block.types.min", cfg.cfg().getDouble("random.block.types.min") - 1.00);
+                            cfg.cfg().set("random.block.types.min", cfg.cfg().getDouble("random.block.types.min") - 0.5);
                         }
                     }
                 } else if(item.getItemMeta().getDisplayName().equals(randomizer1_types_plus_max)) {
-                    cfg.cfg().set("random.block.types.max", cfg.cfg().getDouble("random.block.types.max") + 1.00);
+                    cfg.cfg().set("random.block.types.max", cfg.cfg().getDouble("random.block.types.max") + 0.5);
                 } else if(item.getItemMeta().getDisplayName().equals(randomizer1_types_minus_max)) {
                     if(cfg.cfg().getDouble("random.block.types.max") > 1.00) {
                         if(cfg.cfg().getDouble("random.block.types.max") > cfg.cfg().getDouble("random.block.types.min")) {
-                            cfg.cfg().set("random.block.types.max", cfg.cfg().getDouble("random.block.types.max") - 1.00);
+                            cfg.cfg().set("random.block.types.max", cfg.cfg().getDouble("random.block.types.max") - 0.5);
                         }
                     }
                 }
                 cfg.save();
-                break;
         }
     }
 
