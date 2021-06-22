@@ -17,12 +17,16 @@ import java.util.ArrayList;
 
 public class Randomizer extends Challenge {
 
+    private Config cfg;
+
     public Randomizer(ChallengesMainClass plugin) {
         super(plugin, "randomizer", "randomizer.yml", "randomizer", 3*9, true, "Randomizer", "chmenu", "challenge-randomizer", "Challenges Menu");
     }
 
     @Override
-    public void cfg(Config cfg) { }
+    public void cfg(Config cfg) {
+        this.cfg = cfg;
+    }
 
     @Override
     public ItemStack getItem(Player p) {
@@ -54,94 +58,106 @@ public class Randomizer extends Challenge {
     @Override
     public void ifPlayerDies(Player p) { }
 
-    String randomizer1 = "",
-           randomizer1_anzahl_plus_min = "",
-           randomizer1_anzahl_plus_max = "",
-           randomizer1_anzahl_minus_min = "",
-           randomizer1_anzahl_minus_max = "",
+    String  randomizer1 = "",
+            randomizer1_anzahl_plus_min = "",
+            randomizer1_anzahl_plus_max = "",
+            randomizer1_anzahl_minus_min = "",
+            randomizer1_anzahl_minus_max = "",
+            randomizer1_anzahl_min = "",
+            randomizer1_anzahl_max = "",
             randomizer1_types_plus_min = "",
             randomizer1_types_plus_max = "",
             randomizer1_types_minus_min = "",
             randomizer1_types_minus_max = "",
-           randomizer1_saveInListOrConfig = "";
+            randomizer1_types_min = "",
+            randomizer1_types_max = "",
+            randomizer1_saveInListOrConfig = "";
 
-    String randomizer2 = "",
+    String  randomizer2 = "",
             randomizer2_anzahl_plus_min = "",
             randomizer2_anzahl_plus_max = "",
             randomizer2_anzahl_minus_min = "",
             randomizer2_anzahl_minus_max = "",
+            randomizer2_anzahl_min = "",
+            randomizer2_anzahl_max = "",
             randomizer2_types_plus_min = "",
             randomizer2_types_plus_max = "",
             randomizer2_types_minus_min = "",
             randomizer2_types_minus_max = "",
+            randomizer2_types_min = "",
+            randomizer2_types_max = "",
             randomizer2_saveInListOrConfig = "";
 
-    String randomizer3 = "",
+    String  randomizer3 = "",
             randomizer3_anzahl_plus_min = "",
             randomizer3_anzahl_plus_max = "",
             randomizer3_anzahl_minus_min = "",
             randomizer3_anzahl_minus_max = "",
+            randomizer3_anzahl_min = "",
+            randomizer3_anzahl_max = "",
             randomizer3_types_plus_min = "",
             randomizer3_types_plus_max = "",
             randomizer3_types_minus_min = "",
             randomizer3_types_minus_max = "",
+            randomizer3_types_min = "",
+            randomizer3_types_max = "",
             randomizer3_saveInListOrConfig = "";
 
-    String randomizer4 = "",
+    String  randomizer4 = "",
             randomizer4_anzahl_plus_min = "",
             randomizer4_anzahl_plus_max = "",
             randomizer4_anzahl_minus_min = "",
             randomizer4_anzahl_minus_max = "",
+            randomizer4_anzahl_min = "",
+            randomizer4_anzahl_max = "",
             randomizer4_types_plus_min = "",
             randomizer4_types_plus_max = "",
             randomizer4_types_minus_min = "",
             randomizer4_types_minus_max = "",
+            randomizer4_types_min = "",
+            randomizer4_types_max = "",
             randomizer4_saveInListOrConfig = "";
 
     public void reloadNames(Player p) {
         randomizer1 = LanguagesManager.translate("§6Randomizer: Blöcke (" + isEnabled("blocks"), p.getUniqueId());
-        randomizer1_anzahl_plus_min = LanguagesManager.translate("+1 Minimum an Anzahl von Blöcken", p.getUniqueId());
-        randomizer1_anzahl_plus_max = LanguagesManager.translate("+1 Maximum an Anzahl von Blöcken", p.getUniqueId());
-        randomizer1_anzahl_minus_min = LanguagesManager.translate("-1 Minimum an Anzahl von Blöcken", p.getUniqueId());
-        randomizer1_anzahl_minus_max = LanguagesManager.translate("-1 Maximum an Anzahl von Blöcken", p.getUniqueId());
-        randomizer1_types_plus_min = LanguagesManager.translate("+1 Minimum an Typen von Blöcken", p.getUniqueId());
-        randomizer1_types_plus_max = LanguagesManager.translate("+1 Maximum an Typen von Blöcken", p.getUniqueId());
-        randomizer1_types_minus_min = LanguagesManager.translate("-1 Minimum an Typen von Blöcken", p.getUniqueId());
-        randomizer1_types_minus_max = LanguagesManager.translate("-1 Maximum an Typen von Blöcken", p.getUniqueId());
-        randomizer1_saveInListOrConfig = LanguagesManager.translate("Speichern in Config(" + isToggled("config-blocks") + ")", p.getUniqueId());
+        randomizer1_anzahl_plus_min = LanguagesManager.translate("§6+1 Minimum an Anzahl von Blöcken", p.getUniqueId());
+        randomizer1_anzahl_plus_max = LanguagesManager.translate("§6+1 Maximum an Anzahl von Blöcken", p.getUniqueId());
+        randomizer1_anzahl_minus_min = LanguagesManager.translate("§6-1 Minimum an Anzahl von Blöcken", p.getUniqueId());
+        randomizer1_anzahl_minus_max = LanguagesManager.translate("§6-1 Maximum an Anzahl von Blöcken", p.getUniqueId());
+        randomizer1_types_plus_min = LanguagesManager.translate("§6+1 Minimum an Typen von Blöcken", p.getUniqueId());
+        randomizer1_types_plus_max = LanguagesManager.translate("§6+1 Maximum an Typen von Blöcken", p.getUniqueId());
+        randomizer1_types_minus_min = LanguagesManager.translate("§6-1 Minimum an Typen von Blöcken", p.getUniqueId());
+        randomizer1_types_minus_max = LanguagesManager.translate("§6-1 Maximum an Typen von Blöcken", p.getUniqueId());
+        randomizer1_saveInListOrConfig = LanguagesManager.translate("§6Speichern in Config(" + isToggled("config-blocks") + ")", p.getUniqueId());
+        if(!cfg.cfg().contains("random.block.amount.min")) cfg.cfg().set("random.block.amount.min", 1);
+        if(!cfg.cfg().contains("random.block.amount.max")) cfg.cfg().set("random.block.amount.max", 2);
+        if(!cfg.cfg().contains("random.block.types.min")) cfg.cfg().set("random.block.types.min", 1);
+        if(!cfg.cfg().contains("random.block.types.max")) cfg.cfg().set("random.block.types.max", 4);
+        cfg.save();
+        randomizer1_anzahl_min = LanguagesManager.translate("§6Derzeitige minimale Anzahl von Blöcken: ", p.getUniqueId()) + cfg.cfg().get("random.block.amount.min");
+        randomizer1_anzahl_max = LanguagesManager.translate("§6Derzeitige maximale Anzahl von Blöcken: ", p.getUniqueId()) + cfg.cfg().get("random.block.amount.max");
+        randomizer1_types_min = LanguagesManager.translate("§6Derzeitige minimale Types von Blöcken: ", p.getUniqueId()) + cfg.cfg().get("random.block.types.min");
+        randomizer1_types_max = LanguagesManager.translate("§6Derzeitige maximale Types von Blöcken: ", p.getUniqueId()) + cfg.cfg().get("random.block.types.max");
 
         randomizer2 = LanguagesManager.translate("§6Randomizer: Crafting (" + isEnabled("crafting"), p.getUniqueId());
-        randomizer2_anzahl_plus_min = LanguagesManager.translate("+1 Minimum an Anzahl von Items", p.getUniqueId());
-        randomizer2_anzahl_plus_max = LanguagesManager.translate("+1 Maximum an Anzahl von Items", p.getUniqueId());
-        randomizer2_anzahl_minus_min = LanguagesManager.translate("-1 Minimum an Anzahl von Items", p.getUniqueId());
-        randomizer2_anzahl_minus_max = LanguagesManager.translate("-1 Maximum an Anzahl von Items", p.getUniqueId());
-        randomizer2_types_plus_min = LanguagesManager.translate("+1 Minimum an Typen von Items", p.getUniqueId());
-        randomizer2_types_plus_max = LanguagesManager.translate("+1 Maximum an Typen von Items", p.getUniqueId());
-        randomizer2_types_minus_min = LanguagesManager.translate("-1 Minimum an Typen von Items", p.getUniqueId());
-        randomizer2_types_minus_max = LanguagesManager.translate("-1 Maximum an Typen von Items", p.getUniqueId());
-        randomizer2_saveInListOrConfig = LanguagesManager.translate("Speichern in Config(" + isToggled("config-crafting") + ")", p.getUniqueId());
-
-        randomizer3 = LanguagesManager.translate("§6Randomizer: Mob Drops (" + isEnabled("mobdrops"), p.getUniqueId());
-        randomizer3_anzahl_plus_min = LanguagesManager.translate("+1 Minimum an Anzahl von Items", p.getUniqueId());
-        randomizer3_anzahl_plus_max = LanguagesManager.translate("+1 Maximum an Anzahl von Items", p.getUniqueId());
-        randomizer3_anzahl_minus_min = LanguagesManager.translate("-1 Minimum an Anzahl von Items", p.getUniqueId());
-        randomizer3_anzahl_minus_max = LanguagesManager.translate("-1 Maximum an Anzahl von Items", p.getUniqueId());
-        randomizer3_types_plus_min = LanguagesManager.translate("+1 Minimum an Typen von Items", p.getUniqueId());
-        randomizer3_types_plus_max = LanguagesManager.translate("+1 Maximum an Typen von Items", p.getUniqueId());
-        randomizer3_types_minus_min = LanguagesManager.translate("-1 Minimum an Typen von Items", p.getUniqueId());
-        randomizer3_types_minus_max = LanguagesManager.translate("-1 Maximum an Typen von Items", p.getUniqueId());
-        randomizer3_saveInListOrConfig = LanguagesManager.translate("Speichern in Config(" + isToggled("config-mobdrops") + ")", p.getUniqueId());
-
-        randomizer4 = LanguagesManager.translate("§6Randomizer: Mobs (" + isEnabled("mobs"), p.getUniqueId());
-        randomizer4_anzahl_plus_min = LanguagesManager.translate("+1 Minimum an Anzahl von Mobs", p.getUniqueId());
-        randomizer4_anzahl_plus_max = LanguagesManager.translate("+1 Maximum an Anzahl von Mobs", p.getUniqueId());
-        randomizer4_anzahl_minus_min = LanguagesManager.translate("-1 Minimum an Anzahl von Mobs", p.getUniqueId());
-        randomizer4_anzahl_minus_max = LanguagesManager.translate("-1 Maximum an Anzahl von Mobs", p.getUniqueId());
-        randomizer4_types_plus_min = LanguagesManager.translate("+1 Minimum an Typen von Mobs", p.getUniqueId());
-        randomizer4_types_plus_max = LanguagesManager.translate("+1 Maximum an Typen von Mobs", p.getUniqueId());
-        randomizer4_types_minus_min = LanguagesManager.translate("-1 Minimum an Typen von Mobs", p.getUniqueId());
-        randomizer4_types_minus_max = LanguagesManager.translate("-1 Maximum an Typen von Mobs", p.getUniqueId());
-        randomizer4_saveInListOrConfig = LanguagesManager.translate("Speichern in Config(" + isToggled("config-mobs") + ")", p.getUniqueId());
+        randomizer2_anzahl_plus_min = LanguagesManager.translate("§6+1 Minimum an Anzahl von Output Items", p.getUniqueId());
+        randomizer2_anzahl_plus_max = LanguagesManager.translate("§6+1 Maximum an Anzahl von Output Items", p.getUniqueId());
+        randomizer2_anzahl_minus_min = LanguagesManager.translate("§6-1 Minimum an Anzahl von Output Items", p.getUniqueId());
+        randomizer2_anzahl_minus_max = LanguagesManager.translate("§6-1 Maximum an Anzahl von Output Items", p.getUniqueId());
+        randomizer2_types_plus_min = LanguagesManager.translate("§6+1 Minimum an Typen von Output Items", p.getUniqueId());
+        randomizer2_types_plus_max = LanguagesManager.translate("§6+1 Maximum an Typen von Output Items", p.getUniqueId());
+        randomizer2_types_minus_min = LanguagesManager.translate("§6-1 Minimum an Typen von Output Items", p.getUniqueId());
+        randomizer2_types_minus_max = LanguagesManager.translate("§6-1 Maximum an Typen von Output Items", p.getUniqueId());
+        randomizer2_saveInListOrConfig = LanguagesManager.translate("§6Speichern in Config(" + isToggled("config-crafting") + ")", p.getUniqueId());
+        if(!cfg.cfg().contains("random.crafting.amount.min")) cfg.cfg().set("random.crafting.amount.min", 1);
+        if(!cfg.cfg().contains("random.crafting.amount.max")) cfg.cfg().set("random.crafting.amount.max", 2);
+        if(!cfg.cfg().contains("random.crafting.types.min")) cfg.cfg().set("random.crafting.types.min", 1);
+        if(!cfg.cfg().contains("random.crafting.types.max")) cfg.cfg().set("random.crafting.types.max", 4);
+        cfg.save();
+        randomizer2_anzahl_min = LanguagesManager.translate("§6Derzeitige minimale Anzahl von Output Items: ", p.getUniqueId()) + cfg.cfg().get("random.crafting.amount.min");
+        randomizer2_anzahl_max = LanguagesManager.translate("§6Derzeitige maximale Anzahl von Output Items: ", p.getUniqueId()) + cfg.cfg().get("random.crafting.amount.max");
+        randomizer2_types_min = LanguagesManager.translate("§6Derzeitige minimale Types von Output Items: ", p.getUniqueId()) + cfg.cfg().get("random.crafting.types.min");
+        randomizer2_types_max = LanguagesManager.translate("§6Derzeitige maximale Types von Output Items: ", p.getUniqueId()) + cfg.cfg().get("random.crafting.types.max");
     }
 
     @Override
