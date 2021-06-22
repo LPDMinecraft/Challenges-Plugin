@@ -194,10 +194,10 @@ public class Randomizer extends Challenge {
         if(!cfg.cfg().contains("random.mobs.types.min")) cfg.cfg().set("random.mobs.types.min", 1);
         if(!cfg.cfg().contains("random.mobs.types.max")) cfg.cfg().set("random.mobs.types.max", 4);
         cfg.save();
-        randomizer4_anzahl_min = LanguagesManager.translate("§6Derzeitige minimale Anzahl von Loot Items: ", p.getUniqueId()) + cfg.cfg().get("random.mobs.amount.min");
-        randomizer4_anzahl_max = LanguagesManager.translate("§6Derzeitige maximale Anzahl von Loot Items: ", p.getUniqueId()) + cfg.cfg().get("random.mobs.amount.max");
-        randomizer4_types_min = LanguagesManager.translate("§6Derzeitige minimale Types von Loot Items: ", p.getUniqueId()) + cfg.cfg().get("random.mobs.types.min");
-        randomizer4_types_max = LanguagesManager.translate("§6Derzeitige maximale Types von Loot Items: ", p.getUniqueId()) + cfg.cfg().get("random.mob.types.max");
+        randomizer4_anzahl_min = LanguagesManager.translate("§6Derzeitige minimale Anzahl von Mobs: ", p.getUniqueId()) + cfg.cfg().get("random.mobs.amount.min");
+        randomizer4_anzahl_max = LanguagesManager.translate("§6Derzeitige maximale Anzahl von Mobs: ", p.getUniqueId()) + cfg.cfg().get("random.mobs.amount.max");
+        randomizer4_types_min = LanguagesManager.translate("§6Derzeitige minimale Types von Mobs: ", p.getUniqueId()) + cfg.cfg().get("random.mobs.types.min");
+        randomizer4_types_max = LanguagesManager.translate("§6Derzeitige maximale Types von Mobs: ", p.getUniqueId()) + cfg.cfg().get("random.mob.types.max");
     }
 
     @Override
@@ -220,6 +220,21 @@ public class Randomizer extends Challenge {
                     m = Material.REDSTONE_BLOCK;
                 }
                 inv.setItem(9, new ItemBuilder(m).setDisplayName(randomizer1).build());
+                inv.setItem(1, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(randomizer1_anzahl_plus_min).build());
+                inv.setItem(10, new ItemBuilder(Material.GOLD_BLOCK).setDisplayName(randomizer1_anzahl_min).build());
+                inv.setItem(19, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(randomizer1_anzahl_minus_min).build());
+
+                inv.setItem(2, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(randomizer1_anzahl_plus_max).build());
+                inv.setItem(11, new ItemBuilder(Material.GOLD_BLOCK).setDisplayName(randomizer1_anzahl_max).build());
+                inv.setItem(20, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(randomizer1_anzahl_minus_max).build());
+
+                inv.setItem(4, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(randomizer1_types_plus_min).build());
+                inv.setItem(13, new ItemBuilder(Material.GOLD_BLOCK).setDisplayName(randomizer1_types_min).build());
+                inv.setItem(22, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(randomizer1_types_minus_min).build());
+
+                inv.setItem(5, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(randomizer1_types_plus_max).build());
+                inv.setItem(14, new ItemBuilder(Material.GOLD_BLOCK).setDisplayName(randomizer1_types_max).build());
+                inv.setItem(23, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(randomizer1_types_minus_max).build());
                 break;
         }
 
