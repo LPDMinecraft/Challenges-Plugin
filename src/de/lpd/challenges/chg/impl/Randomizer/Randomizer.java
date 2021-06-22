@@ -158,6 +158,46 @@ public class Randomizer extends Challenge {
         randomizer2_anzahl_max = LanguagesManager.translate("§6Derzeitige maximale Anzahl von Output Items: ", p.getUniqueId()) + cfg.cfg().get("random.crafting.amount.max");
         randomizer2_types_min = LanguagesManager.translate("§6Derzeitige minimale Types von Output Items: ", p.getUniqueId()) + cfg.cfg().get("random.crafting.types.min");
         randomizer2_types_max = LanguagesManager.translate("§6Derzeitige maximale Types von Output Items: ", p.getUniqueId()) + cfg.cfg().get("random.crafting.types.max");
+
+        randomizer3 = LanguagesManager.translate("§6Randomizer: Loot (" + isEnabled("loot"), p.getUniqueId());
+        randomizer3_anzahl_plus_min = LanguagesManager.translate("§6+1 Minimum an Anzahl von Loot Items", p.getUniqueId());
+        randomizer3_anzahl_plus_max = LanguagesManager.translate("§6+1 Maximum an Anzahl von Loot Items", p.getUniqueId());
+        randomizer3_anzahl_minus_min = LanguagesManager.translate("§6-1 Minimum an Anzahl von Loot Items", p.getUniqueId());
+        randomizer3_anzahl_minus_max = LanguagesManager.translate("§6-1 Maximum an Anzahl von Loot Items", p.getUniqueId());
+        randomizer3_types_plus_min = LanguagesManager.translate("§6+1 Minimum an Typen von Loot Items", p.getUniqueId());
+        randomizer3_types_plus_max = LanguagesManager.translate("§6+1 Maximum an Typen von Loot Items", p.getUniqueId());
+        randomizer3_types_minus_min = LanguagesManager.translate("§6-1 Minimum an Typen von Loot Items", p.getUniqueId());
+        randomizer3_types_minus_max = LanguagesManager.translate("§6-1 Maximum an Typen von Loot Items", p.getUniqueId());
+        randomizer3_saveInListOrConfig = LanguagesManager.translate("§6Speichern in Config(" + isToggled("config-loot") + ")", p.getUniqueId());
+        if(!cfg.cfg().contains("random.loot.amount.min")) cfg.cfg().set("random.loot.amount.min", 1);
+        if(!cfg.cfg().contains("random.loot.amount.max")) cfg.cfg().set("random.loot.amount.max", 2);
+        if(!cfg.cfg().contains("random.loot.types.min")) cfg.cfg().set("random.loot.types.min", 1);
+        if(!cfg.cfg().contains("random.loot.types.max")) cfg.cfg().set("random.loot.types.max", 4);
+        cfg.save();
+        randomizer3_anzahl_min = LanguagesManager.translate("§6Derzeitige minimale Anzahl von Loot Items: ", p.getUniqueId()) + cfg.cfg().get("random.loot.amount.min");
+        randomizer3_anzahl_max = LanguagesManager.translate("§6Derzeitige maximale Anzahl von Loot Items: ", p.getUniqueId()) + cfg.cfg().get("random.loot.amount.max");
+        randomizer3_types_min = LanguagesManager.translate("§6Derzeitige minimale Types von Loot Items: ", p.getUniqueId()) + cfg.cfg().get("random.loot.types.min");
+        randomizer3_types_max = LanguagesManager.translate("§6Derzeitige maximale Types von Loot Items: ", p.getUniqueId()) + cfg.cfg().get("random.loot.types.max");
+
+        randomizer4 = LanguagesManager.translate("§6Randomizer: Mobs (" + isEnabled("mobs"), p.getUniqueId());
+        randomizer4_anzahl_plus_min = LanguagesManager.translate("§6+1 Minimum an Anzahl von Mobs", p.getUniqueId());
+        randomizer4_anzahl_plus_max = LanguagesManager.translate("§6+1 Maximum an Anzahl von Mobs", p.getUniqueId());
+        randomizer4_anzahl_minus_min = LanguagesManager.translate("§6-1 Minimum an Anzahl von Mobs", p.getUniqueId());
+        randomizer4_anzahl_minus_max = LanguagesManager.translate("§6-1 Maximum an Anzahl von Mobs", p.getUniqueId());
+        randomizer4_types_plus_min = LanguagesManager.translate("§6+1 Minimum an Typen von Mobs", p.getUniqueId());
+        randomizer4_types_plus_max = LanguagesManager.translate("§6+1 Maximum an Typen von Mobs", p.getUniqueId());
+        randomizer4_types_minus_min = LanguagesManager.translate("§6-1 Minimum an Typen von Mobs", p.getUniqueId());
+        randomizer4_types_minus_max = LanguagesManager.translate("§6-1 Maximum an Typen von Mobs", p.getUniqueId());
+        randomizer4_saveInListOrConfig = LanguagesManager.translate("§6Speichern in Config(" + isToggled("config-mobs") + ")", p.getUniqueId());
+        if(!cfg.cfg().contains("random.mobs.amount.min")) cfg.cfg().set("random.mobs.amount.min", 1);
+        if(!cfg.cfg().contains("random.mobs.amount.max")) cfg.cfg().set("random.mobs.amount.max", 2);
+        if(!cfg.cfg().contains("random.mobs.types.min")) cfg.cfg().set("random.mobs.types.min", 1);
+        if(!cfg.cfg().contains("random.mobs.types.max")) cfg.cfg().set("random.mobs.types.max", 4);
+        cfg.save();
+        randomizer4_anzahl_min = LanguagesManager.translate("§6Derzeitige minimale Anzahl von Loot Items: ", p.getUniqueId()) + cfg.cfg().get("random.mobs.amount.min");
+        randomizer4_anzahl_max = LanguagesManager.translate("§6Derzeitige maximale Anzahl von Loot Items: ", p.getUniqueId()) + cfg.cfg().get("random.mobs.amount.max");
+        randomizer4_types_min = LanguagesManager.translate("§6Derzeitige minimale Types von Loot Items: ", p.getUniqueId()) + cfg.cfg().get("random.mobs.types.min");
+        randomizer4_types_max = LanguagesManager.translate("§6Derzeitige maximale Types von Loot Items: ", p.getUniqueId()) + cfg.cfg().get("random.mob.types.max");
     }
 
     @Override
