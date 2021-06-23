@@ -5,22 +5,31 @@ import de.lpd.challenges.languages.LanguagesManager;
 import de.lpd.challenges.main.ChallengesMainClass;
 import de.lpd.challenges.utils.Config;
 import de.lpd.challenges.utils.ItemBuilder;
+import de.lpd.challenges.utils.Mathe;
 import de.lpd.challenges.utils.Starter;
+import org.apache.logging.log4j.core.appender.MemoryMappedFileAppender;
 import org.apache.logging.log4j.core.appender.ScriptAppenderSelector;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 
 public class Randomizer extends Challenge {
 
     private Config cfg;
+    private HashMap<Material, ArrayList<ItemStack>> randomizer01_items;
 
     public Randomizer(ChallengesMainClass plugin) {
         super(plugin, "randomizer", "randomizer.yml", "randomizer", 3*9, true, "Randomizer", "chmenu", "challenge-randomizer", "Challenges Menu");
+        randomizer01_items = new HashMap<>();
     }
 
     @Override
@@ -50,6 +59,37 @@ public class Randomizer extends Challenge {
     @Override
     public void onMiddleClick(Player p) {
         p.openInventory(getInventory(1, p));
+    }
+
+    @EventHandler
+    public void randomizer1_onBreakBlock(BlockBreakEvent e) {
+        String root = "randomizer1.blocks." + e.getBlock().getType().name();
+        if((!randomizer01_items.containsKey(e.getBlock().getType())) && (!cfg.cfg().contains(root))) {
+            ArrayList<ItemStack> randomMaterial = new ArrayList<>();
+            int types = Mathe.getRandom(Math.round(Math.round(cfg.cfg().getDouble("random.block.types.min"))), Math.round(Math.round(cfg.cfg().getDouble("random.block.types.max"))));
+            for(int i = 0; i < types; i++) {
+                int anzahl = Mathe.getRandom(Math.round(Math.round(cfg.cfg().getDouble("random.block.amount.min"))), Math.round(Math.round(cfg.cfg().getDouble("random.block.amount.max"))));
+                ArrayList<Material> randomShuffel = new ArrayList<>();
+                for(Material c : Material.values()) {
+                    randomShuffel.add(c);
+                }
+                Collections.shuffle(randomShuffel);
+                randomMaterial.add(new ItemBuilder(randomShuffel.get(0), anzahl).build());
+            }
+            if(isToggled("config-blocks")) {
+
+            } else {
+                randomizer01_items.put(e.getBlock().getType(), randomMaterial);
+            }
+        }
+        e.setDropItems(false);
+        if(isToggled("config-blocks")) {
+
+        } else {
+            for(ItemStack item : randomizer01_items.get(e.getBlock().getType())) {
+                e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation(), item);
+            }
+        }
     }
 
     @Override
