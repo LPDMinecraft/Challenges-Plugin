@@ -119,7 +119,7 @@ public abstract class Inventory extends Starter implements Listener {
 		return needpages;
 	}
 
-	public org.bukkit.inventory.Inventory getPage(ArrayList<ItemStack> items, org.bukkit.inventory.Inventory inv, int page, int pluspages) {
+	public org.bukkit.inventory.Inventory getPage(ArrayList<ItemStack> items, org.bukkit.inventory.Inventory inv, int page, int pluspages, Player p) {
 		int slot = 0;
 		int i = 0;
 		org.bukkit.inventory.Inventory in = Bukkit.createInventory(null, size, TITLE + " " + page + "/" + getNeedSites(items, pluspages));
@@ -139,10 +139,13 @@ public abstract class Inventory extends Starter implements Listener {
 		}
 
 		if(page > 1) {
-			in.setItem(in.getSize() - 2, new ItemBuilder(Material.PAPER).setDisplayName(ITEM_BeforePage).build());
+			in.setItem(in.getSize() - 3, new ItemBuilder(Material.PAPER).setDisplayName(ITEM_BeforePage).build());
 		}
 		if(page < getNeedSites(items, pluspages)) {
-			in.setItem(in.getSize() - 3, new ItemBuilder(Material.PAPER).setDisplayName(ITEM_NextPage).build());
+			in.setItem(in.getSize() - 2, new ItemBuilder(Material.PAPER).setDisplayName(ITEM_NextPage).build());
+		}
+		if(BACK_NAME != null) {
+			in.setItem(in.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK(p.getUniqueId())).build());
 		}
 
 		return in;
@@ -210,7 +213,7 @@ public abstract class Inventory extends Starter implements Listener {
 														p.openInventory(inv);
 													}
 												}
-											}, 5l);
+											}, 4l);
 										}
 									}
 								}

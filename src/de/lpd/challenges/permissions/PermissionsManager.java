@@ -50,7 +50,7 @@ public class PermissionsManager {
 
         String root = "users." + p.getUniqueId().toString() + ".";
         adminsCfg.cfg().set(root + "name", p.getName());
-        adminsCfg.cfg().set(root + "uuid", p.getUniqueId());
+        adminsCfg.cfg().set(root + "uuid", p.getUniqueId().toString());
         if(!adminsCfg.cfg().contains(root + "admin")) {
             adminsCfg.cfg().set(root + "admin", false);
         }
