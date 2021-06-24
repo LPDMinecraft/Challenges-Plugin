@@ -256,6 +256,6 @@ public class WaterMLG extends Challenge {
 
 		inv.setItem(inv.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK(p.getUniqueId())).build());
 
-		return getPage(items, inv, page, 0);
+		return getPage(items, inv, page, 0, p);
 	}
 }

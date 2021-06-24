@@ -432,6 +432,6 @@ public class Randomizer extends Challenge {
 
         inv.setItem(inv.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK(p.getUniqueId())).build());
 
-        return getPage(items, inv, page, 3);
+        return getPage(items, inv, page, 3, p);
     }
 }

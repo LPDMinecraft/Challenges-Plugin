@@ -46,7 +46,7 @@ public class ChallengesMenu extends Inventory {
 
 		inv.setItem(inv.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK(p.getUniqueId())).build());
 		
-		return getPage(ChallengesMainClass.getChMa().getAllItems(p), inv, page, 0);
+		return getPage(ChallengesMainClass.getChMa().getAllItems(p), inv, page, 0, p);
 	}
 	
 }

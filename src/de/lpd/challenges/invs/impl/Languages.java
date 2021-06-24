@@ -43,7 +43,7 @@ public class Languages extends Inventory  {
         ArrayList<ItemStack> items = LanguagesManager.getAllItems(p);
         items.add(new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK(p.getUniqueId())).build());
 
-        return getPage(items, inv, page, 0);
+        return getPage(items, inv, page, 0, p);
     }
 
 }

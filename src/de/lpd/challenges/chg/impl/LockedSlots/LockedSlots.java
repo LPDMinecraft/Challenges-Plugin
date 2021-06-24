@@ -201,7 +201,7 @@ public class LockedSlots extends Challenge {
 		inv.setItem(18, new ItemBuilder(Material.STONE_BUTTON).setDisplayName(minusLockedSlots1).build());
 		inv.setItem(inv.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK(p.getUniqueId())).build());
 
-		return getPage(items, inv, page, 0);
+		return getPage(items, inv, page, 0, p);
 	}
 	
 }
