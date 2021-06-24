@@ -7,15 +7,18 @@ import de.lpd.challenges.utils.Config;
 import de.lpd.challenges.utils.ItemBuilder;
 import de.lpd.challenges.utils.Mathe;
 import de.lpd.challenges.utils.Starter;
+import net.minecraft.server.v1_16_R3.RecipeCrafting;
 import org.apache.logging.log4j.core.appender.MemoryMappedFileAppender;
 import org.apache.logging.log4j.core.appender.ScriptAppenderSelector;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Recipe;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,10 +29,12 @@ public class Randomizer extends Challenge {
 
     private Config cfg;
     private HashMap<Material, ArrayList<ItemStack>> randomizer01_items;
+    private HashMap<Recipe, ArrayList<ItemStack>> randomizer02_crafting;
 
     public Randomizer(ChallengesMainClass plugin) {
         super(plugin, "randomizer", "randomizer.yml", "randomizer", 3*9, true, "Randomizer", "chmenu", "challenge-randomizer", "Challenges Menu");
         randomizer01_items = new HashMap<>();
+        randomizer02_crafting = new HashMap<>();
     }
 
     @Override
@@ -63,31 +68,60 @@ public class Randomizer extends Challenge {
 
     @EventHandler
     public void randomizer1_onBreakBlock(BlockBreakEvent e) {
-        String root = "randomizer1.blocks." + e.getBlock().getType().name();
-        if((!randomizer01_items.containsKey(e.getBlock().getType())) && (!cfg.cfg().contains(root))) {
-            ArrayList<ItemStack> randomMaterial = new ArrayList<>();
-            int types = Mathe.getRandom(Math.round(Math.round(cfg.cfg().getDouble("random.block.types.min"))), Math.round(Math.round(cfg.cfg().getDouble("random.block.types.max"))));
-            for(int i = 0; i < types; i++) {
-                int anzahl = Mathe.getRandom(Math.round(Math.round(cfg.cfg().getDouble("random.block.amount.min"))), Math.round(Math.round(cfg.cfg().getDouble("random.block.amount.max"))));
-                ArrayList<Material> randomShuffel = new ArrayList<>();
-                for(Material c : Material.values()) {
-                    randomShuffel.add(c);
+        if(isEnabled("blocks")) {
+            String root = "randomizer1.blocks." + e.getBlock().getType().name();
+            if ((!randomizer01_items.containsKey(e.getBlock().getType())) && (!cfg.cfg().contains(root))) {
+                ArrayList<ItemStack> randomMaterial = new ArrayList<>();
+                int types = Mathe.getRandom(Math.round(Math.round(cfg.cfg().getDouble("random.block.types.min"))), Math.round(Math.round(cfg.cfg().getDouble("random.block.types.max"))));
+                for (int i = 0; i < types; i++) {
+                    int anzahl = Mathe.getRandom(Math.round(Math.round(cfg.cfg().getDouble("random.block.amount.min"))), Math.round(Math.round(cfg.cfg().getDouble("random.block.amount.max"))));
+                    ArrayList<Material> randomShuffel = new ArrayList<>();
+                    for (Material c : Material.values()) {
+                        randomShuffel.add(c);
+                    }
+                    Collections.shuffle(randomShuffel);
+                    randomMaterial.add(new ItemBuilder(randomShuffel.get(0), anzahl).build());
                 }
-                Collections.shuffle(randomShuffel);
-                randomMaterial.add(new ItemBuilder(randomShuffel.get(0), anzahl).build());
-            }
-            if(isToggled("config-blocks")) {
+                if (isToggled("config-blocks")) {
+                    cfg.cfg().set(root + ".name", e.getBlock().getType().name());
+                    cfg.save();
 
+                    int i = 0;
+                    for (ItemStack m : randomMaterial) {
+                        cfg.cfg().set(root + "." + i + ".type", m.getType().name());
+                        cfg.cfg().set(root + "." + i + ".amount", m.getAmount());
+                        i++;
+                    }
+                    cfg.save();
+                } else {
+                    randomizer01_items.put(e.getBlock().getType(), randomMaterial);
+                }
+            }
+            e.setDropItems(false);
+            if (isToggled("config-blocks")) {
+                for (String r : cfg.cfg().getConfigurationSection(root).getKeys(false)) {
+                    String roo = root + "." + r;
+                    Material m = Material.getMaterial(cfg.cfg().getString(root + ".type"));
+                    int amount = cfg.cfg().getInt(root + ".amount");
+                    e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation(), new ItemBuilder(m, amount).build());
+                }
             } else {
-                randomizer01_items.put(e.getBlock().getType(), randomMaterial);
+                for (ItemStack item : randomizer01_items.get(e.getBlock().getType())) {
+                    e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation(), item);
+                }
             }
         }
-        e.setDropItems(false);
-        if(isToggled("config-blocks")) {
+    }
 
-        } else {
-            for(ItemStack item : randomizer01_items.get(e.getBlock().getType())) {
-                e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation(), item);
+    @EventHandler
+    public void onCraft(CraftItemEvent e) {
+        if(isEnabled("crafting")) {
+            if(isToggled("config-crafting")) {
+
+            } else {
+                if(!randomizer02_crafting.containsKey(e.getRecipe())) {
+
+                }
             }
         }
     }
