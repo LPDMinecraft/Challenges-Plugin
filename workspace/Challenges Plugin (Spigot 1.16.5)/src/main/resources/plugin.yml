@@ -1,0 +1,4 @@
+name: Challenges Spigot 1.16.5
+version: '${project.version}'
+main: lcraft.challenges.main.Main
+api-version: 1.16

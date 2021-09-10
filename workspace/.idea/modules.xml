@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Challenges API/Challenges API.iml" filepath="$PROJECT_DIR$/Challenges API/Challenges API.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Challenges Plugin (Spigot 1.16.5)/Challenges Plugin (Spigot 1.16.5).iml" filepath="$PROJECT_DIR$/Challenges Plugin (Spigot 1.16.5)/Challenges Plugin (Spigot 1.16.5).iml" />
+    </modules>
+  </component>
+</project>

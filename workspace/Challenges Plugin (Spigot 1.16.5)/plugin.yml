@@ -1,0 +1,8 @@
+name: ChallengesPlugin
+description: This is a Challenges Plugin
+authors:
+  - LPD
+  - Lcraft
+  - Lukas008
+website: lcraft.de
+main: lcraft.challenges.main

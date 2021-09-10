@@ -1,0 +1,5 @@
+name: Challenges Api
+version: '${project.version}'
+main: lcraftchallengesapi.challengesapi.ChallengesApi
+api-version: 1.15
+website: lcraft.de

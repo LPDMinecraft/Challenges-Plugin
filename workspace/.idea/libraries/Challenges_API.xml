@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Challenges API">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../Challenges API.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
