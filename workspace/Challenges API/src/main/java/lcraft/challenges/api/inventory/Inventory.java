@@ -1,229 +1,117 @@
 package lcraft.challenges.api.inventory;
 
-import lcraft.challenges.api.languages.LanguagesManager;
 import lcraft.challenges.api.main.ChallengesApi;
 import lcraft.challenges.api.main.Starter;
 import lcraft.challenges.api.utils.Config;
 import lcraft.challenges.api.utils.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.UUID;
 
 public abstract class Inventory extends Starter implements Listener {
 
-	private String TITLE = "§aChallenges §7- §6",
-			             ITEM_BACK = "§cZurück zum §6",
-			             ITEM_NextPage = "§6§lNächste Seite",
-			             ITEM_BeforePage = "§6§lVorherige Seite",
-	                     NAME,
-	                     BACK_NAME,
-	                     SHOW_BACK_NAME;
-	private Config cfg;
-	public org.bukkit.inventory.Inventory inv;
-
-	public String getITEM_BACK(UUID p) {
-		return plugin.getLanguagesManager().getPlayer(p).translate(ITEM_BACK);
-	}
-
-	public String getTITLE() {
-		return TITLE;
-	}
-
-	public String getITEM_BeforePage(UUID p) {
-		return plugin.getLanguagesManager().getPlayer(p).translate(ITEM_BeforePage);
-	}
-
-	public String getITEM_NextPage(UUID p) {
-		return plugin.getLanguagesManager().getPlayer(p).translate(ITEM_NextPage);
-	}
-
-	public String getNAME() {
-		return NAME;
-	}
-
-	public int getSize() {
-		return size;
-	}
-
-	private int size = 5*9;
-	public Inventory(ChallengesApi plugin, int size, boolean hasMoreThen1Site, String name, String backName, String showBackName, Config invConfig) {
-		cfg = invConfig;
-
-		this.size = size;
-		plugin.registerListener(this);
-		this.hasMoreThen1Site = hasMoreThen1Site;
-		NAME = name;
-		this.SHOW_BACK_NAME = showBackName;
-
-		BACK_NAME = backName;
-		if(backName == null) {
-			isCanBack = false;
-		} else {
-			isCanBack = true;
-		}
-		NAME = (String) cfg.getOption(cfg, "settings.name", NAME);
-
-		TITLE = TITLE + NAME;
-		ITEM_BACK = ITEM_BACK + this.SHOW_BACK_NAME;
-
-		inv = Bukkit.createInventory(null, size, TITLE);
-		this.plugin = plugin;
-	}
-
 	private ChallengesApi plugin;
-	protected org.bukkit.inventory.Inventory getInv() {
+	private ItemBuilder BACK_TO_LAST_INV,
+	                    BACK_TO_PAGE,
+	                    NEXT_TO_PAGE;
+	private Inventory backInv;
+	private boolean canBack;
+	private Config invConfig;
+
+	public Inventory(ChallengesApi plugin, Inventory backInv, boolean canBack, String id) {
+		plugin.registerListener(this);
+		this.plugin = plugin;
+		this.backInv = backInv;
+		this.canBack = canBack;
+		invConfig = new Config("invs/" + id, "config.yml");
+	}
+
+	public String getListTitle(String title, UUID player, int page, int pages) {
+		title = plugin.getLanguagesManager().getPlayer(player).translate(title + " §6%cpage%§7/§6%maxpage%").replace("%cpage%", page + "").replace("%maxpage%", pages + "");
+		return title;
+	}
+
+	public org.bukkit.inventory.Inventory getListPage(ArrayList<ItemStack> items, int page, int invSize, UUID player, String title) {
+		title = getListTitle(title, player, page, getListPages(items, invSize));
+		org.bukkit.inventory.Inventory inv = Bukkit.createInventory(null, invSize, title);
+
+		int pagethings = 0;
+		int pages = 1;
+		ArrayList<ItemStack> item = new ArrayList<>();
+		for(int i = 0; i < items.size(); i++) {
+			pagethings++;
+			if(pagethings > (invSize - 9)) {
+				pagethings = 0;
+				pages = pages + 1;
+			}
+			if(pages == page) {
+				item.add(items.get(i));
+			}
+		}
+
+		for(ItemStack c : item) {
+			inv.addItem(c);
+		}
+		inv = placeHolder(inv, new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setDisplayName(" ").build());
+		BACK_TO_LAST_INV = new ItemBuilder(Material.ORANGE_BANNER).setDisplayName(plugin.getLanguagesManager().getPlayer(player).translate("§aGo back to last Inv"));
+		BACK_TO_PAGE = new ItemBuilder(Material.RED_BANNER).setDisplayName(plugin.getLanguagesManager().getPlayer(player).translate("§aGo back to last Page"));
+		NEXT_TO_PAGE = new ItemBuilder(Material.LIME_BANNER).setDisplayName(plugin.getLanguagesManager().getPlayer(player).translate("§aGo next Page"));
+
+		if(canBack) inv.setItem(invSize - 1, BACK_TO_LAST_INV.build());
+		if(page > 1) inv.setItem(invSize - 2, BACK_TO_PAGE.build());
+		if(getListPages(items, invSize) > page) inv.setItem(invSize - 8, NEXT_TO_PAGE.build());
+
 		return inv;
+	}
+
+	public org.bukkit.inventory.Inventory placeHolder(org.bukkit.inventory.Inventory inv, ItemStack placeHolder) {
+		for(int i = 0; i < inv.getSize(); i++) {
+			if(inv.getItem(0) == null || (inv.getItem(0) != null && (inv.getItem(0).getType() == Material.AIR || inv.getItem(0) instanceof InventoryHolder))) {
+				inv.setItem(i, placeHolder);
+			}
+		}
+		return inv;
+	}
+
+	public int getListPages(ArrayList<ItemStack> items, int invSize) {
+		int pagethings = 0;
+		int pages = 1;
+		ArrayList<ItemStack> item = new ArrayList<>();
+		for(int i = 0; i < items.size(); i++) {
+			pagethings++;
+			if(pagethings > (invSize - 9)) {
+				pagethings = 0;
+				pages = pages + 1;
+			}
+		}
+		return pages;
 	}
 
 	public ChallengesApi getPlugin() {
 		return plugin;
 	}
-
-	public Config getCfg() {
-		return cfg;
+	public void setBACK_TO_LAST_INV(ItemBuilder BACK_TO_LAST_INV) {
+		this.BACK_TO_LAST_INV = BACK_TO_LAST_INV;
 	}
-
-	private boolean hasMoreThen1Site = false,
-	                isCanBack = false;
-
-	public static org.bukkit.inventory.Inventory placeHolder(org.bukkit.inventory.Inventory inv) {
-		String s = "§7";
-		for(int i = 0; i < inv.getContents().length; i++) {
-			inv.setItem(i, new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setDisplayName(s).build());
-			s = s + " ";
-		}
-		return inv;
+	public void setBACK_TO_PAGE(ItemBuilder BACK_TO_PAGE) {
+		this.BACK_TO_PAGE = BACK_TO_PAGE;
 	}
-
-	public int getNeedSites(ArrayList<ItemStack> items, int plus) {
-		int maxitems = size;
-		// Die Menge von Challenges
-		int needpages = 1 + plus;
-		int i = items.size();
-		while(i > maxitems) {
-			needpages++;
-			i = i - (5*9 - 3);
-		}
-		return needpages;
+	public void setNEXT_TO_PAGE(ItemBuilder NEXT_TO_PAGE) {
+		this.NEXT_TO_PAGE = NEXT_TO_PAGE;
 	}
-
-	public org.bukkit.inventory.Inventory getPage(ArrayList<ItemStack> items, org.bukkit.inventory.Inventory inv, int page, int pluspages, Player p) {
-		int slot = 0;
-		int i = 0;
-		org.bukkit.inventory.Inventory in = Bukkit.createInventory(null, size, TITLE + " " + page + "/" + getNeedSites(items, pluspages));
-		in.setContents(inv.getContents());
-		for(i = ((page - 1) * page); i < (page * (size - 3)); i++) {
-			if(!items.isEmpty()) {
-				try {
-					if(items.size() > i && items.get(i) != null) {
-						ItemStack item = items.get(i);
-						in.setItem(slot, item);
-						slot++;
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-
-		if(page > 1) {
-			in.setItem(in.getSize() - 3, new ItemBuilder(Material.PAPER).setDisplayName(ITEM_BeforePage).build());
-		}
-		if(page < getNeedSites(items, pluspages)) {
-			in.setItem(in.getSize() - 2, new ItemBuilder(Material.PAPER).setDisplayName(ITEM_NextPage).build());
-		}
-		if(BACK_NAME != null) {
-			in.setItem(in.getSize() - 1, new ItemBuilder(Material.BARRIER).setDisplayName(getITEM_BACK(p.getUniqueId())).build());
-		}
-
-		return in;
+	public Config getInvConfig() {
+		return invConfig;
 	}
-
-	public int getCurrentPage(String title) {
-		int site = 1;
-		try {
-			String numbers = title.replaceFirst(TITLE + " ", "");
-			String numb = numbers.split("/")[0];
-			site = Integer.valueOf(numb);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return site;
+	public Inventory getBackInv() {
+		return backInv;
 	}
-
-	private float bugFix2222 = 0;
-
-	public abstract void onClickOnItemEvent(Player p, ItemStack item, InventoryClickEvent e, int page);
-	public abstract org.bukkit.inventory.Inventory getInventory(int page, Player p);
-
-	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onInteractEvente7237872749872989288283847757573474762366(InventoryClickEvent e) {
-		if(e.getWhoClicked() != null && e.getWhoClicked() instanceof Player) {
-			Player p = (Player) e.getWhoClicked();
-			if(e.getView() != null) {
-				if(e.getView().getTitle() != null) {
-					if(e.getView().getTitle().startsWith(TITLE)) {
-						e.setCancelled(true);
-						if(e.getCurrentItem() != null) {
-							if (e.getCurrentItem().getItemMeta() != null) {
-								normalClickAnyInventory(p, e.getCurrentItem(), e);
-								if (e.getCurrentItem().getItemMeta().getDisplayName() != null) {
-									if (e.getCurrentItem().getType() != null && e.getCurrentItem().getType() != Material.AIR) {
-										int currentpage = getCurrentPage(e.getView().getTitle());
-										if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ITEM_BeforePage)) {
-											if(currentpage > 1) {
-												p.closeInventory();
-												p.openInventory(getInventory(currentpage - 1, p));
-											}
-										} else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ITEM_NextPage)) {
-											if(currentpage < Arrays.stream(e.getView().getTopInventory().getContents()).count()) {
-												p.closeInventory();
-												p.openInventory(getInventory(currentpage + 1, p));
-											}
-										} else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ITEM_BACK)) {
-											p.closeInventory();
-											if(isCanBack) {
-												p.openInventory(plugin.getInventoryManager().invs.get(BACK_NAME).getInventory(1, p));
-											} else {
-												p.openInventory(plugin.getInventoryManager().invs.get("menu").getInventory(1, p));
-											}
-										} else {
-											bugFix2222++;
-											if(bugFix2222 >= 1) {
-												onClickOnItemEvent(p, e.getCurrentItem(), e, currentpage);
-												bugFix2222 = 0;
-											}
-											Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
-												@Override
-												public void run() {
-													org.bukkit.inventory.Inventory inv = getInventory(currentpage, p);
-													if(inv != null && p.getOpenInventory() != null && p.getOpenInventory().getTitle().startsWith(TITLE)) {
-														p.openInventory(inv);
-													}
-												}
-											}, 4l);
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-
-	public void normalClickAnyInventory(Player p, ItemStack currentItem, InventoryClickEvent e) {
-
-	}
+	public abstract ArrayList<String> allPermissions(ArrayList<String> allPermissions);
+	public abstract ArrayList<String> allLanguages(ArrayList<String> allLanguages);
 
 }

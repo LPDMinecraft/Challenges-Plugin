@@ -129,4 +129,12 @@ public final class ChallengesApi extends JavaPlugin {
         return timer;
     }
 
+    public ChallengesManager getChallengesManager() {
+        return challengesManager;
+    }
+
+    public SettingManager getSettingManager() {
+        return settingManager;
+    }
+    
 }

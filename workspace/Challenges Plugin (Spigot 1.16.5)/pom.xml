@@ -70,5 +70,13 @@
             <version>1.16.5-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>lcraft.challenges</groupId>
+            <artifactId>challenges-api</artifactId>
+            <version>1.0.0</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
+
 </project>

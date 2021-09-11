@@ -6,13 +6,15 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Challenges API" />
         <module name="Challenges Plugin (Spigot 1.16.5)" />
+        <module name="Challenges API" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="Challenges API" target="1.8" />
       <module name="Challenges Plugin (Spigot 1.16.5)" target="1.8" />
+      <module name="challenges-api" target="1.5" />
+      <module name="challenges-spigot-1.16.5" target="1.5" />
       <module name="Spigot 1.16.5 Plugin" target="8" />
     </bytecodeTargetLevel>
   </component>

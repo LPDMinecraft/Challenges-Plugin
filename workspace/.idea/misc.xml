@@ -9,8 +9,8 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/Spigot 1.16.5 Plugin/pom.xml" />
-        <option value="$PROJECT_DIR$/Challenges API/pom.xml" />
         <option value="$PROJECT_DIR$/Challenges Plugin (Spigot 1.16.5)/pom.xml" />
+        <option value="$PROJECT_DIR$/Challenges API/pom.xml" />
       </list>
     </option>
   </component>
